@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>Modul 295 - Lektion 01</title>
+
+    <link rel="stylesheet" href="dist/reset.css" />
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/black.css" />
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css" />
+
+    <style>
+        td {
+            font-size: 21px;
+        }
+
+        .inline-code {
+            font-family: "Consolas", "Monaco", "Andale Mono", "Ubuntu Mono",
+                monospace;
+            display: inline-block;
+            background-color: #2d2d2d;
+            padding: 2px 4px;
+            border-radius: 2px;
+            font-size: 75%;
+        }
+
+        thead td {
+            font-weight: bold;
+            font-size: 24px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="reveal">
+        <div class="slides">
+            <!-- Modulfolie -->
+            <section>
+                <h2>Modul 295</h2>
+                <hr />
+                <h3>Backend für Applikationen realisieren</h3>
+                <img style="width: 200px" src="assets/img/web-icon.png" alt="Web Icon" />
+            </section>
+
+            <!-- Titelfolie -->
+            <section>
+                <h2>01 - Einführung in PHP</h2>
+                <hr />
+                <h3>Grundlagen der serverseitigen Programmierung</h3>
+                <img style="width: 240px" src="assets/img/php-logo.svg" alt="PHP Logo" />
+            </section>
+
+            <!-- Lernziele -->
+            <section>
+                <h2>Lernziele dieser Lektion</h2>
+                <ul>
+                    <li>Wissen, was PHP ist und wofür es eingesetzt wird</li>
+                    <li>Kennen der wichtigsten Fakten zur Geschichte von PHP</li>
+                    <li>Verstehen, warum PHP für die serverseitige Entwicklung geeignet ist</li>
+                    <li>XAMPP installieren und einen lokalen Server damit betreiben können</li>
+                    <li>Ein erstes PHP-Skript schreiben und ausführen können</li>
+                    <li>Grundlagen von Variablen in PHP kennen und anwenden können</li>
+                </ul>
+            </section>
+
+            <!-- Was ist PHP -->
+            <section>
+                <h2>Was ist PHP?</h2>
+                <ul>
+                    <li><b>PHP</b> steht für <i>"PHP: Hypertext Preprocessor"</i> (ein rekursives Akronym)</li>
+                    <li>Eine <b>serverseitige</b> Skriptsprache</li>
+                    <li>Wird auf dem <b>Server</b> ausgeführt, nicht im Browser</li>
+                    <li>Der Server liefert dem Client fertiges <b>HTML</b> aus</li>
+                </ul>
+            </section>
+
+            <!-- Was ist PHP - Ablauf -->
+            <section>
+                <h2>Was ist PHP?</h2>
+                <p>So läuft eine Anfrage an eine PHP-Seite ab:</p>
+                <ol>
+                    <li>Browser fordert eine <code class="inline-code">.php</code>-Datei vom Server an</li>
+                    <li>Der Server führt den PHP-Code aus</li>
+                    <li>PHP generiert daraus HTML (und ggf. CSS/JS)</li>
+                    <li>Der Server sendet das fertige HTML an den Browser zurück</li>
+                </ol>
+                <p>Der Browser sieht <b>niemals</b> den PHP-Quellcode selbst.</p>
+            </section>
+
+            <!-- Fakten -->
+            <section>
+                <h2>Einige Fakten zu PHP</h2>
+                <table>
+                    <tr>
+                        <td>Erfinder</td>
+                        <td>Rasmus Lerdorf</td>
+                    </tr>
+                    <tr>
+                        <td>Erschienen</td>
+                        <td>1994</td>
+                    </tr>
+                    <tr>
+                        <td>Ursprünglicher Name</td>
+                        <td>"Personal Home Page Tools" (PHP Tools)</td>
+                    </tr>
+                    <tr>
+                        <td>Lizenz</td>
+                        <td>Open Source (PHP License)</td>
+                    </tr>
+                    <tr>
+                        <td>Aktuelle Major-Version</td>
+                        <td>PHP 8</td>
+                    </tr>
+                    <tr>
+                        <td>Dateiendung</td>
+                        <td><code class="inline-code">.php</code></td>
+                    </tr>
+                </table>
+            </section>
+
+            <!-- Fakten - Verbreitung -->
+            <section>
+                <h2>Einige Fakten zu PHP</h2>
+                <ul>
+                    <li>PHP wird auf einem sehr grossen Teil aller Websites weltweit eingesetzt</li>
+                    <li>Bekannte Systeme, die (teilweise) auf PHP basieren:</li>
+                    <ul>
+                        <li>WordPress</li>
+                        <li>Wikipedia (MediaWiki)</li>
+                        <li>Facebook (ursprünglich)</li>
+                        <li>Shopware</li>
+                    </ul>
+                </ul>
+            </section>
+
+            <!-- Warum PHP -->
+            <section>
+                <h2>Warum PHP?</h2>
+                <ul>
+                    <li><b>Einfacher Einstieg:</b> Übersichtliche Syntax, viele Lernressourcen</li>
+                    <li><b>Weit verbreitet:</b> Grosse Community, viele Frameworks (z.B. Laravel, Symfony)</li>
+                    <li><b>Günstiges Hosting:</b> Fast jeder Webhoster unterstützt PHP nativ</li>
+                    <li><b>Direkt in HTML einbettbar:</b> Kein separater Build-Step nötig</li>
+                    <li><b>Plattformunabhängig:</b> Läuft auf Windows, Linux und macOS</li>
+                </ul>
+            </section>
+
+            <!-- Voraussetzungen -->
+            <section>
+                <h2>Voraussetzungen</h2>
+                <p>Um PHP-Dateien im Browser zu öffnen, benötigen wir einen <b>Webserver mit PHP</b>.</p>
+                <p>Die einfachste Lösung dafür heisst <b>XAMPP</b>.</p>
+            </section>
+
+            <!-- Was ist XAMPP -->
+            <section>
+                <h2>Was ist XAMPP?</h2>
+                <ul>
+                    <li>Ein kostenloses Software-Paket, das alles Nötige auf einmal installiert:</li>
+                    <ul>
+                        <li><b>X</b> - läuft auf Windows, Linux und macOS</li>
+                        <li><b>A</b>pache (Webserver)</li>
+                        <li><b>M</b>ariaDB/MySQL (Datenbank)</li>
+                        <li><b>P</b>HP</li>
+                        <li><b>P</b>erl</li>
+                    </ul>
+                    <li>Kein manuelles Einrichten von Apache oder PHP nötig</li>
+                    <li>Download unter <code class="inline-code">apachefriends.org</code></li>
+                </ul>
+            </section>
+
+            <!-- XAMPP installieren -->
+            <section>
+                <h2>XAMPP installieren</h2>
+                <ol>
+                    <li>Installer für Ihr Betriebssystem von <code class="inline-code">apachefriends.org</code>
+                        herunterladen</li>
+                    <li>Installer ausführen (Standardeinstellungen übernehmen genügt)</li>
+                    <li>Das <b>XAMPP Control Panel</b> öffnen</li>
+                </ol>
+            </section>
+
+            <!-- XAMPP Control Panel -->
+            <section>
+                <h2>Server starten</h2>
+                <p>Im XAMPP Control Panel neben <code class="inline-code">Apache</code> auf
+                    <b>Start</b> klicken.</p>
+                <ul>
+                    <li>Das Modul wird grün hinterlegt, sobald es läuft</li>
+                    <li><code class="inline-code">MySQL</code> wird für diese Lektion noch nicht benötigt</li>
+                    <li>Mit <b>Stop</b> wird der Server wieder angehalten</li>
+                </ul>
+            </section>
+
+            <!-- htdocs -->
+            <section>
+                <h2>Der htdocs-Ordner</h2>
+                <p>Apache liefert nur Dateien aus, die sich im Ordner <code class="inline-code">htdocs</code>
+                    befinden.</p>
+                <table>
+                    <tr>
+                        <td>Windows</td>
+                        <td><code class="inline-code">C:\xampp\htdocs\</code></td>
+                    </tr>
+                    <tr>
+                        <td>macOS</td>
+                        <td><code class="inline-code">/Applications/XAMPP/xamppfiles/htdocs/</code></td>
+                    </tr>
+                    <tr>
+                        <td>Linux</td>
+                        <td><code class="inline-code">/opt/lampp/htdocs/</code></td>
+                    </tr>
+                </table>
+                <p>Erstellen Sie darin einen eigenen Projektordner, z.B. <code class="inline-code">php-intro</code>.</p>
+            </section>
+
+            <!-- Aufruf im Browser -->
+            <section>
+                <h2>Aufruf im Browser</h2>
+                <p>Läuft Apache, ist jedes Projekt im <code class="inline-code">htdocs</code>-Ordner über
+                    <code class="inline-code">localhost</code> erreichbar - ganz ohne Terminal.</p>
+                <pre>
+                    <code class="bash" data-trim data-line-numbers>
+                        http://localhost/php-intro/
+                    </code>
+                </pre>
+                <p>Apache sucht im aufgerufenen Ordner automatisch nach einer
+                    <code class="inline-code">index.php</code> (oder <code class="inline-code">index.html</code>).</p>
+            </section>
+
+            <!-- Hello World -->
+            <section>
+                <h2>Hello World</h2>
+                <p>PHP-Code wird mit den Tags <code class="inline-code">&lt;?php ... ?&gt;</code> eingeleitet und
+                    beendet.</p>
+                <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        echo "Hallo Welt!";
+                    </code>
+                </pre>
+                <p>Speichern Sie diesen Code als <code class="inline-code">index.php</code> in Ihrem Projektordner
+                    unter <code class="inline-code">htdocs</code>.</p>
+            </section>
+
+            <!-- Hello World - im Browser -->
+            <section>
+                <h2>Hello World</h2>
+                <ul>
+                    <li>Im XAMPP Control Panel sicherstellen, dass <code class="inline-code">Apache</code> läuft</li>
+                    <li>Im Browser <code class="inline-code">http://localhost/php-intro/</code> öffnen</li>
+                    <li>Ausgabe im Browser: <code class="inline-code">Hallo Welt!</code></li>
+                </ul>
+                <p><code class="inline-code">echo</code> gibt Text aus, welcher direkt in das an den Browser
+                    gesendete HTML geschrieben wird.</p>
+            </section>
+
+            <!-- Hello World - kombiniert mit HTML -->
+            <section>
+                <h2>Hello World</h2>
+                <p>PHP kann beliebig oft mit HTML kombiniert werden.</p>
+                <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;!DOCTYPE html&gt;
+                        &lt;html lang="de"&gt;
+                        &lt;body&gt;
+                            &lt;h1&gt;
+                                &lt;?php echo "Hallo Welt!"; ?&gt;
+                            &lt;/h1&gt;
+                        &lt;/body&gt;
+                        &lt;/html&gt;
+                    </code>
+                </pre>
+            </section>
+
+            <!-- Variablen -->
+            <section>
+                <h2>Grundlagen: Variablen</h2>
+                <ul>
+                    <li>Variablen beginnen in PHP immer mit einem <code class="inline-code">$</code></li>
+                    <li>PHP ist <b>lose typisiert</b> - eine Typangabe ist nicht nötig</li>
+                    <li>Der Typ wird automatisch anhand des zugewiesenen Wertes bestimmt</li>
+                    <li>Variablennamen sind <code class="inline-code">case-sensitive</code></li>
+                </ul>
+                <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        $name = "Anna";
+                        $age = 24;
+                    </code>
+                </pre>
+            </section>
+
+            <!-- Variablen - Datentypen -->
+            <section>
+                <h2>Grundlagen: Variablen</h2>
+                <p>Die wichtigsten Datentypen in PHP:</p>
+                <table>
+                    <tr>
+                        <td><code class="inline-code">string</code></td>
+                        <td>Zeichenkette</td>
+                        <td><code class="inline-code">"Hallo"</code></td>
+                    </tr>
+                    <tr>
+                        <td><code class="inline-code">int</code></td>
+                        <td>Ganzzahl</td>
+                        <td><code class="inline-code">24</code></td>
+                    </tr>
+                    <tr>
+                        <td><code class="inline-code">float</code></td>
+                        <td>Kommazahl</td>
+                        <td><code class="inline-code">19.95</code></td>
+                    </tr>
+                    <tr>
+                        <td><code class="inline-code">bool</code></td>
+                        <td>Wahrheitswert</td>
+                        <td><code class="inline-code">true</code> / <code class="inline-code">false</code></td>
+                    </tr>
+                    <tr>
+                        <td><code class="inline-code">array</code></td>
+                        <td>Liste von Werten</td>
+                        <td><code class="inline-code">[1, 2, 3]</code></td>
+                    </tr>
+                    <tr>
+                        <td><code class="inline-code">null</code></td>
+                        <td>Kein Wert</td>
+                        <td><code class="inline-code">null</code></td>
+                    </tr>
+                </table>
+            </section>
+
+            <!-- Variablen - Beispiel -->
+            <section>
+                <h2>Grundlagen: Variablen</h2>
+                <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        $name = "Anna";
+                        $age = 24;
+                        $isStudent = true;
+                        $price = 19.95;
+
+                        echo $name;
+                        var_dump($age);
+                        var_dump($isStudent);
+                        var_dump($price);
+                    </code>
+                </pre>
+                <p><code class="inline-code">var_dump()</code> zeigt Wert <b>und</b> Typ einer Variable an - sehr
+                    nützlich beim Debuggen.</p>
+            </section>
+
+            <!-- Variablen - Strings kombinieren -->
+            <section>
+                <h2>Grundlagen: Variablen</h2>
+                <p>Texte und Variablen lassen sich auf zwei Arten kombinieren:</p>
+                <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        $name = "Anna";
+
+                        // Konkatenation mit dem Punkt-Operator
+                        echo "Hallo " . $name . "!";
+
+                        // String-Interpolation (nur mit doppelten Anführungszeichen)
+                        echo "Hallo $name!";
+                    </code>
+                </pre>
+                <ul>
+                    <li><code class="inline-code">.</code> verbindet (konkateniert) Strings</li>
+                    <li>Variablen in <code class="inline-code">"..."</code> werden automatisch ersetzt</li>
+                    <li>In <code class="inline-code">'...'</code> (einfache Anführungszeichen) funktioniert das
+                        <b>nicht</b></li>
+                </ul>
+            </section>
+
+            <!-- TL;DR -->
+            <section>
+                <h2>TL;DR</h2>
+                <ul>
+                    <li>PHP ist eine serverseitige Skriptsprache von Rasmus Lerdorf (seit 1994)</li>
+                    <li>PHP-Code wird auf dem Server ausgeführt und liefert HTML an den Browser</li>
+                    <li>XAMPP liefert Apache, MySQL und PHP als fertiges Paket - Start über das Control Panel</li>
+                    <li>Projekte gehören in den <code class="inline-code">htdocs</code>-Ordner und sind dann unter
+                        <code class="inline-code">localhost</code> erreichbar</li>
+                    <li>PHP-Code steht zwischen <code class="inline-code">&lt;?php ... ?&gt;</code></li>
+                    <li>Variablen beginnen mit <code class="inline-code">$</code> und sind lose typisiert</li>
+                </ul>
+            </section>
+
+        </div>
+    </div>
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            plugins: [RevealZoom, RevealMarkdown, RevealHighlight, RevealNotes],
+        });
+    </script>
+</body>
+
+</html>

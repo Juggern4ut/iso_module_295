@@ -1,0 +1,69 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+\usepackage{parskip}
+
+\setlength{\parindent}{0pt} % Keine Einrückungen
+
+\title{Modul 295 - Aufgabenblatt 01}
+\author{von Lukas Meier}
+\date{Unterricht vom 11.08.2026}
+
+\begin{document}
+
+\maketitle
+
+\section{XAMPP installieren}
+
+Laden Sie XAMPP für Ihr Betriebssystem von \texttt{apachefriends.org} herunter und installieren Sie es mit den Standardeinstellungen. Öffnen Sie danach das \textbf{XAMPP Control Panel} und starten Sie das Modul \texttt{Apache} über den Button \textbf{Start}. Sobald das Modul grün hinterlegt ist, läuft der Server.
+
+\section{Projektordner anlegen}
+
+Apache liefert ausschliesslich Dateien aus, die sich im Ordner \texttt{htdocs} Ihrer XAMPP-Installation befinden:
+
+\begin{itemize}
+    \item Windows: \texttt{C:\textbackslash xampp\textbackslash htdocs\textbackslash}
+    \item macOS: \texttt{/Applications/XAMPP/xamppfiles/htdocs/}
+    \item Linux: \texttt{/opt/lampp/htdocs/}
+\end{itemize}
+
+Erstellen Sie darin einen Ordner \texttt{php-intro} und speichern Sie die Datei \texttt{index.php}, welche Sie auf dem Netzwerkordner finden, darin.
+
+\section{Aufruf im Browser}
+
+Öffnen Sie bei laufendem Apache-Server \texttt{http://localhost/php-intro/} in Ihrem Browser. Solange Apache läuft, wird bei jedem Neuladen der Seite die aktuelle Version von \texttt{index.php} ausgeführt - ein Terminal wird dafür nicht benötigt.
+
+\section{Hello World}
+
+Schreiben Sie im obersten \texttt{<?php ?>}-Block der \texttt{index.php} (vor dem \texttt{<!DOCTYPE html>}) eine Zeile Code, welche mit \texttt{echo} den Text \texttt{Hallo Welt!} ausgibt. Laden Sie die Seite im Browser neu und kontrollieren Sie die Ausgabe.
+
+\section{Hello World mit HTML}
+
+Nutzen Sie nun den zweiten \texttt{<?php ?>}-Block, welcher sich bereits innerhalb des \texttt{<h1>}-Elements der \texttt{index.php} befindet. Passen Sie den Text so an, dass anstelle von "Willkommen bei Modul 295" neu Ihr Vor- und Nachname im \texttt{<h1>} angezeigt wird, ausgegeben über PHP mittels \texttt{echo}.
+
+\section{Variablen: Name und Alter}
+
+Definieren Sie im zweiten \texttt{<?php ?>}-Block zwei Variablen \texttt{\$name} und \texttt{\$age}, welche Ihren Namen und Ihr Alter enthalten. Geben Sie beide Variablen mit je einem eigenen \texttt{echo} auf der Seite aus.
+
+\section{Variablen: weitere Datentypen}
+
+Ergänzen Sie zwei weitere Variablen: \texttt{\$isStudent} (Wahrheitswert \texttt{true} oder \texttt{false}) und \texttt{\$height} (Kommazahl, z.B. Ihre Grösse in Metern). Geben Sie beide Variablen mit \texttt{var\_dump()} aus und prüfen Sie im Browser, welcher Datentyp jeweils angezeigt wird.
+
+\section{String-Konkatenation}
+
+Schreiben Sie einen \texttt{echo}-Aufruf, welcher mithilfe des Punkt-Operators (\texttt{.}) einen vollständigen Satz aus Text und den Variablen \texttt{\$name} und \texttt{\$age} zusammensetzt, z.B. \texttt{Anna ist 24 Jahre alt.}
+
+\section{String-Interpolation}
+
+Schreiben Sie denselben Satz aus der vorherigen Aufgabe nun ein zweites Mal, diesmal jedoch mittels String-Interpolation (Variablen direkt innerhalb eines Strings in doppelten Anführungszeichen, ohne den Punkt-Operator). Vergleichen Sie beide Varianten.
+
+\section{Eigene Variablen}
+
+Denken Sie sich ein eigenes kleines Beispiel aus (z.B. ein Produkt aus einem Onlineshop). Definieren Sie dafür mindestens drei Variablen unterschiedlichen Typs (z.B. \texttt{string}, \texttt{float}, \texttt{bool}) und geben Sie alle drei sinnvoll formatiert mit \texttt{echo} bzw. \texttt{var\_dump()} aus.
+
+\section{Rechnen mit Variablen}
+
+Nehmen Sie die \texttt{float}-Variable aus der vorherigen Aufgabe (z.B. einen Preis) und erstellen Sie eine neue Variable, welche den Preis inklusive 7.7\% Mehrwertsteuer enthält. Geben Sie das Ergebnis mit \texttt{echo} aus.
+
+\end{document}
