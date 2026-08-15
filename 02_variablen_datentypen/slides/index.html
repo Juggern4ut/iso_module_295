@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+
+    <title>Modul 295 - Lektion 02</title>
+
+    <link rel="stylesheet" href="dist/reset.css" />
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/black.css" />
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css" />
+
+    <style>
+      td {
+        font-size: 21px;
+      }
+
+      .inline-code {
+        font-family:
+          "Consolas", "Monaco", "Andale Mono", "Ubuntu Mono", monospace;
+        display: inline-block;
+        background-color: #2d2d2d;
+        padding: 2px 4px;
+        border-radius: 2px;
+        font-size: 75%;
+      }
+
+      thead td {
+        font-weight: bold;
+        font-size: 24px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <!-- Modulfolie -->
+        <section>
+          <h2>Modul 295</h2>
+          <hr />
+          <h3>Backend für Applikationen realisieren</h3>
+          <img
+            style="width: 200px"
+            src="assets/img/web-icon.png"
+            alt="Web Icon"
+          />
+        </section>
+
+        <!-- Titelfolie -->
+        <section>
+          <h2>02 - Variablen und Datentypen</h2>
+          <hr />
+          <h3>Typumwandlung, Konstanten und Vergleichsoperatoren</h3>
+          <img
+            style="width: 240px"
+            src="assets/img/php-logo.svg"
+            alt="PHP Logo"
+          />
+        </section>
+
+        <!-- Lernziele -->
+        <section>
+          <h2>Lernziele dieser Lektion</h2>
+          <ul>
+            <li>Die wichtigsten Datentypen von PHP kennen</li>
+            <li>"Type Juggling" und "lose Typisierung" verstehen</li>
+            <li>Datentypen mit Funktionen prüfen können</li>
+            <li>Datentypen gezielt umwandeln können (Type Casting)</li>
+            <li>
+              Konstanten mit <code class="inline-code">define()</code> und
+              <code class="inline-code">const</code> definieren können
+            </li>
+            <li>
+              Den Unterschied zwischen losem und striktem Vergleich (<code
+                class="inline-code"
+                >==</code
+              >
+              vs. <code class="inline-code">===</code>) kennen
+            </li>
+          </ul>
+        </section>
+
+        <!-- Rückblick -->
+        <section>
+          <h2>Rückblick: Variablen</h2>
+          <ul>
+            <li>
+              Variablen beginnen in PHP immer mit einem
+              <code class="inline-code">$</code>
+            </li>
+            <li>
+              PHP ist <b>lose typisiert</b> - der Typ wird automatisch aus dem
+              Wert bestimmt
+            </li>
+            <li>Eine Typangabe bei der Deklaration ist nicht nötig</li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        $name = "Anna";
+                        $age = 24;
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Skalare Datentypen -->
+        <section>
+          <h2>Skalare Datentypen</h2>
+          <p>PHP kennt vier <b>skalare</b> (einfache) Datentypen:</p>
+          <table>
+            <tr>
+              <td><code class="inline-code">string</code></td>
+              <td>Zeichenkette</td>
+              <td><code class="inline-code">"Hallo"</code></td>
+            </tr>
+            <tr>
+              <td><code class="inline-code">int</code></td>
+              <td>Ganzzahl</td>
+              <td><code class="inline-code">24</code></td>
+            </tr>
+            <tr>
+              <td><code class="inline-code">float</code></td>
+              <td>Kommazahl</td>
+              <td><code class="inline-code">19.95</code></td>
+            </tr>
+            <tr>
+              <td><code class="inline-code">bool</code></td>
+              <td>Wahrheitswert</td>
+              <td>
+                <code class="inline-code">true</code> /
+                <code class="inline-code">false</code>
+              </td>
+            </tr>
+          </table>
+        </section>
+
+        <!-- Verbund-Datentypen -->
+        <section>
+          <h2>Verbund- und Spezial-Datentypen</h2>
+          <table>
+            <tr>
+              <td><code class="inline-code">array</code></td>
+              <td>Liste/Zuordnung von Werten</td>
+              <td><code class="inline-code">[1, 2, 3]</code></td>
+            </tr>
+            <tr>
+              <td><code class="inline-code">object</code></td>
+              <td>Instanz einer Klasse</td>
+              <td><code class="inline-code">new Person()</code></td>
+            </tr>
+            <tr>
+              <td><code class="inline-code">null</code></td>
+              <td>Kein Wert vorhanden</td>
+              <td><code class="inline-code">null</code></td>
+            </tr>
+          </table>
+          <p>
+            <code class="inline-code">array</code> und
+            <code class="inline-code">object</code> schauen wir uns in einer
+            späteren Lektion genauer an.
+          </p>
+        </section>
+
+        <!-- Datentyp herausfinden -->
+        <section>
+          <h2>Datentyp herausfinden</h2>
+          <p>
+            <code class="inline-code">gettype()</code> gibt den Datentyp einer
+            Variable als String zurück.
+          </p>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        $price = 19.95;
+
+                        echo gettype($price); // "double"
+                    </code>
+                </pre>
+          <p>
+            Hinweis: PHP nennt den Typ
+            <code class="inline-code">float</code> intern
+            <code class="inline-code">double</code>.
+          </p>
+        </section>
+
+        <!-- is_* Funktionen -->
+        <section>
+          <h2>Datentyp prüfen</h2>
+          <p>
+            Für jeden Datentyp existiert ausserdem eine eigene
+            <code class="inline-code">is_*()</code>-Funktion, welche
+            <code class="inline-code">true</code> oder
+            <code class="inline-code">false</code> zurückgibt.
+          </p>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        $age = 24;
+
+                        var_dump(is_int($age));    // bool(true)
+                        var_dump(is_string($age)); // bool(false)
+                        var_dump(is_float($age));  // bool(false)
+                        var_dump(is_bool($age));   // bool(false)
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Type Juggling -->
+        <section>
+          <h2>Type Juggling</h2>
+          <ul>
+            <li>
+              PHP wandelt Datentypen bei Bedarf automatisch um - das nennt sich
+              <b>Type Juggling</b>
+            </li>
+            <li>
+              Passiert z.B. bei Rechenoperationen oder Vergleichen mit
+              <code class="inline-code">==</code>
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        $result = "10" + 5;   // int(15) - String wird zu int
+                        $result = "10" . 5;   // string("105") - int wird zu string
+                        $result = "3.5" + 1;  // float(4.5)
+                    </code>
+                </pre>
+          <p>
+            Das kann zu unerwarteten Ergebnissen führen - deshalb ist es
+            wichtig, Datentypen bewusst zu kennen.
+          </p>
+        </section>
+
+        <!-- Type Casting -->
+        <section>
+          <h2>Type Casting</h2>
+          <p>
+            Mit <b>Type Casting</b> wandeln wir einen Wert gezielt selbst in
+            einen anderen Datentyp um.
+          </p>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        $input = "42";
+
+                        $number = (int) $input;     // int(42)
+                        $decimal = (float) $input;   // float(42)
+                        $text = (string) 42;         // string("42")
+                        $flag = (bool) 1;             // bool(true)
+                    </code>
+                </pre>
+          <p>
+            Der gewünschte Zieltyp steht dabei in runden Klammern vor dem Wert.
+          </p>
+        </section>
+
+        <!-- Type Casting - Anwendungsfall -->
+        <section>
+          <h2>Type Casting - Anwendungsfall</h2>
+          <p>
+            Formulareingaben aus <code class="inline-code">$_GET</code>/<code
+              class="inline-code"
+              >$_POST</code
+            >
+            sind in PHP immer vom Typ <code class="inline-code">string</code> -
+            selbst wenn eine Zahl eingegeben wurde.
+          </p>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        $quantity = "3"; // z.B. aus einem Formular
+                        $price = 19.95;
+
+                        $total = (int) $quantity * $price;
+                        echo $total; // 59.85
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Was ist "leer"? -->
+        <section>
+          <h2>Wahrheitswerte anderer Typen</h2>
+          <p>
+            Jeder Wert lässt sich zu
+            <code class="inline-code">bool</code> umwandeln. Als
+            <code class="inline-code">false</code> gelten dabei:
+          </p>
+          <table>
+            <tr>
+              <td><code class="inline-code">0</code></td>
+              <td><code class="inline-code">0.0</code></td>
+              <td><code class="inline-code">""</code></td>
+            </tr>
+            <tr>
+              <td><code class="inline-code">"0"</code></td>
+              <td><code class="inline-code">[]</code></td>
+              <td><code class="inline-code">null</code></td>
+            </tr>
+          </table>
+          <p>
+            Alle anderen Werte gelten als
+            <code class="inline-code">true</code> - auch
+            <code class="inline-code">"false"</code> als String!
+          </p>
+        </section>
+
+        <!-- Konstanten -->
+        <section>
+          <h2>Konstanten</h2>
+          <ul>
+            <li>
+              Eine <b>Konstante</b> speichert einen Wert, der sich zur Laufzeit
+              nicht mehr ändern lässt
+            </li>
+            <li>
+              Definition mit der Funktion
+              <code class="inline-code">define()</code>
+            </li>
+            <li>
+              Kein <code class="inline-code">$</code> beim Namen, per Konvention
+              in <code class="inline-code">GROSSBUCHSTABEN</code>
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        define("VAT_RATE", 0.077);
+
+                        echo VAT_RATE; // 0.077
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Konstanten - const -->
+        <section>
+          <h2>Konstanten mit <code class="inline-code">const</code></h2>
+          <p>
+            Alternativ lassen sich Konstanten auch mit dem Schlüsselwort
+            <code class="inline-code">const</code> definieren.
+          </p>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        const VAT_RATE = 0.077;
+                        const COMPANY_NAME = "Modul 295 AG";
+
+                        echo VAT_RATE;
+                        echo COMPANY_NAME;
+                    </code>
+                </pre>
+          <p>
+            <code class="inline-code">const</code> wird ausserhalb von Klassen
+            meist bevorzugt, da es zur Kompilierzeit ausgewertet wird.
+          </p>
+        </section>
+
+        <!-- Vergleichsoperatoren -->
+        <section>
+          <h2>Vergleichsoperatoren</h2>
+          <table>
+            <tr>
+              <td><code class="inline-code">==</code></td>
+              <td>Gleich (Wert, <b>mit</b> Type Juggling)</td>
+            </tr>
+            <tr>
+              <td><code class="inline-code">===</code></td>
+              <td>Identisch (Wert <b>und</b> Typ)</td>
+            </tr>
+            <tr>
+              <td>
+                <code class="inline-code">!=</code> /
+                <code class="inline-code">!==</code>
+              </td>
+              <td>Ungleich / Nicht identisch</td>
+            </tr>
+            <tr>
+              <td>
+                <code class="inline-code">&lt;</code>
+                <code class="inline-code">&gt;</code>
+                <code class="inline-code">&lt;=</code>
+                <code class="inline-code">&gt;=</code>
+              </td>
+              <td>Kleiner, grösser, kleiner/gleich, grösser/gleich</td>
+            </tr>
+          </table>
+        </section>
+
+        <!-- == vs === -->
+        <section>
+          <h2>
+            <code class="inline-code">==</code> vs.
+            <code class="inline-code">===</code>
+          </h2>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        var_dump(0 == "abc");    // bool(false) 
+                        var_dump("10" == 10);    // bool(true)  - Type Juggling
+                        var_dump("10" === 10);   // bool(false) - unterschiedlicher Typ
+                        var_dump(10 === 10);     // bool(true)  - Wert und Typ gleich
+                    </code>
+                </pre>
+          <p>
+            Faustregel: In PHP <b>möglichst immer</b>
+            <code class="inline-code">===</code> verwenden, um unerwartetes Type
+            Juggling zu vermeiden.
+          </p>
+        </section>
+
+        <!-- TL;DR -->
+        <section>
+          <h2>TL;DR</h2>
+          <ul>
+            <li>
+              PHP kennt die Skalartypen <code class="inline-code">string</code>,
+              <code class="inline-code">int</code>,
+              <code class="inline-code">float</code>,
+              <code class="inline-code">bool</code> sowie u.a.
+              <code class="inline-code">array</code> und
+              <code class="inline-code">null</code>
+            </li>
+            <li>
+              <code class="inline-code">gettype()</code> und
+              <code class="inline-code">is_*()</code> prüfen den aktuellen
+              Datentyp
+            </li>
+            <li>
+              Type Juggling wandelt Typen automatisch um, Type Casting
+              <code class="inline-code">(int)</code> etc. macht dies gezielt
+            </li>
+            <li>
+              Konstanten werden mit
+              <code class="inline-code">define()</code> oder
+              <code class="inline-code">const</code> definiert und sind
+              unveränderlich
+            </li>
+            <li>
+              <code class="inline-code">===</code> vergleicht Wert
+              <b>und</b> Typ und sollte
+              <code class="inline-code">==</code> vorgezogen werden
+            </li>
+          </ul>
+        </section>
+      </div>
+    </div>
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+      Reveal.initialize({
+        hash: true,
+        plugins: [RevealZoom, RevealMarkdown, RevealHighlight, RevealNotes],
+      });
+    </script>
+  </body>
+</html>

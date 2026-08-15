@@ -1,0 +1,57 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+\usepackage{parskip}
+
+\setlength{\parindent}{0pt} % Keine Einrückungen
+
+\title{Modul 295 - Aufgabenblatt 02}
+\author{von Lukas Meier}
+\date{Unterricht vom 18.08.2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Projekt vorbereiten}
+
+Erstellen Sie im \texttt{htdocs}-Ordner Ihrer XAMPP-Installation einen neuen Ordner \texttt{php-datentypen} und speichern Sie die Datei \texttt{index.php}, welche Sie auf dem Netzwerkordner finden, darin. Öffnen Sie danach \texttt{http://localhost/php-datentypen/} im Browser.
+
+\section{Datentyp herausfinden}
+
+Definieren Sie vier Variablen \texttt{\$city} (string), \texttt{\$population} (int), \texttt{\$area} (float, z.B. Fläche in km\textsuperscript{2}) und \texttt{\$isCapital} (bool). Geben Sie den Datentyp jeder Variable mit \texttt{gettype()} aus.
+
+\section{Datentyp prüfen}
+
+Prüfen Sie dieselben vier Variablen nun mit den passenden \texttt{is\_*()}-Funktionen (\texttt{is\_string()}, \texttt{is\_int()}, \texttt{is\_float()}, \texttt{is\_bool()}) und geben Sie die Ergebnisse jeweils mit \texttt{var\_dump()} aus.
+
+\section{Type Juggling beobachten}
+
+Schreiben Sie folgende drei Ausdrücke als \texttt{echo}-Ausgaben und notieren Sie sich (z.B. als Kommentar im Code), welches Ergebnis und welcher Datentyp jeweils herauskommt: \texttt{"5" + 3}, \texttt{"5" . 3} und \texttt{"2.5" + "2.5"}.
+
+\section{Type Casting}
+
+Definieren Sie eine Variable \texttt{\$input} mit dem String-Wert \texttt{"7"}. Wandeln Sie diese anschliessend mittels Type Casting in \texttt{int}, \texttt{float} und \texttt{bool} um und geben Sie alle drei umgewandelten Werte mit \texttt{var\_dump()} aus.
+
+\section{Rechnen mit Casting}
+
+Nehmen Sie an, ein Formularfeld liefert die Menge eines Produkts immer als String, z.B. \texttt{\$quantity = "4";}. Definieren Sie zusätzlich \texttt{\$unitPrice} als \texttt{float}. Wandeln Sie \texttt{\$quantity} mit \texttt{(int)} um und berechnen Sie den Gesamtpreis (Menge $\times$ Einzelpreis). Geben Sie das Ergebnis mit \texttt{echo} aus.
+
+\section{Wahrheitswerte}
+
+Prüfen und notieren Sie (z.B. als Kommentar), ob folgende Werte als \texttt{true} oder \texttt{false} gelten, indem Sie sie jeweils mit \texttt{(bool)} casten und mit \texttt{var\_dump()} ausgeben: \texttt{0}, \texttt{"0"}, \texttt{""}, \texttt{"false"}, \texttt{[]}, \texttt{null}.
+
+\section{Konstanten definieren}
+
+Definieren Sie mit \texttt{const} zwei Konstanten \texttt{VAT\_RATE} (Mehrwertsteuersatz, z.B. \texttt{0.077}) und \texttt{SHOP\_NAME} (Name eines fiktiven Onlineshops). Geben Sie beide Konstanten mit \texttt{echo} aus.
+
+\section{Rechnen mit Konstanten}
+
+Definieren Sie eine Variable \texttt{\$netPrice} (float) und berechnen Sie mithilfe der Konstante \texttt{VAT\_RATE} aus der vorherigen Aufgabe den Bruttopreis. Geben Sie das Ergebnis mit \texttt{echo} aus.
+
+\section{Loser vs. strikter Vergleich}
+
+Vergleichen Sie \texttt{"10"} und \texttt{10} einmal mit \texttt{==} und einmal mit \texttt{===} und geben Sie beide Ergebnisse mit \texttt{var\_dump()} aus. Erklären Sie in einem kurzen Kommentar im Code, weshalb die beiden Ergebnisse unterschiedlich ausfallen.
+
+\end{document}
