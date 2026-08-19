@@ -1,0 +1,511 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+
+    <title>Modul 295 - Lektion 03</title>
+
+    <link rel="stylesheet" href="dist/reset.css" />
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/black.css" />
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css" />
+
+    <style>
+      td {
+        font-size: 21px;
+      }
+
+      .inline-code {
+        font-family:
+          "Consolas", "Monaco", "Andale Mono", "Ubuntu Mono", monospace;
+        display: inline-block;
+        background-color: #2d2d2d;
+        padding: 2px 4px;
+        border-radius: 2px;
+        font-size: 75%;
+      }
+
+      thead td {
+        font-weight: bold;
+        font-size: 24px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <!-- Modulfolie -->
+        <section>
+          <h2>Modul 295</h2>
+          <hr />
+          <h3>Backend für Applikationen realisieren</h3>
+          <img
+            style="width: 200px"
+            src="assets/img/web-icon.png"
+            alt="Web Icon"
+          />
+        </section>
+
+        <!-- Titelfolie -->
+        <section>
+          <h2>03 - Operatoren, Ausdrücke und Bedingungen</h2>
+          <hr />
+          <h3>Rechnen, Vergleichen und Entscheiden in PHP</h3>
+          <img
+            style="width: 240px"
+            src="assets/img/php-logo.svg"
+            alt="PHP Logo"
+          />
+        </section>
+
+        <!-- Lernziele -->
+        <section>
+          <h2>Lernziele dieser Lektion</h2>
+          <ul>
+            <li>Arithmetische, Zuweisungs- und Vergleichsoperatoren anwenden können</li>
+            <li>Inkrement-/Dekrement- sowie logische Operatoren einsetzen können</li>
+            <li>Die Auswertungsreihenfolge (Operatorrangfolge) einschätzen können</li>
+            <li>Bedingungen mit <code class="inline-code">if</code>, <code class="inline-code">elseif</code> und <code class="inline-code">else</code> formulieren können</li>
+            <li>Mehrfachverzweigungen mit <code class="inline-code">switch</code> umsetzen können</li>
+            <li>Den ternären und den Null-Coalescing-Operator gezielt einsetzen können</li>
+          </ul>
+        </section>
+
+        <!-- Rückblick -->
+        <section>
+          <h2>Rückblick: Vergleichsoperatoren</h2>
+          <ul>
+            <li>
+              <code class="inline-code">==</code> vergleicht nur den
+              <b>Wert</b>, <code class="inline-code">===</code> vergleicht
+              <b>Wert und Typ</b>
+            </li>
+            <li>
+              Faustregel: möglichst immer
+              <code class="inline-code">===</code> verwenden
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        var_dump("10" == 10);   // bool(true)
+                        var_dump("10" === 10);  // bool(false)
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Was ist ein Ausdruck -->
+        <section>
+          <h2>Was ist ein Ausdruck?</h2>
+          <ul>
+            <li>
+              Ein <b>Ausdruck</b> (Expression) ist alles, was zu einem Wert
+              ausgewertet werden kann
+            </li>
+            <li>Operatoren verknüpfen Werte und Variablen zu neuen Ausdrücken</li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        3 + 4          // Ausdruck -> 7
+                        $age >= 18     // Ausdruck -> bool
+                        "Hallo " . $name // Ausdruck -> string
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Arithmetische Operatoren -->
+        <section>
+          <h2>Arithmetische Operatoren</h2>
+          <table>
+            <tr>
+              <td><code class="inline-code">+</code></td>
+              <td>Addition</td>
+            </tr>
+            <tr>
+              <td><code class="inline-code">-</code></td>
+              <td>Subtraktion</td>
+            </tr>
+            <tr>
+              <td><code class="inline-code">*</code></td>
+              <td>Multiplikation</td>
+            </tr>
+            <tr>
+              <td><code class="inline-code">/</code></td>
+              <td>Division</td>
+            </tr>
+            <tr>
+              <td><code class="inline-code">%</code></td>
+              <td>Modulo (Rest der Division)</td>
+            </tr>
+            <tr>
+              <td><code class="inline-code">**</code></td>
+              <td>Potenz</td>
+            </tr>
+          </table>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        echo 10 % 3; // 1
+                        echo 2 ** 3; // 8
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Zuweisungsoperatoren -->
+        <section>
+          <h2>Zuweisungsoperatoren</h2>
+          <p>
+            Kombinierte Zuweisungsoperatoren verknüpfen eine Rechenoperation
+            direkt mit der Zuweisung.
+          </p>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        $total = 10;
+                        $total += 5;  // $total = $total + 5;  -> 15
+                        $total -= 2;  // $total = $total - 2;  -> 13
+                        $total *= 3;  // $total = $total * 3;  -> 39
+                        $total /= 3;  // $total = $total / 3;  -> 13
+
+                        $name = "Anna";
+                        $name .= " Muster"; // Konkatenation & Zuweisung
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Inkrement / Dekrement -->
+        <section>
+          <h2>Inkrement- und Dekrement-Operatoren</h2>
+          <p>
+            <code class="inline-code">++</code> und
+            <code class="inline-code">--</code> erhöhen bzw. verringern eine
+            Variable um 1.
+          </p>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        $count = 5;
+
+                        $count++; // Post-Inkrement, entspricht $count += 1;
+                        echo $count; // 6
+
+                        $count--; // Post-Dekrement
+                        echo $count; // 5
+                    </code>
+                </pre>
+          <p>
+            Es gibt auch die Pre-Varianten
+            <code class="inline-code">++$count</code> /
+            <code class="inline-code">--$count</code> - der Unterschied
+            zeigt sich erst, wenn der Ausdruck direkt weiterverwendet wird.
+          </p>
+        </section>
+
+        <!-- Vergleichsoperatoren erweitert -->
+        <section>
+          <h2>Vergleichsoperatoren im Überblick</h2>
+          <table>
+            <tr>
+              <td>
+                <code class="inline-code">==</code> /
+                <code class="inline-code">===</code>
+              </td>
+              <td>Gleich / Identisch</td>
+            </tr>
+            <tr>
+              <td>
+                <code class="inline-code">!=</code> /
+                <code class="inline-code">!==</code>
+              </td>
+              <td>Ungleich / Nicht identisch</td>
+            </tr>
+            <tr>
+              <td>
+                <code class="inline-code">&lt;</code>
+                <code class="inline-code">&gt;</code>
+                <code class="inline-code">&lt;=</code>
+                <code class="inline-code">&gt;=</code>
+              </td>
+              <td>Kleiner, grösser, kleiner/gleich, grösser/gleich</td>
+            </tr>
+            <tr>
+              <td><code class="inline-code">&lt;=&gt;</code></td>
+              <td>Spaceship-Operator</td>
+            </tr>
+          </table>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        echo 3 &lt;=&gt; 5; // -1 (kleiner)
+                        echo 5 &lt;=&gt; 5; //  0 (gleich)
+                        echo 7 &lt;=&gt; 5; //  1 (grösser)
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Logische Operatoren -->
+        <section>
+          <h2>Logische Operatoren</h2>
+          <table>
+            <tr>
+              <td><code class="inline-code">&&</code></td>
+              <td>Und (beide Bedingungen müssen zutreffen)</td>
+            </tr>
+            <tr>
+              <td><code class="inline-code">||</code></td>
+              <td>Oder (mind. eine Bedingung muss zutreffen)</td>
+            </tr>
+            <tr>
+              <td><code class="inline-code">!</code></td>
+              <td>Nicht (kehrt den Wahrheitswert um)</td>
+            </tr>
+          </table>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        $age = 20;
+                        $hasTicket = true;
+
+                        var_dump($age >= 18 && $hasTicket); // bool(true)
+                        var_dump($age &lt; 18 || !$hasTicket); // bool(false)
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Kurzschlussauswertung -->
+        <section>
+          <h2>Kurzschlussauswertung (Short-Circuit)</h2>
+          <ul>
+            <li>
+              PHP wertet logische Ausdrücke nur so weit aus, wie nötig
+            </li>
+            <li>
+              Bei <code class="inline-code">&&</code> wird die zweite
+              Bedingung nicht mehr geprüft, wenn die erste bereits
+              <code class="inline-code">false</code> ist
+            </li>
+            <li>
+              Bei <code class="inline-code">||</code> wird die zweite
+              Bedingung nicht mehr geprüft, wenn die erste bereits
+              <code class="inline-code">true</code> ist
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        $user = null;
+
+                        // Zweiter Teil wird nicht ausgeführt, da $user null ist
+                        if ($user !== null && $user->isAdmin()) {
+                            // ...
+                        }
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Operatorrangfolge -->
+        <section>
+          <h2>Operatorrangfolge</h2>
+          <ul>
+            <li>
+              Operatoren werden nicht einfach von links nach rechts
+              ausgewertet - es gilt "Punkt vor Strich" und weitere Regeln
+            </li>
+            <li>
+              Mit runden Klammern <code class="inline-code">()</code> lässt
+              sich die Reihenfolge gezielt steuern und der Code lesbarer
+              machen
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        echo 2 + 3 * 4;   // 14 - Multiplikation zuerst
+                        echo (2 + 3) * 4; // 20 - Klammer zuerst
+
+                        $result = 5 > 3 && 2 > 1; // Vergleiche vor &&
+                    </code>
+                </pre>
+        </section>
+
+        <!-- if / else -->
+        <section>
+          <h2>Bedingungen: <code class="inline-code">if</code> / <code class="inline-code">else</code></h2>
+          <p>
+            Mit <code class="inline-code">if</code> wird ein Codeblock nur
+            ausgeführt, wenn die Bedingung <code class="inline-code">true</code>
+            ergibt.
+          </p>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        $age = 16;
+
+                        if ($age >= 18) {
+                            echo "Volljährig";
+                        } else {
+                            echo "Minderjährig";
+                        }
+                    </code>
+                </pre>
+        </section>
+
+        <!-- elseif -->
+        <section>
+          <h2><code class="inline-code">elseif</code> - mehrere Fälle</h2>
+          <p>
+            Mit <code class="inline-code">elseif</code> lassen sich beliebig
+            viele weitere Bedingungen prüfen, bevor als letzte Option
+            <code class="inline-code">else</code> greift.
+          </p>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        $points = 72;
+
+                        if ($points >= 90) {
+                            echo "Note 6";
+                        } elseif ($points >= 75) {
+                            echo "Note 5";
+                        } elseif ($points >= 60) {
+                            echo "Note 4";
+                        } else {
+                            echo "Note ungenügend";
+                        }
+                    </code>
+                </pre>
+        </section>
+
+        <!-- switch -->
+        <section>
+          <h2><code class="inline-code">switch</code></h2>
+          <p>
+            <code class="inline-code">switch</code> vergleicht einen Wert mit
+            mehreren möglichen Fällen - übersichtlicher als viele
+            <code class="inline-code">elseif</code> bei einem einzelnen
+            Vergleichswert.
+          </p>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        $day = 3;
+
+                        switch ($day) {
+                            case 1:
+                                echo "Montag";
+                                break;
+                            case 2:
+                                echo "Dienstag";
+                                break;
+                            case 3:
+                                echo "Mittwoch";
+                                break;
+                            default:
+                                echo "Unbekannter Tag";
+                        }
+                    </code>
+                </pre>
+          <p>
+            Ohne <code class="inline-code">break</code> "fällt" die
+            Ausführung in den nächsten Fall (Fallthrough)!
+          </p>
+        </section>
+
+        <!-- Ternärer Operator -->
+        <section>
+          <h2>Ternärer Operator</h2>
+          <p>
+            Der ternäre Operator <code class="inline-code">?:</code> ist eine
+            Kurzform für ein einfaches
+            <code class="inline-code">if</code>/<code class="inline-code">else</code>,
+            das einen Wert zurückgibt.
+          </p>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        $age = 20;
+
+                        // Bedingung ? Wert wenn true : Wert wenn false
+                        $status = $age >= 18 ? "Volljährig" : "Minderjährig";
+                        echo $status;
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Null-Coalescing -->
+        <section>
+          <h2>Null-Coalescing-Operator</h2>
+          <p>
+            <code class="inline-code">??</code> gibt den linken Wert zurück,
+            falls dieser existiert und nicht <code class="inline-code">null</code>
+            ist - sonst den rechten Wert.
+          </p>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        $username = $_GET["user"] ?? "Gast";
+                        echo $username;
+
+                        // Entspricht in etwa:
+                        $username = isset($_GET["user"]) ? $_GET["user"] : "Gast";
+                    </code>
+                </pre>
+          <p>
+            Praktisch für Standardwerte, z.B. bei fehlenden
+            Formular- oder URL-Parametern.
+          </p>
+        </section>
+
+        <!-- TL;DR -->
+        <section>
+          <h2>TL;DR</h2>
+          <ul>
+            <li>
+              Arithmetische (<code class="inline-code">+ - * / % **</code>),
+              Zuweisungs- (<code class="inline-code">+= -= .=</code> ...) und
+              Inkrement-/Dekrement-Operatoren (<code class="inline-code">++ --</code>)
+              rechnen und verändern Werte
+            </li>
+            <li>
+              Logische Operatoren (<code class="inline-code">&& || !</code>)
+              kombinieren Bedingungen und werden per Short-Circuit ausgewertet
+            </li>
+            <li>
+              Klammern <code class="inline-code">()</code> steuern die
+              Operatorrangfolge und verbessern die Lesbarkeit
+            </li>
+            <li>
+              <code class="inline-code">if</code>/<code class="inline-code">elseif</code>/<code class="inline-code">else</code>
+              und <code class="inline-code">switch</code> steuern den
+              Programmablauf
+            </li>
+            <li>
+              <code class="inline-code">?:</code> und
+              <code class="inline-code">??</code> sind kompakte Kurzformen
+              für einfache Fallunterscheidungen bzw. Standardwerte
+            </li>
+          </ul>
+        </section>
+      </div>
+    </div>
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+      Reveal.initialize({
+        hash: true,
+        plugins: [RevealZoom, RevealMarkdown, RevealHighlight, RevealNotes],
+      });
+    </script>
+  </body>
+</html>

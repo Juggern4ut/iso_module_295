@@ -1,0 +1,61 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+\usepackage{parskip}
+
+\setlength{\parindent}{0pt} % Keine Einrückungen
+
+\title{Modul 295 - Aufgabenblatt 03}
+\author{von Lukas Meier}
+\date{Unterricht vom 25.08.2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Projekt vorbereiten}
+
+Erstellen Sie im \texttt{htdocs}-Ordner Ihrer XAMPP-Installation einen neuen Ordner \texttt{php-operatoren} und speichern Sie die Datei \texttt{index.php}, welche Sie auf dem Netzwerkordner finden, darin. Öffnen Sie danach \texttt{http://localhost/php-operatoren/} im Browser.
+
+\section{Arithmetische Operatoren}
+
+Definieren Sie zwei Variablen \texttt{\$a = 15;} und \texttt{\$b = 4;}. Geben Sie mit je einem \texttt{echo} die Summe, die Differenz, das Produkt, den Quotienten, den Rest der Division (Modulo) sowie \texttt{\$a} hoch 2 aus.
+
+\section{Zuweisungsoperatoren}
+
+Definieren Sie eine Variable \texttt{\$cartTotal = 0;} und addieren Sie mit \texttt{+=} zwei beliebige Beträge dazu. Ziehen Sie anschliessend mit \texttt{-=} einen Rabatt von \texttt{5} ab und geben Sie das Ergebnis mit \texttt{echo} aus. Definieren Sie ausserdem eine String-Variable und hängen Sie mit \texttt{.=} einen weiteren Textteil an.
+
+\section{Inkrement- und Dekrement-Operatoren}
+
+Definieren Sie eine Variable \texttt{\$stock = 10;}. Erhöhen Sie den Wert einmal mit \texttt{++} und verringern Sie ihn danach zweimal mit \texttt{--}. Geben Sie den Wert nach jedem Schritt mit \texttt{echo} aus.
+
+\section{Vergleichsoperatoren}
+
+Definieren Sie \texttt{\$x = 8;} und \texttt{\$y = 12;}. Vergleichen Sie beide Variablen mit \texttt{==}, \texttt{<} und dem Spaceship-Operator \texttt{<=>} und geben Sie alle drei Ergebnisse mit \texttt{var\_dump()} aus.
+
+\section{Logische Operatoren}
+
+Definieren Sie \texttt{\$age = 17;} und \texttt{\$hasParentalConsent = true;}. Prüfen Sie mit \texttt{var\_dump()}, ob mindestens eine der beiden Bedingungen (\texttt{\$age >= 18} oder \texttt{\$hasParentalConsent}) zutrifft, ob beide Bedingungen zutreffen und wie das Gegenteil von \texttt{\$hasParentalConsent} lautet.
+
+\section{Operatorrangfolge}
+
+Schreiben Sie den Ausdruck \texttt{4 + 3 * 2} einmal ohne und einmal mit runden Klammern (so, dass zuerst addiert wird) als \texttt{echo}-Ausgabe. Notieren Sie sich als Kommentar, weshalb sich die beiden Ergebnisse unterscheiden.
+
+\section{Bedingungen mit if / elseif / else}
+
+Definieren Sie eine Variable \texttt{\$points} mit einer Punktzahl zwischen \texttt{0} und \texttt{100}. Geben Sie mittels \texttt{if}/\texttt{elseif}/\texttt{else} abhängig von der Punktzahl eine Note aus: ab 90 Punkten "Note 6", ab 75 Punkten "Note 5", ab 60 Punkten "Note 4", sonst "Note ungenügend".
+
+\section{switch}
+
+Definieren Sie eine Variable \texttt{\$weekday} mit einer Zahl von 1 bis 7. Geben Sie mittels \texttt{switch} den passenden Wochentagsnamen aus (Montag bis Sonntag) und ergänzen Sie einen \texttt{default}-Fall für ungültige Werte. Achten Sie darauf, jeden \texttt{case} mit \texttt{break} abzuschliessen.
+
+\section{Ternärer Operator}
+
+Definieren Sie eine Variable \texttt{\$cartTotal} mit einem beliebigen Betrag. Ermitteln Sie mit dem ternären Operator \texttt{?:} einen Text, der bei einem Betrag ab \texttt{100} "10\% Rabatt" enthält, sonst "Kein Rabatt". Geben Sie das Ergebnis mit \texttt{echo} aus.
+
+\section{Null-Coalescing-Operator}
+
+Lesen Sie mit dem Null-Coalescing-Operator \texttt{??} den URL-Parameter \texttt{user} aus \texttt{\$\_GET} aus und verwenden Sie "Gast" als Standardwert, falls der Parameter fehlt. Geben Sie das Ergebnis mit \texttt{echo} aus und testen Sie beide Fälle im Browser (z.B. \texttt{http://localhost/php-operatoren/?user=Anna}).
+
+\end{document}
