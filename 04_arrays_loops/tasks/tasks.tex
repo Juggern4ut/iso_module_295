@@ -1,0 +1,77 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+\usepackage{parskip}
+
+\setlength{\parindent}{0pt} % Keine Einrückungen
+
+\title{Modul 295 - Aufgabenblatt 04}
+\author{von Lukas Meier}
+\date{Unterricht vom 01.09.2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Projekt vorbereiten}
+
+Erstellen Sie im \texttt{htdocs}-Ordner Ihrer XAMPP-Installation einen neuen Ordner \texttt{php-arrays-schleifen} und speichern Sie die Datei \texttt{index.php}, welche Sie auf dem Netzwerkordner finden, darin. Öffnen Sie danach \texttt{http://localhost/php-arrays-schleifen/} im Browser.
+
+\section{Indizierte Arrays}
+
+Legen Sie ein indiziertes Array \texttt{\$fruits} mit den Werten \texttt{"Apfel"}, \texttt{"Birne"} und \texttt{"Kiwi"} an. Geben Sie das erste und das letzte Element mit \texttt{echo} aus. Ändern Sie danach das zweite Element auf \texttt{"Mango"} und hängen Sie mit \texttt{[]} den Wert \texttt{"Orange"} an. Geben Sie das gesamte Array am Ende mit \texttt{print\_r()} aus.
+
+\section{Assoziative Arrays}
+
+Legen Sie ein assoziatives Array \texttt{\$person} mit den Schlüsseln \texttt{firstname}, \texttt{lastname} und \texttt{age} an und befüllen Sie es mit beliebigen Werten. Geben Sie \texttt{firstname} und \texttt{age} mit \texttt{echo} aus, ändern Sie danach \texttt{age} auf einen anderen Wert und geben Sie das gesamte Array mit \texttt{print\_r()} aus.
+
+\section{Elemente hinzufügen und entfernen}
+
+Legen Sie ein Array \texttt{\$stock} mit drei beliebigen Produktnamen an. Fügen Sie mit \texttt{array\_push()} ein weiteres Produkt am Ende hinzu. Entfernen Sie danach mit \texttt{array\_pop()} das letzte Element und geben Sie den entfernten Wert mit \texttt{echo} aus. Fügen Sie anschliessend mit \texttt{array\_unshift()} ein Produkt am Anfang hinzu, entfernen Sie es wieder mit \texttt{array\_shift()} und geben Sie auch diesen Wert mit \texttt{echo} aus. Geben Sie zum Schluss das verbleibende Array mit \texttt{print\_r()} aus.
+
+\section{Im Array suchen}
+
+Legen Sie ein Array \texttt{\$fruits} mit vier beliebigen Früchten an. Prüfen Sie mit \texttt{in\_array()}, ob \texttt{"Kiwi"} enthalten ist, ermitteln Sie mit \texttt{array\_search()} den Schlüssel von \texttt{"Mango"} und prüfen Sie mit \texttt{array\_key\_exists()}, ob der Schlüssel \texttt{10} existiert. Geben Sie alle drei Ergebnisse mit \texttt{var\_dump()} aus.
+
+\section{Arrays sortieren}
+
+Legen Sie ein Array \texttt{\$numbers} mit fünf unsortierten Zahlen an. Sortieren Sie es einmal aufsteigend mit \texttt{sort()} und geben Sie es mit \texttt{print\_r()} aus, danach absteigend mit \texttt{rsort()} und geben Sie es erneut aus. Legen Sie zusätzlich ein assoziatives Array \texttt{\$prices} mit drei Produkten und Preisen an. Sortieren Sie es einmal mit \texttt{asort()} nach den Preisen (Werten) und einmal mit \texttt{ksort()} nach den Produktnamen (Schlüsseln) und geben Sie es jeweils mit \texttt{print\_r()} aus.
+
+\section{Mehrdimensionale Arrays}
+
+Legen Sie ein Array \texttt{\$persons} an, das drei assoziative Arrays mit je \texttt{firstname} und \texttt{age} enthält. Geben Sie den Vornamen der zweiten Person sowie das Alter der dritten Person mit \texttt{echo} aus.
+
+\section{while-Schleife}
+
+Legen Sie ein Array \texttt{\$fruits} mit vier beliebigen Früchten an. Durchlaufen Sie es mit einer \texttt{while}-Schleife und einem Zähler \texttt{\$i}, der bei \texttt{0} beginnt, und geben Sie jedes Element mit \texttt{echo} aus. Verwenden Sie \texttt{count(\$fruits)} als Abbruchbedingung.
+
+\section{do-while-Schleife}
+
+Zählen Sie mit einer \texttt{do-while}-Schleife von \texttt{5} bis \texttt{1} herunter und geben Sie jeden Wert mit \texttt{echo} aus.
+
+\section{for-Schleife}
+
+Verwenden Sie \textbf{dasselbe} Array \texttt{\$fruits} wie in Aufgabe 8 und durchlaufen Sie es dieses Mal mit einer \texttt{for}-Schleife. Geben Sie für jedes Element den Index und den Wert aus, z.B. \texttt{"0: Apfel"}.
+
+\section{foreach-Schleife}
+
+Durchlaufen Sie \textbf{erneut dasselbe} Array \texttt{\$fruits} - dieses Mal mit einer \texttt{foreach}-Schleife - und geben Sie jedes Element mit \texttt{echo} aus. Vergleichen Sie im Kopf die drei Varianten aus den Aufgaben 8 bis 11: Welche empfinden Sie als am einfachsten?
+
+\section{foreach mit Schlüssel und Wert}
+
+Verwenden Sie das assoziative Array \texttt{\$prices} aus Aufgabe 6 (oder legen Sie es erneut an) und durchlaufen Sie es mit \texttt{foreach} inklusive Schlüssel und Wert. Geben Sie pro Durchlauf einen Text im Format \texttt{"Apfel kostet 1.5"} aus.
+
+\section{break und continue}
+
+Schreiben Sie eine \texttt{for}-Schleife von \texttt{1} bis \texttt{20}, welche mit \texttt{break} abbricht, sobald eine Zahl durch \texttt{7} teilbar ist (Modulo-Operator \texttt{\%}), und alle Zahlen davor ausgibt. Schreiben Sie danach eine zweite \texttt{for}-Schleife von \texttt{1} bis \texttt{10}, welche mit \texttt{continue} alle geraden Zahlen überspringt und nur die ungeraden Zahlen ausgibt.
+
+\section{Schleife, Array und Bedingung kombiniert}
+
+Legen Sie ein Array \texttt{\$prices} mit fünf beliebigen Preisen (Dezimalzahlen) an. Berechnen Sie mit je einer \texttt{foreach}-Schleife: (a) die Summe aller Preise, (b) die Anzahl Preise, die mindestens \texttt{20} betragen (mit einem Zähler und einer \texttt{if}-Bedingung), und (c) den höchsten Preis (ohne die Funktion \texttt{max()} zu verwenden - vergleichen Sie stattdessen in der Schleife mit einer \texttt{if}-Bedingung). Geben Sie alle drei Ergebnisse mit \texttt{echo} aus.
+
+\section{Bonusaufgabe: Einkaufsliste}
+
+Legen Sie ein mehrdimensionales Array \texttt{\$cart} an, das mindestens drei Produkte enthält. Jedes Produkt soll die Schlüssel \texttt{name}, \texttt{price} und \texttt{quantity} besitzen. Durchlaufen Sie \texttt{\$cart} mit \texttt{foreach} und geben Sie pro Produkt eine Zeile im Format \texttt{"Apfel: 6 x 0.5 = 3"} aus (Menge mal Preis). Summieren Sie gleichzeitig den Gesamtbetrag in einer Variable \texttt{\$total}. Geben Sie nach der Schleife den Gesamtbetrag aus und prüfen Sie mit einer Bedingung: Beträgt \texttt{\$total} mindestens \texttt{15}, geben Sie \texttt{"Versand gratis"} aus, ansonsten \texttt{"Versand: 5.90"}.
+
+\end{document}

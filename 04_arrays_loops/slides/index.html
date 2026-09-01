@@ -1,0 +1,744 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+
+    <title>Modul 295 - Lektion 04</title>
+
+    <link rel="stylesheet" href="dist/reset.css" />
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/black.css" />
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css" />
+
+    <style>
+      td {
+        font-size: 21px;
+      }
+
+      .inline-code {
+        font-family:
+          "Consolas", "Monaco", "Andale Mono", "Ubuntu Mono", monospace;
+        display: inline-block;
+        background-color: #2d2d2d;
+        padding: 2px 4px;
+        border-radius: 2px;
+        font-size: 75%;
+      }
+
+      thead td {
+        font-weight: bold;
+        font-size: 24px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <!-- Modulfolie -->
+        <section>
+          <h2>Modul 295</h2>
+          <hr />
+          <h3>Backend für Applikationen realisieren</h3>
+          <img
+            style="width: 200px"
+            src="assets/img/web-icon.png"
+            alt="Web Icon"
+          />
+        </section>
+
+        <!-- Titelfolie -->
+        <section>
+          <h2>04 - Arrays und Schleifen</h2>
+          <hr />
+          <h3>Mehrere Werte verwalten und wiederholt verarbeiten</h3>
+          <img
+            style="width: 240px"
+            src="assets/img/php-logo.svg"
+            alt="PHP Logo"
+          />
+        </section>
+
+        <!-- Lernziele -->
+        <section>
+          <h2>Lernziele dieser Lektion</h2>
+          <ul>
+            <li>Erklären können, was ein Array ist und wozu es dient</li>
+            <li>Indizierte und assoziative Arrays anlegen und verwenden können</li>
+            <li>Elemente aus einem Array lesen, ändern, hinzufügen und entfernen können</li>
+            <li>Häufig genutzte Array-Funktionen einsetzen können (Suchen, Sortieren, Zählen)</li>
+            <li>Die verschiedenen Schleifenarten in PHP kennen und ihre Unterschiede erklären können</li>
+            <li>Schleifen zur Verarbeitung von Arrays einsetzen können</li>
+          </ul>
+        </section>
+
+        <!-- Rückblick -->
+        <section>
+          <h2>Rückblick: Bedingungen</h2>
+          <ul>
+            <li>
+              Mit <code class="inline-code">if</code> /
+              <code class="inline-code">elseif</code> /
+              <code class="inline-code">else</code> steuern wir den
+              Programmablauf abhängig von Bedingungen
+            </li>
+            <li>
+              Diese Bausteine brauchen wir gleich wieder - innerhalb von
+              Schleifen
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        $points = 68;
+
+                        if ($points >= 60) {
+                            echo "Bestanden";
+                        } else {
+                            echo "Nicht bestanden";
+                        }
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Was ist ein Array -->
+        <section>
+          <h2>Was ist ein Array?</h2>
+          <ul>
+            <li>
+              Ein Array ist eine <b>Variable</b>, die mehrere Werte auf
+              einmal speichern kann
+            </li>
+            <li>
+              Statt für jeden Wert eine eigene Variable anzulegen, fasst man
+              zusammengehörige Werte in einem Array zusammen
+            </li>
+            <li>
+              Jedes Element im Array hat einen <b>Schlüssel</b> (Index) und
+              einen <b>Wert</b>
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        // Ohne Array - unpraktisch
+                        $fruit1 = "Apfel";
+                        $fruit2 = "Birne";
+                        $fruit3 = "Kiwi";
+
+                        // Mit Array - viel besser
+                        $fruits = ["Apfel", "Birne", "Kiwi"];
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Indizierte Arrays anlegen -->
+        <section>
+          <h2>Indizierte Arrays anlegen</h2>
+          <ul>
+            <li>
+              Bei einem <b>indizierten Array</b> vergibt PHP automatisch
+              numerische Schlüssel, beginnend bei <code class="inline-code">0</code>
+            </li>
+            <li>
+              Die eckige Klammer-Schreibweise <code class="inline-code">[]</code>
+              ist heute Standard, die alte Funktion
+              <code class="inline-code">array()</code> funktioniert weiterhin
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        $fruits = ["Apfel", "Birne", "Kiwi"];
+                        // entspricht: $fruits = array("Apfel", "Birne", "Kiwi");
+
+                        // Schlüssel: 0 => "Apfel", 1 => "Birne", 2 => "Kiwi"
+                        echo $fruits[0]; // "Apfel"
+                        echo $fruits[2]; // "Kiwi"
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Zugriff und Ändern -->
+        <section>
+          <h2>Elemente lesen und ändern</h2>
+          <ul>
+            <li>
+              Der Zugriff erfolgt über den Schlüssel in eckigen Klammern
+            </li>
+            <li>
+              Ein neues Element wird einfach mit einem neuen Schlüssel
+              zugewiesen - oder ohne Schlüssel angehängt
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        $fruits = ["Apfel", "Birne", "Kiwi"];
+
+                        $fruits[1] = "Mango"; // Element ändern
+                        echo $fruits[1]; // "Mango"
+
+                        $fruits[] = "Orange"; // Element anhängen (Index 3)
+                        echo $fruits[3]; // "Orange"
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Assoziative Arrays -->
+        <section>
+          <h2>Assoziative Arrays</h2>
+          <ul>
+            <li>
+              Bei einem <b>assoziativen Array</b> definiert man die
+              Schlüssel selbst - meist als String
+            </li>
+            <li>
+              Damit lassen sich Werte inhaltlich beschriften statt sie über
+              eine Position anzusprechen
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        $person = [
+                            "firstname" => "Anna",
+                            "lastname"  => "Muster",
+                            "age"       => 23,
+                        ];
+
+                        echo $person["firstname"]; // "Anna"
+                        $person["age"] = 24; // Wert ändern
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Mehrdimensionale Arrays -->
+        <section>
+          <h2>Mehrdimensionale Arrays</h2>
+          <ul>
+            <li>
+              Ein Array-Element kann selbst wieder ein Array sein - so
+              entstehen verschachtelte Strukturen
+            </li>
+            <li>
+              Häufig genutzt, um z.B. mehrere Datensätze (Personen,
+              Produkte, ...) zu speichern
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        $persons = [
+                            ["firstname" => "Anna", "age" => 23],
+                            ["firstname" => "Bruno", "age" => 31],
+                        ];
+
+                        echo $persons[0]["firstname"]; // "Anna"
+                        echo $persons[1]["age"];       // 31
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Verhalten: dynamisch, count -->
+        <section>
+          <h2>Verhalten von Arrays</h2>
+          <ul>
+            <li>
+              Arrays sind <b>dynamisch</b> - sie wachsen und schrumpfen
+              automatisch, es gibt keine feste Grösse
+            </li>
+            <li>
+              Ein Array kann Werte unterschiedlichen Typs enthalten
+              (Strings, Zahlen, Booleans, sogar weitere Arrays)
+            </li>
+            <li>
+              Mit <code class="inline-code">count()</code> ermittelt man die
+              Anzahl Elemente
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        $mixed = ["Anna", 23, true, [1, 2, 3]];
+
+                        echo count($mixed); // 4
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Array ausgeben -->
+        <section>
+          <h2>Arrays ausgeben</h2>
+          <ul>
+            <li>
+              <code class="inline-code">echo</code> funktioniert nicht
+              direkt mit Arrays
+            </li>
+            <li>
+              <code class="inline-code">print_r()</code> zeigt den Inhalt
+              lesbar an, <code class="inline-code">var_dump()</code> zeigt
+              zusätzlich die Datentypen
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        $fruits = ["Apfel", "Birne", "Kiwi"];
+
+                        print_r($fruits);
+                        // Array ( [0] => Apfel [1] => Birne [2] => Kiwi )
+
+                        var_dump($fruits);
+                        // array(3) { [0]=> string(5) "Apfel" ... }
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Elemente hinzufügen/entfernen -->
+        <section>
+          <h2>Elemente hinzufügen und entfernen</h2>
+          <table>
+            <tr>
+              <td><code class="inline-code">array_push($arr, $val)</code></td>
+              <td>Element am Ende hinzufügen</td>
+            </tr>
+            <tr>
+              <td><code class="inline-code">array_pop($arr)</code></td>
+              <td>Letztes Element entfernen und zurückgeben</td>
+            </tr>
+            <tr>
+              <td><code class="inline-code">array_unshift($arr, $val)</code></td>
+              <td>Element am Anfang hinzufügen</td>
+            </tr>
+            <tr>
+              <td><code class="inline-code">array_shift($arr)</code></td>
+              <td>Erstes Element entfernen und zurückgeben</td>
+            </tr>
+            <tr>
+              <td><code class="inline-code">unset($arr[$key])</code></td>
+              <td>Element mit bestimmtem Schlüssel entfernen</td>
+            </tr>
+          </table>
+        </section>
+
+        <!-- In Array suchen -->
+        <section>
+          <h2>Im Array suchen</h2>
+          <ul>
+            <li>
+              <code class="inline-code">in_array()</code> prüft, ob ein
+              <b>Wert</b> im Array vorkommt
+            </li>
+            <li>
+              <code class="inline-code">array_search()</code> liefert den
+              <b>Schlüssel</b> eines gesuchten Werts (oder
+              <code class="inline-code">false</code>)
+            </li>
+            <li>
+              <code class="inline-code">array_key_exists()</code> prüft, ob
+              ein bestimmter <b>Schlüssel</b> existiert
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        $fruits = ["Apfel", "Birne", "Kiwi"];
+
+                        var_dump(in_array("Kiwi", $fruits));      // bool(true)
+                        var_dump(array_search("Kiwi", $fruits));  // int(2)
+                        var_dump(array_key_exists(5, $fruits));   // bool(false)
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Arrays sortieren -->
+        <section>
+          <h2>Arrays sortieren</h2>
+          <table>
+            <tr>
+              <td><code class="inline-code">sort()</code></td>
+              <td>Aufsteigend sortieren, Schlüssel neu vergeben</td>
+            </tr>
+            <tr>
+              <td><code class="inline-code">rsort()</code></td>
+              <td>Absteigend sortieren, Schlüssel neu vergeben</td>
+            </tr>
+            <tr>
+              <td><code class="inline-code">asort()</code></td>
+              <td>Nach Werten sortieren, Schlüssel bleiben erhalten</td>
+            </tr>
+            <tr>
+              <td><code class="inline-code">ksort()</code></td>
+              <td>Nach Schlüsseln sortieren</td>
+            </tr>
+          </table>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        $numbers = [5, 3, 8, 1];
+                        sort($numbers);
+                        print_r($numbers); // [1, 3, 5, 8]
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Weitere Array-Funktionen -->
+        <section>
+          <h2>Weitere nützliche Array-Funktionen</h2>
+          <table>
+            <tr>
+              <td><code class="inline-code">array_merge($a, $b)</code></td>
+              <td>Zwei Arrays zusammenführen</td>
+            </tr>
+            <tr>
+              <td><code class="inline-code">array_slice($arr, $off, $len)</code></td>
+              <td>Ausschnitt aus einem Array holen</td>
+            </tr>
+            <tr>
+              <td><code class="inline-code">array_reverse($arr)</code></td>
+              <td>Reihenfolge umkehren</td>
+            </tr>
+            <tr>
+              <td><code class="inline-code">array_unique($arr)</code></td>
+              <td>Doppelte Werte entfernen</td>
+            </tr>
+            <tr>
+              <td><code class="inline-code">array_sum($arr)</code></td>
+              <td>Summe aller Werte berechnen</td>
+            </tr>
+          </table>
+        </section>
+
+        <!-- Zwischenstopp -->
+        <section>
+          <h2>Zweiter Teil: Schleifen</h2>
+          <hr />
+          <h3>Code wiederholt ausführen</h3>
+        </section>
+
+        <!-- Wozu Schleifen -->
+        <section>
+          <h2>Wozu Schleifen?</h2>
+          <ul>
+            <li>
+              Schleifen (Loops) führen einen Codeblock <b>mehrmals</b> aus,
+              solange eine Bedingung zutrifft
+            </li>
+            <li>
+              Damit lässt sich Code wiederholen, ohne ihn mehrfach
+              abzuschreiben - z.B. um alle Elemente eines Arrays zu
+              verarbeiten
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        // Ohne Schleife - unpraktisch
+                        echo $fruits[0];
+                        echo $fruits[1];
+                        echo $fruits[2];
+
+                        // Mit Schleife - viel besser
+                        foreach ($fruits as $fruit) {
+                            echo $fruit;
+                        }
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Übersicht Loop-Arten -->
+        <section>
+          <h2>Arten von Schleifen in PHP</h2>
+          <table>
+            <tr>
+              <td><code class="inline-code">while</code></td>
+              <td>Solange eine Bedingung zutrifft (Prüfung vorher)</td>
+            </tr>
+            <tr>
+              <td><code class="inline-code">do-while</code></td>
+              <td>Wie <code class="inline-code">while</code>, aber Prüfung
+              erst nach dem ersten Durchlauf</td>
+            </tr>
+            <tr>
+              <td><code class="inline-code">for</code></td>
+              <td>Wenn die Anzahl Durchläufe bekannt ist (Zähler)</td>
+            </tr>
+            <tr>
+              <td><code class="inline-code">foreach</code></td>
+              <td>Um alle Elemente eines Arrays zu durchlaufen</td>
+            </tr>
+          </table>
+        </section>
+
+        <!-- while -->
+        <section>
+          <h2><code class="inline-code">while</code>-Schleife</h2>
+          <p>
+            Die Bedingung wird <b>vor</b> jedem Durchlauf geprüft. Ist sie
+            von Anfang an <code class="inline-code">false</code>, wird der
+            Codeblock kein einziges Mal ausgeführt.
+          </p>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        $i = 1;
+
+                        while ($i &lt;= 5) {
+                            echo $i;
+                            $i++; // wichtig, sonst Endlosschleife!
+                        }
+                        // Ausgabe: 12345
+                    </code>
+                </pre>
+        </section>
+
+        <!-- do-while -->
+        <section>
+          <h2><code class="inline-code">do-while</code>-Schleife</h2>
+          <p>
+            Der Codeblock wird zuerst <b>einmal ausgeführt</b> und die
+            Bedingung erst danach geprüft - daher läuft er mindestens
+            einmal.
+          </p>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        $i = 10;
+
+                        do {
+                            echo $i;
+                            $i++;
+                        } while ($i &lt;= 5);
+                        // Ausgabe: 10 - obwohl die Bedingung nie zutrifft!
+                    </code>
+                </pre>
+        </section>
+
+        <!-- for -->
+        <section>
+          <h2><code class="inline-code">for</code>-Schleife</h2>
+          <p>
+            Fasst Startwert, Bedingung und Schrittzähler in einer Zeile
+            zusammen - ideal, wenn die Anzahl Durchläufe von Anfang an klar
+            ist.
+          </p>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        //     Start;    Bedingung;   Schritt
+                        for ($i = 1;   $i &lt;= 5;    $i++) {
+                            echo $i;
+                        }
+                        // Ausgabe: 12345
+                    </code>
+                </pre>
+        </section>
+
+        <!-- for über Array -->
+        <section>
+          <h2><code class="inline-code">for</code> mit Array-Index</h2>
+          <p>
+            Mit <code class="inline-code">count()</code> lässt sich auch ein
+            Array mit einer <code class="inline-code">for</code>-Schleife
+            durchlaufen - dabei hat man Zugriff auf den Index.
+          </p>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        $fruits = ["Apfel", "Birne", "Kiwi"];
+
+                        for ($i = 0; $i &lt; count($fruits); $i++) {
+                            echo $i . ": " . $fruits[$i];
+                        }
+                    </code>
+                </pre>
+        </section>
+
+        <!-- foreach -->
+        <section>
+          <h2><code class="inline-code">foreach</code>-Schleife</h2>
+          <p>
+            Durchläuft jedes Element eines Arrays automatisch - ohne
+            Zähler und ohne Gefahr, sich beim Index zu vertun. Der
+            Standardweg, um Arrays zu durchlaufen.
+          </p>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        $fruits = ["Apfel", "Birne", "Kiwi"];
+
+                        foreach ($fruits as $fruit) {
+                            echo $fruit;
+                        }
+                        // Ausgabe: ApfelBirneKiwi
+                    </code>
+                </pre>
+        </section>
+
+        <!-- foreach mit Key/Value -->
+        <section>
+          <h2><code class="inline-code">foreach</code> mit Schlüssel und Wert</h2>
+          <p>
+            Mit <code class="inline-code">as $key => $value</code> erhält
+            man zusätzlich den Schlüssel - unerlässlich bei assoziativen
+            Arrays.
+          </p>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        $person = [
+                            "firstname" => "Anna",
+                            "age"       => 23,
+                        ];
+
+                        foreach ($person as $key => $value) {
+                            echo $key . ": " . $value;
+                        }
+                        // firstname: Anna
+                        // age: 23
+                    </code>
+                </pre>
+        </section>
+
+        <!-- break/continue -->
+        <section>
+          <h2><code class="inline-code">break</code> und
+          <code class="inline-code">continue</code></h2>
+          <ul>
+            <li>
+              <code class="inline-code">break</code> beendet die Schleife
+              sofort komplett
+            </li>
+            <li>
+              <code class="inline-code">continue</code> überspringt nur den
+              aktuellen Durchlauf und macht beim nächsten weiter
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        for ($i = 1; $i &lt;= 10; $i++) {
+                            if ($i == 5) {
+                                break; // Schleife stoppt bei 5
+                            }
+                            echo $i;
+                        }
+                        // Ausgabe: 1234
+
+                        for ($i = 1; $i &lt;= 5; $i++) {
+                            if ($i % 2 == 0) {
+                                continue; // gerade Zahlen überspringen
+                            }
+                            echo $i;
+                        }
+                        // Ausgabe: 135
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Endlosschleifen -->
+        <section>
+          <h2>Vorsicht: Endlosschleifen</h2>
+          <ul>
+            <li>
+              Wird die Bedingung nie <code class="inline-code">false</code>,
+              läuft die Schleife für immer weiter und blockiert das Skript
+            </li>
+            <li>
+              Häufigste Ursache: der Zähler wird vergessen oder falsch
+              verändert
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        $i = 1;
+
+                        while ($i &lt;= 5) {
+                            echo $i;
+                            // $i++; fehlt -> Endlosschleife!
+                        }
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Kombiniertes Beispiel -->
+        <section>
+          <h2>Schleifen und Arrays kombiniert</h2>
+          <p>
+            Ein typisches Muster: mit einer Schleife alle Elemente
+            durchgehen und dabei eine Bedingung prüfen.
+          </p>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        $prices = [19.90, 45.00, 8.50, 120.00];
+                        $total = 0;
+
+                        foreach ($prices as $price) {
+                            if ($price >= 20) {
+                                $total += $price;
+                            }
+                        }
+
+                        echo $total; // 165 (45 + 120)
+                    </code>
+                </pre>
+        </section>
+
+        <!-- TL;DR -->
+        <section>
+          <h2>TL;DR</h2>
+          <ul>
+            <li>
+              Ein <b>Array</b> speichert mehrere Werte in einer Variable -
+              <b>indiziert</b> (automatische Nummerierung) oder
+              <b>assoziativ</b> (eigene Schlüssel)
+            </li>
+            <li>
+              Häufige Funktionen: <code class="inline-code">count()</code>,
+              <code class="inline-code">in_array()</code>,
+              <code class="inline-code">array_search()</code>,
+              <code class="inline-code">sort()</code>,
+              <code class="inline-code">array_push()</code> /
+              <code class="inline-code">array_pop()</code>
+            </li>
+            <li>
+              <code class="inline-code">while</code> und
+              <code class="inline-code">do-while</code> laufen, solange
+              eine Bedingung zutrifft
+            </li>
+            <li>
+              <code class="inline-code">for</code> eignet sich für eine
+              bekannte Anzahl Durchläufe, <code class="inline-code">foreach</code>
+              für das Durchlaufen von Arrays
+            </li>
+            <li>
+              <code class="inline-code">break</code> stoppt die Schleife,
+              <code class="inline-code">continue</code> überspringt nur den
+              aktuellen Durchlauf
+            </li>
+          </ul>
+        </section>
+      </div>
+    </div>
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+      Reveal.initialize({
+        hash: true,
+        plugins: [RevealZoom, RevealMarkdown, RevealHighlight, RevealNotes],
+      });
+    </script>
+  </body>
+</html>
