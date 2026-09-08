@@ -1,0 +1,831 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+
+    <title>Modul 295 - Lektion 05</title>
+
+    <link rel="stylesheet" href="dist/reset.css" />
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/black.css" />
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css" />
+
+    <style>
+      td {
+        font-size: 21px;
+      }
+
+      .inline-code {
+        font-family:
+          "Consolas", "Monaco", "Andale Mono", "Ubuntu Mono", monospace;
+        display: inline-block;
+        background-color: #2d2d2d;
+        padding: 2px 4px;
+        border-radius: 2px;
+        font-size: 75%;
+      }
+
+      thead td {
+        font-weight: bold;
+        font-size: 24px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <!-- Modulfolie -->
+        <section>
+          <h2>Modul 295</h2>
+          <hr />
+          <h3>Backend für Applikationen realisieren</h3>
+          <img
+            style="width: 200px"
+            src="assets/img/web-icon.png"
+            alt="Web Icon"
+          />
+        </section>
+
+        <!-- Titelfolie -->
+        <section>
+          <h2>05 - Funktionen</h2>
+          <hr />
+          <h3>Code strukturieren und wiederverwenden</h3>
+          <img
+            style="width: 240px"
+            src="assets/img/php-logo.svg"
+            alt="PHP Logo"
+          />
+        </section>
+
+        <!-- Lernziele -->
+        <section>
+          <h2>Lernziele dieser Lektion</h2>
+          <ul>
+            <li>Eigene Funktionen in PHP definieren und aufrufen können</li>
+            <li>Parameter (auch mit Default-Werten, Typen und Namen) einsetzen können</li>
+            <li>Werte mit <code class="inline-code">return</code> zurückgeben können</li>
+            <li>Den Gültigkeitsbereich (Scope) von Variablen erklären können</li>
+            <li>Referenzen, statische Variablen und Rekursion einsetzen können</li>
+            <li>Anonyme Funktionen, Closures und Arrow Functions verwenden können</li>
+          </ul>
+        </section>
+
+        <!-- Rückblick -->
+        <section>
+          <h2>Rückblick: Schleifen und Arrays</h2>
+          <ul>
+            <li>
+              Mit Schleifen haben wir Code-<b>Wiederholung</b> vermieden -
+              derselbe Codeblock lief mehrmals
+            </li>
+            <li>
+              Heute geht es um eine andere Art von Wiederholung: derselbe
+              Codeblock soll an <b>verschiedenen Stellen</b> im Programm
+              nutzbar sein
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        // Dieser Code taucht immer wieder auf...
+                        echo "Rabatt für Anna: " . (100 * 0.9);
+                        echo "Rabatt für Bruno: " . (250 * 0.9);
+                        echo "Rabatt für Clara: " . (80 * 0.9);
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Wozu Funktionen -->
+        <section>
+          <h2>Wozu Funktionen?</h2>
+          <ul>
+            <li>
+              Das Konzept "Funktion" kennen Sie bereits aus anderen
+              Sprachen - in PHP gilt dasselbe Prinzip
+            </li>
+            <li>
+              Eine Funktion fasst einen Codeblock unter einem <b>Namen</b>
+              zusammen und macht ihn <b>wiederverwendbar</b>
+            </li>
+            <li>
+              Vorteile: weniger Wiederholung (DRY), bessere Lesbarkeit,
+              einfacheres Testen und Anpassen
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        function priceWithDiscount($price) {
+                            echo "Preis: " . ($price * 0.9);
+                        }
+
+                        priceWithDiscount(100); // Preis: 90
+                        priceWithDiscount(250); // Preis: 225
+                        priceWithDiscount(80);  // Preis: 72
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Funktion definieren -->
+        <section>
+          <h2>Eine Funktion definieren</h2>
+          <ul>
+            <li>
+              Mit dem Schlüsselwort <code class="inline-code">function</code>,
+              gefolgt vom Namen, runden Klammern und einem Codeblock in
+              geschweiften Klammern
+            </li>
+            <li>
+              Funktionsnamen: keine Leerzeichen, meist
+              <code class="inline-code">camelCase</code>, dürfen nicht mit
+              einer Zahl beginnen
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        function greet() {
+                            echo "Hallo zusammen!";
+                        }
+                        // Bis hierhin passiert noch nichts -
+                        // die Funktion wurde nur definiert
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Funktion aufrufen -->
+        <section>
+          <h2>Eine Funktion aufrufen</h2>
+          <ul>
+            <li>
+              Der Codeblock wird erst ausgeführt, wenn die Funktion
+              <b>aufgerufen</b> wird - mit ihrem Namen und runden Klammern
+            </li>
+            <li>
+              Eine Funktion kann beliebig oft aufgerufen werden
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        function greet() {
+                            echo "Hallo zusammen!";
+                        }
+
+                        greet(); // "Hallo zusammen!"
+                        greet(); // "Hallo zusammen!" - nochmals
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Parameter -->
+        <section>
+          <h2>Parameter übergeben</h2>
+          <ul>
+            <li>
+              <b>Parameter</b> sind Variablen in der Klammer der
+              Funktionsdefinition - sie machen eine Funktion flexibel
+            </li>
+            <li>
+              Beim Aufruf übergibt man konkrete Werte, die
+              <b>Argumente</b> genannt werden
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        function greet($name) {
+                            echo "Hallo " . $name . "!";
+                        }
+
+                        greet("Anna");  // "Hallo Anna!"
+                        greet("Bruno"); // "Hallo Bruno!"
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Mehrere Parameter -->
+        <section>
+          <h2>Mehrere Parameter</h2>
+          <ul>
+            <li>
+              Eine Funktion kann beliebig viele Parameter haben, getrennt
+              durch Kommas
+            </li>
+            <li>
+              Die Argumente beim Aufruf werden <b>der Reihenfolge nach</b>
+              den Parametern zugeordnet
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        function greet($firstname, $lastname) {
+                            echo "Hallo " . $firstname . " " . $lastname . "!";
+                        }
+
+                        greet("Anna", "Muster"); // "Hallo Anna Muster!"
+                    </code>
+                </pre>
+        </section>
+
+        <!-- return -->
+        <section>
+          <h2>Werte zurückgeben mit <code class="inline-code">return</code></h2>
+          <ul>
+            <li>
+              <code class="inline-code">echo</code> gibt nur etwas auf dem
+              Bildschirm aus - der Wert steht danach nicht mehr zur
+              Verfügung
+            </li>
+            <li>
+              <code class="inline-code">return</code> gibt einen Wert an
+              die Aufrufstelle <b>zurück</b>, wo er weiterverwendet werden
+              kann
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        function add($a, $b) {
+                            return $a + $b;
+                        }
+
+                        $result = add(3, 4);
+                        echo $result; // 7
+                        echo add(10, 5) * 2; // 30
+                    </code>
+                </pre>
+        </section>
+
+        <!-- return beendet Funktion -->
+        <section>
+          <h2><code class="inline-code">return</code> beendet die Funktion</h2>
+          <ul>
+            <li>
+              Sobald <code class="inline-code">return</code> ausgeführt
+              wird, endet die Funktion sofort - egal, was danach noch
+              folgen würde
+            </li>
+            <li>
+              Ideal, um z.B. bei einer ungültigen Eingabe frühzeitig
+              auszusteigen
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        function safeDivide($a, $b) {
+                            if ($b === 0) {
+                                return "Division durch 0 nicht möglich";
+                            }
+                            return $a / $b; // wird nur erreicht, wenn $b != 0
+                        }
+
+                        echo safeDivide(10, 0); // "Division durch 0 nicht möglich"
+                        echo safeDivide(10, 2); // 5
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Funktion ohne return -->
+        <section>
+          <h2>Funktionen ohne <code class="inline-code">return</code></h2>
+          <ul>
+            <li>
+              Nicht jede Funktion muss einen Wert zurückgeben - manche
+              lösen nur eine Aktion aus (z.B. eine Ausgabe)
+            </li>
+            <li>
+              Ohne <code class="inline-code">return</code> liefert eine
+              Funktion automatisch <code class="inline-code">null</code>
+              zurück
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        function logMessage($text) {
+                            echo "[LOG] " . $text;
+                        }
+
+                        $result = logMessage("Server gestartet");
+                        var_dump($result); // NULL
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Default-Werte -->
+        <section>
+          <h2>Default-Werte für Parameter</h2>
+          <ul>
+            <li>
+              Einem Parameter kann ein <b>Standardwert</b> zugewiesen
+              werden - er wird verwendet, wenn beim Aufruf kein Argument
+              übergeben wird
+            </li>
+            <li>
+              Damit wird der Parameter <b>optional</b>
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        function greet($name = "Gast") {
+                            echo "Hallo " . $name . "!";
+                        }
+
+                        greet("Anna"); // "Hallo Anna!"
+                        greet();       // "Hallo Gast!"
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Reihenfolge optionaler Parameter -->
+        <section>
+          <h2>Reihenfolge bei optionalen Parametern</h2>
+          <ul>
+            <li>
+              Parameter mit Default-Wert müssen <b>nach</b> den
+              Pflichtparametern stehen
+            </li>
+            <li>
+              Sonst wäre beim Aufruf nicht eindeutig, welches Argument zu
+              welchem Parameter gehört
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        // Richtig: optionaler Parameter am Ende
+                        function greet($name, $greeting = "Hallo") {
+                            echo $greeting . " " . $name . "!";
+                        }
+
+                        greet("Anna");           // "Hallo Anna!"
+                        greet("Anna", "Servus"); // "Servus Anna!"
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Type Hints -->
+        <section>
+          <h2>Parameter- und Rückgabetypen</h2>
+          <ul>
+            <li>
+              PHP erlaubt, den erwarteten Typ eines Parameters direkt
+              anzugeben (<b>Type Hint</b>) - z.B.
+              <code class="inline-code">int</code>,
+              <code class="inline-code">string</code>,
+              <code class="inline-code">float</code>,
+              <code class="inline-code">bool</code>,
+              <code class="inline-code">array</code>
+            </li>
+            <li>
+              Nach der Parameterliste kann mit
+              <code class="inline-code">: Typ</code> auch der
+              Rückgabetyp festgelegt werden
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        function add(int $a, int $b): int {
+                            return $a + $b;
+                        }
+
+                        echo add(3, 4);    // 7
+                        echo add(3, "4a"); // Fehler bzw. Warnung
+                    </code>
+                </pre>
+        </section>
+
+        <!-- strict_types -->
+        <section>
+          <h2>Typen werden standardmässig angepasst</h2>
+          <ul>
+            <li>
+              Ohne weitere Einstellung <b>wandelt</b> PHP passende Werte
+              automatisch um (z.B. <code class="inline-code">"4"</code> zu
+              <code class="inline-code">4</code>)
+            </li>
+            <li>
+              Mit <code class="inline-code">declare(strict_types=1);</code>
+              ganz am Anfang der Datei wird das verhindert - falsche Typen
+              lösen dann einen Fehler aus
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        declare(strict_types=1);
+
+                        function add(int $a, int $b): int {
+                            return $a + $b;
+                        }
+
+                        echo add(3, "4"); // TypeError: "4" ist kein int
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Named Arguments -->
+        <section>
+          <h2>Benannte Argumente (Named Arguments)</h2>
+          <ul>
+            <li>
+              Statt der Reihenfolge nach kann man Argumente auch über den
+              <b>Parameternamen</b> übergeben
+            </li>
+            <li>
+              Praktisch bei vielen (v.a. optionalen) Parametern - der
+              Aufruf bleibt lesbar
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        function greet($name, $greeting = "Hallo") {
+                            echo $greeting . " " . $name . "!";
+                        }
+
+                        greet(name: "Anna", greeting: "Servus"); // "Servus Anna!"
+                        greet(greeting: "Servus", name: "Anna"); // Reihenfolge egal
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Variadic -->
+        <section>
+          <h2>Variable Anzahl Argumente</h2>
+          <ul>
+            <li>
+              Mit <code class="inline-code">...$args</code> (drei Punkte)
+              nimmt ein Parameter <b>beliebig viele</b> Argumente als
+              Array entgegen
+            </li>
+            <li>
+              Nützlich, wenn die Anzahl Werte beim Schreiben der Funktion
+              noch nicht feststeht
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        function sum(...$numbers) {
+                            $total = 0;
+                            foreach ($numbers as $n) {
+                                $total += $n;
+                            }
+                            return $total;
+                        }
+
+                        echo sum(1, 2, 3);       // 6
+                        echo sum(5, 10, 15, 20); // 50
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Array als Rückgabewert -->
+        <section>
+          <h2>Mehrere Werte zurückgeben</h2>
+          <ul>
+            <li>
+              <code class="inline-code">return</code> kann nur <b>einen</b>
+              Wert zurückgeben - ist ein Array dieser Wert, lassen sich
+              trotzdem mehrere Werte transportieren
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        function minMax($numbers) {
+                            return [min($numbers), max($numbers)];
+                        }
+
+                        $result = minMax([5, 3, 8, 1]);
+                        echo $result[0]; // 1 (Minimum)
+                        echo $result[1]; // 8 (Maximum)
+
+                        // Praktisch: direkt in Variablen aufteilen
+                        [$smallest, $largest] = minMax([5, 3, 8, 1]);
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Scope -->
+        <section>
+          <h2>Gültigkeitsbereich (Scope)</h2>
+          <ul>
+            <li>
+              Variablen, die <b>innerhalb</b> einer Funktion angelegt
+              werden, sind <b>lokal</b> - sie existieren nur dort
+            </li>
+            <li>
+              Ausserhalb der Funktion definierte Variablen sind innerhalb
+              der Funktion standardmässig <b>nicht sichtbar</b>
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        function calculate() {
+                            $result = 42; // lokale Variable
+                            echo $result; // 42
+                        }
+
+                        calculate();
+                        echo $result; // Fehler: $result existiert hier nicht
+                    </code>
+                </pre>
+        </section>
+
+        <!-- global -->
+        <section>
+          <h2>Das <code class="inline-code">global</code>-Schlüsselwort</h2>
+          <ul>
+            <li>
+              Mit <code class="inline-code">global</code> kann eine
+              Funktion trotzdem auf eine globale Variable zugreifen
+            </li>
+            <li>
+              In der Praxis eher vermeiden - Werte besser als Parameter
+              übergeben und mit <code class="inline-code">return</code>
+              zurückgeben
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        $counter = 0;
+
+                        function increment() {
+                            global $counter;
+                            $counter++;
+                        }
+
+                        increment();
+                        increment();
+                        echo $counter; // 2
+                    </code>
+                </pre>
+        </section>
+
+        <!-- static -->
+        <section>
+          <h2>Statische Variablen</h2>
+          <ul>
+            <li>
+              Eine mit <code class="inline-code">static</code> deklarierte
+              Variable behält ihren Wert über mehrere Aufrufe der
+              Funktion hinweg
+            </li>
+            <li>
+              Sie wird nur beim <b>ersten</b> Aufruf initialisiert
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        function countCalls() {
+                            static $count = 0;
+                            $count++;
+                            echo "Aufruf Nr. " . $count;
+                        }
+
+                        countCalls(); // "Aufruf Nr. 1"
+                        countCalls(); // "Aufruf Nr. 2"
+                        countCalls(); // "Aufruf Nr. 3"
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Pass by reference -->
+        <section>
+          <h2>Pass by Value vs. Pass by Reference</h2>
+          <ul>
+            <li>
+              Standardmässig erhält eine Funktion eine <b>Kopie</b> des
+              Arguments (<i>by value</i>) - Änderungen wirken sich nicht
+              nach aussen aus
+            </li>
+            <li>
+              Mit <code class="inline-code">&amp;</code> vor dem Parameter
+              erhält die Funktion eine <b>Referenz</b> (<i>by
+              reference</i>) - Änderungen wirken sich direkt auf die
+              Original-Variable aus
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        function addOne($n) {
+                            $n = $n + 1; // wirkt sich nicht nach aussen aus
+                        }
+                        function addOneByRef(&$n) {
+                            $n = $n + 1; // verändert das Original
+                        }
+
+                        $x = 5;
+                        addOne($x);
+                        echo $x; // 5
+
+                        addOneByRef($x);
+                        echo $x; // 6
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Rekursion -->
+        <section>
+          <h2>Rekursion</h2>
+          <ul>
+            <li>
+              Eine <b>rekursive</b> Funktion ruft sich selbst auf - sie
+              braucht eine <b>Abbruchbedingung</b>, sonst läuft sie
+              endlos (wie bei einer Schleife ohne Ende)
+            </li>
+            <li>
+              Nützlich bei Problemen, die sich in gleichartige,
+              kleinere Teilprobleme zerlegen lassen
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        function factorial($n) {
+                            if ($n &lt;= 1) {
+                                return 1; // Abbruchbedingung
+                            }
+                            return $n * factorial($n - 1); // Selbstaufruf
+                        }
+
+                        echo factorial(5); // 5*4*3*2*1 = 120
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Anonyme Funktionen -->
+        <section>
+          <h2>Anonyme Funktionen</h2>
+          <ul>
+            <li>
+              Eine Funktion ohne Namen, die direkt einer Variable
+              zugewiesen wird - auch <b>Closure</b> genannt
+            </li>
+            <li>
+              Nützlich, wenn eine Funktion nur an einer Stelle gebraucht
+              wird, z.B. als Argument einer anderen Funktion
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        $square = function ($n) {
+                            return $n * $n;
+                        };
+
+                        echo $square(5); // 25
+
+                        // Häufig als Argument, z.B. bei array_map
+                        $numbers = [1, 2, 3, 4];
+                        $squares = array_map($square, $numbers);
+                        print_r($squares); // [1, 4, 9, 16]
+                    </code>
+                </pre>
+        </section>
+
+        <!-- use bei Closures -->
+        <section>
+          <h2>Äussere Variablen mit <code class="inline-code">use</code></h2>
+          <ul>
+            <li>
+              Eine anonyme Funktion sieht standardmässig keine Variablen
+              von "aussen" - mit <code class="inline-code">use</code>
+              werden sie gezielt <b>eingebunden</b>
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        $discount = 0.1;
+
+                        $applyDiscount = function ($price) use ($discount) {
+                            return $price * (1 - $discount);
+                        };
+
+                        echo $applyDiscount(100); // 90
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Arrow Functions -->
+        <section>
+          <h2>Arrow Functions</h2>
+          <ul>
+            <li>
+              Kurzschreibweise für einfache anonyme Funktionen:
+              <code class="inline-code">fn(...) =&gt; Ausdruck</code>
+            </li>
+            <li>
+              Äussere Variablen sind automatisch verfügbar - kein
+              <code class="inline-code">use</code> nötig
+            </li>
+            <li>
+              Es gibt kein <code class="inline-code">return</code> und
+              keine geschweiften Klammern - der Ausdruck wird automatisch
+              zurückgegeben
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        $discount = 0.1;
+
+                        $applyDiscount = fn($price) => $price * (1 - $discount);
+
+                        echo $applyDiscount(100); // 90
+
+                        $numbers = [1, 2, 3, 4];
+                        $squares = array_map(fn($n) => $n * $n, $numbers);
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Eingebaute Funktionen -->
+        <section>
+          <h2>Eingebaute PHP-Funktionen</h2>
+          <ul>
+            <li>
+              PHP bringt hunderte fertige Funktionen mit -
+              <code class="inline-code">strlen()</code>,
+              <code class="inline-code">strtoupper()</code>,
+              <code class="inline-code">count()</code>,
+              <code class="inline-code">array_map()</code> und viele mehr
+              kennen Sie bereits
+            </li>
+            <li>
+              Bevor Sie selbst eine Funktion schreiben: prüfen, ob PHP
+              nicht schon eine passende Funktion mitbringt -
+              <a href="https://www.php.net/manual/de/funcref.php" target="_blank">php.net/manual</a>
+              hilft weiter
+            </li>
+          </ul>
+        </section>
+
+        <!-- TL;DR -->
+        <section>
+          <h2>TL;DR</h2>
+          <ul>
+            <li>
+              Eine Funktion wird mit <code class="inline-code">function</code>
+              definiert und über ihren Namen aufgerufen -
+              <b>Parameter</b> machen sie flexibel,
+              <code class="inline-code">return</code> liefert ein
+              Ergebnis zurück
+            </li>
+            <li>
+              Default-Werte, Type Hints und benannte Argumente machen
+              Funktionsaufrufe klarer und sicherer
+            </li>
+            <li>
+              Variablen innerhalb einer Funktion sind <b>lokal</b> -
+              <code class="inline-code">global</code> und
+              <code class="inline-code">static</code> sind gezielte
+              Ausnahmen
+            </li>
+            <li>
+              <code class="inline-code">&amp;</code> übergibt eine
+              Referenz statt einer Kopie (<i>by reference</i>)
+            </li>
+            <li>
+              Anonyme Funktionen (<code class="inline-code">function()</code>
+              mit <code class="inline-code">use</code>) und
+              <b>Arrow Functions</b> (<code class="inline-code">fn() =&gt;</code>)
+              sind kompakte Funktionen ohne eigenen Namen
+            </li>
+          </ul>
+        </section>
+      </div>
+    </div>
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+      Reveal.initialize({
+        hash: true,
+        plugins: [RevealZoom, RevealMarkdown, RevealHighlight, RevealNotes],
+      });
+    </script>
+  </body>
+</html>

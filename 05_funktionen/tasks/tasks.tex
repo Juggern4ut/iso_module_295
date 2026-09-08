@@ -1,0 +1,85 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+\usepackage{parskip}
+
+\setlength{\parindent}{0pt} % Keine Einrückungen
+
+\title{Modul 295 - Aufgabenblatt 05}
+\author{von Lukas Meier}
+\date{Unterricht vom 08.09.2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Projekt vorbereiten}
+
+Erstellen Sie im \texttt{htdocs}-Ordner Ihrer XAMPP-Installation einen neuen Ordner \texttt{php-funktionen} und speichern Sie die Datei \texttt{index.php}, welche Sie auf dem Netzwerkordner finden, darin. Öffnen Sie danach \texttt{http://localhost/php-funktionen/} im Browser.
+
+\section{Erste Funktion}
+
+Schreiben Sie eine Funktion \texttt{greet()} ohne Parameter, die mit \texttt{echo} den Text \texttt{"Hallo zusammen!"} ausgibt. Rufen Sie die Funktion zweimal auf.
+
+\section{Funktion mit Parameter}
+
+Schreiben Sie eine Funktion \texttt{greetByName(\$name)} mit einem Parameter \texttt{\$name}, die \texttt{"Hallo <Name>!"} ausgibt. Rufen Sie die Funktion mit zwei verschiedenen Namen auf.
+
+\section{Funktion mit Rückgabewert}
+
+Schreiben Sie eine Funktion \texttt{add(\$a, \$b)}, die zwei Zahlen mit \texttt{return} addiert zurückgibt (statt sie direkt auszugeben). Speichern Sie das Ergebnis eines Aufrufs in einer Variable und geben Sie diese mit \texttt{echo} aus. Verwenden Sie einen zweiten Aufruf direkt in einer Berechnung, z.B. \texttt{echo add(10, 5) * 2;}.
+
+\section{Funktion mit mehreren Parametern}
+
+Schreiben Sie eine Funktion \texttt{calculateRectangleArea(\$width, \$height)}, die die Fläche eines Rechtecks berechnet und zurückgibt. Testen Sie die Funktion mit zwei unterschiedlichen Wertepaaren und geben Sie die Ergebnisse mit \texttt{echo} aus.
+
+\section{Default-Werte}
+
+Erweitern Sie eine Begrüssungsfunktion \texttt{greetWithGreeting(\$name, \$greeting = "Hallo")} um einen zweiten Parameter \texttt{\$greeting} mit dem Default-Wert \texttt{"Hallo"}. Rufen Sie die Funktion einmal nur mit dem Namen und einmal zusätzlich mit einer eigenen Begrüssung (z.B. \texttt{"Servus"}) auf.
+
+\section{Type Hints}
+
+Schreiben Sie eine Funktion \texttt{multiply(int \$a, int \$b): int}, welche zwei Ganzzahlen multipliziert. Geben Sie das Ergebnis einmal mit \texttt{echo} und einmal mit \texttt{var\_dump()} aus und prüfen Sie, dass der Rückgabetyp tatsächlich \texttt{int} ist.
+
+\section{Benannte Argumente}
+
+Rufen Sie die Funktion \texttt{greetWithGreeting()} aus Aufgabe 6 zweimal mit \textbf{benannten Argumenten} (\texttt{name: ..., greeting: ...}) auf - einmal in der ursprünglichen Reihenfolge und einmal mit vertauschter Reihenfolge der Argumente. Prüfen Sie, dass beide Aufrufe dasselbe Ergebnis liefern.
+
+\section{Variable Anzahl Argumente}
+
+Schreiben Sie eine Funktion \texttt{sum(...\$numbers)}, die mit dem Variadic-Operator \texttt{...} eine beliebige Anzahl Zahlen entgegennimmt und deren Summe mit einer \texttt{foreach}-Schleife berechnet und zurückgibt. Testen Sie die Funktion mit unterschiedlich vielen Argumenten.
+
+\section{Array zurückgeben}
+
+Schreiben Sie eine Funktion \texttt{minMax(\$numbers)}, die zu einem übergebenen Zahlen-Array den kleinsten und den grössten Wert (mit \texttt{min()} und \texttt{max()}) als Array \texttt{[\$min, \$max]} zurückgibt. Rufen Sie die Funktion einmal auf und greifen Sie über den Index auf beide Werte zu. Rufen Sie sie ein zweites Mal auf und weisen Sie das Ergebnis direkt zwei Variablen \texttt{\$smallest} und \texttt{\$largest} zu (\texttt{[\$smallest, \$largest] = ...}).
+
+\section{Gültigkeitsbereich (Scope)}
+
+Legen Sie eine globale Variable \texttt{\$counter = 0;} an. Schreiben Sie eine Funktion \texttt{incrementLocal()}, die \emph{innerhalb} der Funktion eine eigene, lokale Variable \texttt{\$counter} auf \texttt{0} setzt und um \texttt{1} erhöht. Rufen Sie sie zweimal auf und geben Sie danach die globale \texttt{\$counter} aus - sie bleibt bei \texttt{0}. Schreiben Sie danach eine zweite Funktion \texttt{incrementGlobal()}, die mit dem Schlüsselwort \texttt{global} auf die globale \texttt{\$counter} zugreift und sie erhöht. Rufen Sie auch diese zweimal auf und geben Sie \texttt{\$counter} erneut aus - dieses Mal hat sich der Wert verändert.
+
+\section{Statische Variable}
+
+Schreiben Sie eine Funktion \texttt{countCalls()} mit einer \texttt{static}-Variable \texttt{\$count}, die bei jedem Aufruf um \texttt{1} erhöht wird und den Text \texttt{"Aufruf Nr. X"} ausgibt. Rufen Sie die Funktion dreimal auf und beobachten Sie, dass sich der Zähler den Wert zwischen den Aufrufen merkt.
+
+\section{Pass by Reference}
+
+Schreiben Sie zwei Funktionen: \texttt{addOne(\$n)}, die den Parameter normal (\emph{by value}) entgegennimmt und um \texttt{1} erhöht, sowie \texttt{addOneByRef(\&\$n)}, die den Parameter \emph{by reference} entgegennimmt. Legen Sie eine Variable \texttt{\$x = 5;} an, rufen Sie zuerst \texttt{addOne(\$x)} auf und geben Sie \texttt{\$x} aus (unverändert), rufen Sie danach \texttt{addOneByRef(\$x)} auf und geben Sie \texttt{\$x} erneut aus (verändert).
+
+\section{Rekursion}
+
+Schreiben Sie eine rekursive Funktion \texttt{factorial(\$n)}, die die Fakultät einer Zahl berechnet (\texttt{n! = n * (n-1) * ... * 1}, mit \texttt{factorial(1)} bzw. \texttt{factorial(0)} als Abbruchbedingung, die \texttt{1} zurückgibt). Testen Sie die Funktion mit \texttt{factorial(5)} (Ergebnis: \texttt{120}) und mit \texttt{factorial(1)}.
+
+\section{Anonyme Funktion (Closure)}
+
+Legen Sie eine Variable \texttt{\$discount = 0.1;} an. Schreiben Sie eine anonyme Funktion, die einem Preis den Rabatt abzieht und dabei \texttt{\$discount} mit \texttt{use} einbindet, und speichern Sie sie in einer Variable \texttt{\$applyDiscount}. Testen Sie sie mit zwei verschiedenen Preisen. Verwenden Sie ausserdem eine anonyme Funktion zusammen mit \texttt{array\_map()}, um zu einem Array von Zahlen \texttt{[1, 2, 3, 4]} ein Array der jeweiligen Quadratzahlen zu berechnen.
+
+\section{Arrow Function}
+
+Lösen Sie Aufgabe 15 ein zweites Mal - dieses Mal mit \textbf{Arrow Functions} (\texttt{fn(...) => ...}) statt mit anonymen Funktionen. Vergleichen Sie im Kopf die Schreibweise: Was fällt bei der Arrow Function im Vergleich zur anonymen Funktion weg?
+
+\section{Bonusaufgabe: Warenkorb mit Funktionen}
+
+Schreiben Sie drei Funktionen: \texttt{calculateSubtotal(\$price, \$quantity)} berechnet den Zwischenbetrag eines Produkts, \texttt{formatCurrency(\$amount)} formatiert einen Betrag mit zwei Nachkommastellen und dem Zusatz \texttt{" CHF"} (Tipp: \texttt{number\_format()}), und \texttt{calculateShipping(\$total)} gibt \texttt{0} zurück, wenn \texttt{\$total} mindestens \texttt{15} beträgt, sonst \texttt{5.90}. Legen Sie ein mehrdimensionales Array \texttt{\$cart} mit mindestens drei Produkten (\texttt{name}, \texttt{price}, \texttt{quantity}) an. Durchlaufen Sie es mit \texttt{foreach}, berechnen Sie mit Ihren Funktionen pro Produkt den Zwischenbetrag und geben Sie eine Zeile im Format \texttt{"Apfel: 6 x 0.5 = 3.00 CHF"} aus. Summieren Sie den Gesamtbetrag, geben Sie Zwischensumme, Versandkosten und den Gesamtbetrag inklusive Versand formatiert mit \texttt{formatCurrency()} aus.
+
+\end{document}
