@@ -1,0 +1,73 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+\usepackage{parskip}
+
+\setlength{\parindent}{0pt} % Keine Einrückungen
+
+\title{Modul 295 - Aufgabenblatt 06}
+\author{von Lukas Meier}
+\date{Unterricht vom 15.09.2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Projekt vorbereiten}
+
+Erstellen Sie im \texttt{htdocs}-Ordner Ihrer XAMPP-Installation einen neuen Ordner \texttt{php-klassen} und speichern Sie die Datei \texttt{index.php}, welche Sie auf dem Netzwerkordner finden, darin. Öffnen Sie danach \texttt{http://localhost/php-klassen/} im Browser.
+
+\section{Erste Klasse}
+
+Definieren Sie eine Klasse \texttt{Product} mit den öffentlichen Eigenschaften \texttt{\$name} (string) und \texttt{\$price} (float) sowie einer Methode \texttt{printInfo()}, die mit \texttt{echo} Name und Preis im Format \texttt{"{}Apfel: 0.5 CHF"} ausgibt (verwenden Sie dazu \texttt{\$this}). Erzeugen Sie zwei Objekte, setzen Sie deren Eigenschaften über den Pfeil-Operator \texttt{->} und rufen Sie bei beiden \texttt{printInfo()} auf.
+
+\section{Konstruktor}
+
+Ergänzen Sie die Klasse \texttt{Product} um einen Konstruktor \texttt{\_\_construct(\$name, \$price)}, der die beiden Eigenschaften direkt setzt. Erzeugen Sie die zwei Objekte aus Aufgabe 2 neu - dieses Mal, indem Sie Name und Preis direkt bei \texttt{new Product(...)} übergeben.
+
+\section{Constructor Property Promotion}
+
+Schreiben Sie den Konstruktor aus Aufgabe 3 mit \textbf{Constructor Property Promotion} um, sodass die Eigenschaften \texttt{\$name} und \texttt{\$price} direkt in der Parameterliste des Konstruktors deklariert werden. Prüfen Sie, dass sich das Verhalten der Objekte nicht verändert hat.
+
+\section{Sichtbarkeit und Getter/Setter}
+
+Ändern Sie die Sichtbarkeit von \texttt{\$price} auf \texttt{private}. Ergänzen Sie die Klasse \texttt{Product} um eine Methode \texttt{getPrice(): float}, die den Preis zurückgibt, sowie eine Methode \texttt{setPrice(float \$price): void}, die den Preis nur übernimmt, wenn er mindestens \texttt{0} beträgt (sonst passiert nichts). Testen Sie \texttt{getPrice()}, rufen Sie \texttt{setPrice()} einmal mit einem gültigen und einmal mit einem negativen Wert auf und geben Sie den Preis danach jeweils erneut mit \texttt{getPrice()} aus.
+
+\section{Statische Eigenschaft und Methode}
+
+Ergänzen Sie \texttt{Product} um eine private, statische Eigenschaft \texttt{\$count}, die im Konstruktor bei jeder Objekterzeugung um \texttt{1} erhöht wird, sowie eine öffentliche, statische Methode \texttt{getCount(): int}, die den aktuellen Wert zurückgibt. Erzeugen Sie insgesamt drei \texttt{Product}-Objekte und geben Sie danach \texttt{Product::getCount()} aus.
+
+\section{Klassenkonstante}
+
+Ergänzen Sie \texttt{Product} um eine öffentliche Konstante \texttt{TAX\_RATE = 0.077} sowie eine Methode \texttt{priceWithTax(): float}, die den Preis inklusive Steuer zurückgibt (\texttt{self::TAX\_RATE} verwenden). Geben Sie für eines Ihrer Produkte den Preis inklusive Steuer aus.
+
+\section{Vererbung}
+
+Erstellen Sie eine Klasse \texttt{SaleProduct}, die von \texttt{Product} erbt (\texttt{extends}). Sie soll zusätzlich eine öffentliche Eigenschaft \texttt{\$discount} (float, als Rabatt zwischen \texttt{0} und \texttt{1}) besitzen. Der Konstruktor von \texttt{SaleProduct} nimmt Name, Preis und Rabatt entgegen und ruft mit \texttt{parent::\_\_construct(...)} den Konstruktor von \texttt{Product} auf, um Name und Preis zu setzen. Erzeugen Sie ein \texttt{SaleProduct}-Objekt und rufen Sie die geerbte Methode \texttt{printInfo()} darauf auf.
+
+\section{Methode überschreiben}
+
+Überschreiben Sie in \texttt{SaleProduct} die Methode \texttt{priceWithTax(): float} so, dass zuerst der Preis um den Rabatt reduziert wird (\texttt{price * (1 - discount)}) und erst danach die Steuer gemäss \texttt{TAX\_RATE} aufgerechnet wird. Vergleichen Sie für denselben Ausgangspreis die Ausgabe von \texttt{priceWithTax()} bei einem normalen \texttt{Product} und einem \texttt{SaleProduct}.
+
+\section{Abstrakte Klasse}
+
+Definieren Sie eine abstrakte Klasse \texttt{Shape} mit einer abstrakten Methode \texttt{calculateArea(): float} sowie einer konkreten Methode \texttt{printArea(): void}, die mit \texttt{echo} die mit \texttt{calculateArea()} berechnete Fläche ausgibt. Erstellen Sie zwei Klassen \texttt{Circle} (mit Eigenschaft \texttt{\$radius}) und \texttt{Rectangle} (mit Eigenschaften \texttt{\$width} und \texttt{\$height}), die von \texttt{Shape} erben und \texttt{calculateArea()} passend implementieren (\texttt{M\_PI * radius ** 2} bzw. \texttt{width * height}). Erzeugen Sie je ein Objekt und rufen Sie \texttt{printArea()} auf.
+
+\section{Interface}
+
+Definieren Sie ein Interface \texttt{Describable} mit einer Methode \texttt{describe(): string}. Lassen Sie \texttt{Circle} und \texttt{Rectangle} dieses Interface zusätzlich zu \texttt{Shape} implementieren (\texttt{implements}) und ergänzen Sie beide Klassen um eine passende \texttt{describe()}-Methode (z.B. \texttt{"Kreis mit Radius 3"}). Legen Sie ein Array mit Ihren beiden Shape-Objekten an, durchlaufen Sie es mit \texttt{foreach} und geben Sie pro Objekt \texttt{describe()} sowie \texttt{printArea()} aus.
+
+\section{Readonly-Eigenschaften}
+
+Definieren Sie eine Klasse \texttt{Point} mit den öffentlichen, \texttt{readonly}-Eigenschaften \texttt{\$x} und \texttt{\$y} (float, über Constructor Property Promotion). Erzeugen Sie ein Objekt \texttt{new Point(3, 4)} und geben Sie \texttt{\$x} und \texttt{\$y} aus. Schreiben Sie als Kommentar dazu, was passieren würde, wenn Sie versuchen würden, \texttt{\$p->x} nachträglich zu verändern.
+
+\section{instanceof}
+
+Legen Sie ein Array an, das Ihre \texttt{Circle}- und \texttt{Rectangle}-Objekte aus Aufgabe 10 sowie zusätzlich ein \texttt{Product}-Objekt enthält. Durchlaufen Sie das Array mit \texttt{foreach} und geben Sie mit Hilfe von \texttt{instanceof} nur für die Objekte, die tatsächlich vom Typ \texttt{Shape} sind, \texttt{printArea()} aus.
+
+\section{Bonusaufgabe: Warenkorb mit Klassen}
+
+Erstellen Sie eine Klasse \texttt{ShoppingCart} mit einer privaten Eigenschaft \texttt{\$items} (Array, initial leer). Ergänzen Sie eine Methode \texttt{addProduct(Product \$product, int \$quantity): void}, die ein Produkt zusammen mit der Menge im Warenkorb ablegt, eine Methode \texttt{getSubtotal(): float}, die über alle Positionen den Zwischenbetrag summiert (Preis mit \texttt{getPrice()} pro Produkt mal Menge), sowie eine Methode \texttt{getShipping(): float}, die \texttt{0} zurückgibt, wenn der Zwischenbetrag mindestens \texttt{15} beträgt, sonst \texttt{5.90}. Ergänzen Sie ausserdem eine Methode \texttt{printReceipt(): void}, die pro Position eine Zeile im Format \texttt{"{}Apfel: 6 x 0.5 = 3.00 CHF"} ausgibt (Tipp: \texttt{number\_format()}) und danach Zwischensumme, Versandkosten und den Gesamtbetrag inklusive Versand ausgibt. Erzeugen Sie mindestens drei \texttt{Product}-Objekte, legen Sie sie mit unterschiedlichen Mengen in einen \texttt{ShoppingCart} und rufen Sie \texttt{printReceipt()} auf.
+
+\end{document}

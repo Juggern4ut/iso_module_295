@@ -1,0 +1,847 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+
+    <title>Modul 295 - Lektion 06</title>
+
+    <link rel="stylesheet" href="dist/reset.css" />
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/black.css" />
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css" />
+
+    <style>
+      td {
+        font-size: 21px;
+      }
+
+      .inline-code {
+        font-family:
+          "Consolas", "Monaco", "Andale Mono", "Ubuntu Mono", monospace;
+        display: inline-block;
+        background-color: #2d2d2d;
+        padding: 2px 4px;
+        border-radius: 2px;
+        font-size: 75%;
+      }
+
+      thead td {
+        font-weight: bold;
+        font-size: 24px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <!-- Modulfolie -->
+        <section>
+          <h2>Modul 295</h2>
+          <hr />
+          <h3>Backend für Applikationen realisieren</h3>
+          <img
+            style="width: 200px"
+            src="assets/img/web-icon.png"
+            alt="Web Icon"
+          />
+        </section>
+
+        <!-- Titelfolie -->
+        <section>
+          <h2>06 - Klassen</h2>
+          <hr />
+          <h3>Objektorientierte Grundlagen in PHP</h3>
+          <img
+            style="width: 240px"
+            src="assets/img/php-logo.svg"
+            alt="PHP Logo"
+          />
+        </section>
+
+        <!-- Lernziele -->
+        <section>
+          <h2>Lernziele dieser Lektion</h2>
+          <ul>
+            <li>Die Begriffe Klasse, Objekt und Instanz erklären können</li>
+            <li>Eigene Klassen mit Eigenschaften und Methoden in PHP definieren können</li>
+            <li>Objekte erzeugen und mit <code class="inline-code">$this</code>, Konstruktoren und Sichtbarkeiten arbeiten können</li>
+            <li>Statische Eigenschaften, Methoden und Klassenkonstanten einsetzen können</li>
+            <li>Vererbung, abstrakte Klassen und Interfaces anwenden können</li>
+            <li><code class="inline-code">readonly</code>-Eigenschaften und den <code class="inline-code">instanceof</code>-Operator verwenden können</li>
+          </ul>
+        </section>
+
+        <!-- Rückblick -->
+        <section>
+          <h2>Rückblick: Funktionen</h2>
+          <ul>
+            <li>
+              Mit Funktionen haben wir <b>Code</b> gebündelt und
+              wiederverwendbar gemacht
+            </li>
+            <li>
+              Bisher waren Daten (Variablen, Arrays) und Code (Funktionen)
+              getrennte Dinge
+            </li>
+            <li>
+              Heute verbinden wir beides: <b>Klassen</b> bündeln Daten und
+              die dazugehörigen Funktionen gemeinsam
+            </li>
+          </ul>
+        </section>
+
+        <!-- Wozu Klassen -->
+        <section>
+          <h2>Wozu Klassen?</h2>
+          <ul>
+            <li>
+              Ein Array kann Daten zu einem Produkt speichern - aber die
+              Logik dazu (z.B. Preis berechnen) liegt woanders im Code
+            </li>
+            <li>
+              Eine <b>Klasse</b> beschreibt einen eigenen <b>Datentyp</b>,
+              der Eigenschaften (Daten) und Methoden (Verhalten) an einem
+              Ort zusammenfasst
+            </li>
+            <li>
+              Das Konzept kennen Sie bereits aus anderen Sprachen -
+              in PHP gilt dasselbe Prinzip
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        // Bisher: Daten und Logik getrennt
+                        $product = ["name" => "Apfel", "price" => 0.50];
+
+                        function printInfo($product) {
+                            echo $product["name"] . ": " . $product["price"] . " CHF";
+                        }
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Klasse, Objekt, Instanz -->
+        <section>
+          <h2>Klasse, Objekt und Instanz</h2>
+          <ul>
+            <li>
+              Eine <b>Klasse</b> ist ein Bauplan - sie legt fest, welche
+              Eigenschaften und Methoden ein Ding dieses Typs hat
+            </li>
+            <li>
+              Ein <b>Objekt</b> ist ein konkretes Ding, das nach diesem
+              Bauplan erzeugt wurde - man sagt auch, es ist eine
+              <b>Instanz</b> der Klasse
+            </li>
+            <li>
+              Aus einer Klasse lassen sich beliebig viele, unabhängige
+              Objekte erzeugen
+            </li>
+          </ul>
+        </section>
+
+        <!-- Klasse definieren -->
+        <section>
+          <h2>Eine Klasse definieren</h2>
+          <ul>
+            <li>
+              Mit dem Schlüsselwort <code class="inline-code">class</code>,
+              gefolgt vom Namen (meist <code class="inline-code">PascalCase</code>)
+              und einem Codeblock in geschweiften Klammern
+            </li>
+            <li>
+              <b>Eigenschaften</b> (properties) sind Variablen innerhalb
+              der Klasse - sie speichern die Daten eines Objekts
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        class Product {
+                            public string $name;
+                            public float $price;
+                        }
+                        // Bis hierhin passiert noch nichts -
+                        // die Klasse wurde nur definiert
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Objekt erzeugen -->
+        <section>
+          <h2>Ein Objekt erzeugen</h2>
+          <ul>
+            <li>
+              Mit dem Schlüsselwort <code class="inline-code">new</code>
+              gefolgt vom Klassennamen wird ein neues Objekt (eine Instanz)
+              erzeugt
+            </li>
+            <li>
+              Auf Eigenschaften greift man mit dem Pfeil-Operator
+              <code class="inline-code">-&gt;</code> zu
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        class Product {
+                            public string $name;
+                            public float $price;
+                        }
+
+                        $apple = new Product();
+                        $apple->name = "Apfel";
+                        $apple->price = 0.50;
+
+                        echo $apple->name; // "Apfel"
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Mehrere Objekte -->
+        <section>
+          <h2>Mehrere, unabhängige Objekte</h2>
+          <ul>
+            <li>
+              Jedes Objekt hat seine <b>eigenen</b> Werte für die
+              Eigenschaften - eine Änderung an einem Objekt wirkt sich
+              nicht auf ein anderes aus
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        $apple = new Product();
+                        $apple->name = "Apfel";
+                        $apple->price = 0.50;
+
+                        $bread = new Product();
+                        $bread->name = "Brot";
+                        $bread->price = 3.20;
+
+                        echo $apple->name; // "Apfel"
+                        echo $bread->name; // "Brot"
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Methoden -->
+        <section>
+          <h2>Methoden</h2>
+          <ul>
+            <li>
+              Eine <b>Methode</b> ist eine Funktion innerhalb einer Klasse -
+              sie beschreibt das <b>Verhalten</b> eines Objekts
+            </li>
+            <li>
+              Aufgerufen wird sie ebenfalls mit dem Pfeil-Operator
+              <code class="inline-code">-&gt;</code>
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        class Product {
+                            public string $name;
+                            public float $price;
+
+                            public function printInfo() {
+                                echo $this->name . ": " . $this->price . " CHF";
+                            }
+                        }
+
+                        $apple = new Product();
+                        $apple->name = "Apfel";
+                        $apple->price = 0.50;
+                        $apple->printInfo(); // "Apfel: 0.5 CHF"
+                    </code>
+                </pre>
+        </section>
+
+        <!-- $this -->
+        <section>
+          <h2><code class="inline-code">$this</code> - Verweis auf das aktuelle Objekt</h2>
+          <ul>
+            <li>
+              Innerhalb einer Methode zeigt <code class="inline-code">$this</code>
+              immer auf <b>das Objekt</b>, über welches die Methode gerade
+              aufgerufen wurde
+            </li>
+            <li>
+              Damit greift eine Methode auf die Eigenschaften
+              <b>ihres eigenen</b> Objekts zu
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        $apple->printInfo(); // $this zeigt hier auf $apple
+                        $bread->printInfo(); // $this zeigt hier auf $bread
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Konstruktor -->
+        <section>
+          <h2>Der Konstruktor <code class="inline-code">__construct()</code></h2>
+          <ul>
+            <li>
+              Die Methode <code class="inline-code">__construct()</code>
+              wird automatisch aufgerufen, sobald ein Objekt mit
+              <code class="inline-code">new</code> erzeugt wird
+            </li>
+            <li>
+              Sie dient dazu, die Eigenschaften direkt bei der Erzeugung
+              zu setzen - statt sie danach einzeln zuzuweisen
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        class Product {
+                            public string $name;
+                            public float $price;
+
+                            public function __construct($name, $price) {
+                                $this->name = $name;
+                                $this->price = $price;
+                            }
+                        }
+
+                        $apple = new Product("Apfel", 0.50);
+                        echo $apple->name; // "Apfel"
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Constructor Property Promotion -->
+        <section>
+          <h2>Constructor Property Promotion</h2>
+          <ul>
+            <li>
+              Seit PHP 8 können Eigenschaften direkt in der
+              Parameterliste des Konstruktors deklariert werden - Deklaration
+              und Zuweisung passieren dann in einem Schritt
+            </li>
+            <li>
+              Spart Schreibarbeit, das Verhalten ist identisch zur
+              vorherigen Folie
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        class Product {
+                            public function __construct(
+                                public string $name,
+                                public float $price
+                            ) {}
+                        }
+
+                        $apple = new Product("Apfel", 0.50);
+                        echo $apple->name; // "Apfel"
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Sichtbarkeit public/private -->
+        <section>
+          <h2>Sichtbarkeit: <code class="inline-code">public</code> und <code class="inline-code">private</code></h2>
+          <ul>
+            <li>
+              <code class="inline-code">public</code> - von überall
+              zugreifbar, auch von aussen über
+              <code class="inline-code">-&gt;</code>
+            </li>
+            <li>
+              <code class="inline-code">private</code> - nur innerhalb
+              <b>derselben Klasse</b> zugreifbar, schützt Daten vor
+              unerlaubtem Zugriff von aussen
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        class Product {
+                            public function __construct(
+                                public string $name,
+                                private float $price
+                            ) {}
+                        }
+
+                        $apple = new Product("Apfel", 0.50);
+                        echo $apple->name;  // "Apfel" - erlaubt
+                        echo $apple->price; // Fehler: $price ist private
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Sichtbarkeit protected -->
+        <section>
+          <h2>Sichtbarkeit: <code class="inline-code">protected</code></h2>
+          <ul>
+            <li>
+              <code class="inline-code">protected</code> - zugreifbar
+              innerhalb der eigenen Klasse <b>und</b> in davon abgeleiteten
+              Klassen (Vererbung, siehe später)
+            </li>
+            <li>
+              Von aussen (über <code class="inline-code">-&gt;</code>)
+              ist der Zugriff, wie bei <code class="inline-code">private</code>,
+              nicht erlaubt
+            </li>
+          </ul>
+        </section>
+
+        <!-- Getter und Setter -->
+        <section>
+          <h2>Getter und Setter</h2>
+          <ul>
+            <li>
+              Da <code class="inline-code">private</code>-Eigenschaften
+              von aussen nicht direkt zugreifbar sind, definiert man
+              öffentliche Methoden dafür - <b>Getter</b> zum Lesen,
+              <b>Setter</b> zum Schreiben
+            </li>
+            <li>
+              Ein Setter kann zusätzlich Werte prüfen, bevor er sie
+              übernimmt
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        class Product {
+                            public function __construct(
+                                public string $name,
+                                private float $price
+                            ) {}
+
+                            public function getPrice(): float {
+                                return $this->price;
+                            }
+
+                            public function setPrice(float $price): void {
+                                if ($price >= 0) {
+                                    $this->price = $price;
+                                }
+                            }
+                        }
+
+                        $apple = new Product("Apfel", 0.50);
+                        echo $apple->getPrice(); // 0.5
+                        $apple->setPrice(0.80);
+                        echo $apple->getPrice(); // 0.8
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Statische Eigenschaften -->
+        <section>
+          <h2>Statische Eigenschaften</h2>
+          <ul>
+            <li>
+              Eine <code class="inline-code">static</code>-Eigenschaft
+              gehört der <b>Klasse selbst</b>, nicht einem einzelnen Objekt -
+              alle Objekte teilen sich denselben Wert
+            </li>
+            <li>
+              Zugriff innerhalb der Klasse mit
+              <code class="inline-code">self::$name</code>
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        class Product {
+                            public static int $count = 0;
+
+                            public function __construct(public string $name) {
+                                self::$count++;
+                            }
+                        }
+
+                        $apple = new Product("Apfel");
+                        $bread = new Product("Brot");
+                        echo Product::$count; // 2
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Statische Methoden -->
+        <section>
+          <h2>Statische Methoden</h2>
+          <ul>
+            <li>
+              Eine <code class="inline-code">static</code>-Methode wird
+              über den Klassennamen aufgerufen, nicht über ein Objekt -
+              <code class="inline-code">Klasse::methode()</code>
+            </li>
+            <li>
+              Innerhalb einer statischen Methode gibt es kein
+              <code class="inline-code">$this</code>, da kein konkretes
+              Objekt vorliegt
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        class Product {
+                            private static int $count = 0;
+
+                            public function __construct(public string $name) {
+                                self::$count++;
+                            }
+
+                            public static function getCount(): int {
+                                return self::$count;
+                            }
+                        }
+
+                        new Product("Apfel");
+                        new Product("Brot");
+                        echo Product::getCount(); // 2
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Klassenkonstanten -->
+        <section>
+          <h2>Klassenkonstanten</h2>
+          <ul>
+            <li>
+              Mit <code class="inline-code">const</code> definiert man
+              einen Wert, der sich nie ändert - z.B. einen Steuersatz
+            </li>
+            <li>
+              Zugriff innerhalb der Klasse mit
+              <code class="inline-code">self::NAME</code>, von aussen mit
+              <code class="inline-code">Klasse::NAME</code>
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        class Product {
+                            public const TAX_RATE = 0.077;
+
+                            public function __construct(
+                                public string $name,
+                                public float $price
+                            ) {}
+
+                            public function priceWithTax(): float {
+                                return $this->price * (1 + self::TAX_RATE);
+                            }
+                        }
+
+                        $apple = new Product("Apfel", 0.50);
+                        echo $apple->priceWithTax(); // 0.5385
+                        echo Product::TAX_RATE;      // 0.077
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Vererbung -->
+        <section>
+          <h2>Vererbung mit <code class="inline-code">extends</code></h2>
+          <ul>
+            <li>
+              Eine Klasse kann alle Eigenschaften und Methoden einer
+              anderen Klasse <b>erben</b> - die neue Klasse muss diese
+              nicht selbst nochmals definieren
+            </li>
+            <li>
+              Die ursprüngliche Klasse heisst <b>Basisklasse</b> (Eltern-
+              klasse), die neue <b>abgeleitete Klasse</b> (Kindklasse)
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        class SaleProduct extends Product {
+                            // erbt $name, $price, priceWithTax(), ...
+                            public function __construct(
+                                string $name,
+                                float $price,
+                                public float $discount
+                            ) {
+                                parent::__construct($name, $price);
+                            }
+                        }
+
+                        $sale = new SaleProduct("Apfel", 0.50, 0.2);
+                        echo $sale->priceWithTax(); // geerbt von Product
+                    </code>
+                </pre>
+        </section>
+
+        <!-- parent:: -->
+        <section>
+          <h2><code class="inline-code">parent::</code></h2>
+          <ul>
+            <li>
+              Mit <code class="inline-code">parent::</code> ruft man
+              gezielt eine Methode der <b>Basisklasse</b> auf - z.B. deren
+              Konstruktor, wie auf der vorherigen Folie
+            </li>
+            <li>
+              So lässt sich Code der Basisklasse wiederverwenden, statt
+              ihn zu duplizieren
+            </li>
+          </ul>
+        </section>
+
+        <!-- Methoden überschreiben -->
+        <section>
+          <h2>Methoden überschreiben (Overriding)</h2>
+          <ul>
+            <li>
+              Eine abgeleitete Klasse kann eine geerbte Methode mit
+              demselben Namen <b>neu definieren</b> - die eigene Version
+              gilt dann
+            </li>
+            <li>
+              Mit <code class="inline-code">parent::methode()</code> lässt
+              sich innerhalb der neuen Version trotzdem die ursprüngliche
+              Methode mit aufrufen
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        class SaleProduct extends Product {
+                            public function __construct(
+                                string $name, float $price, public float $discount
+                            ) {
+                                parent::__construct($name, $price);
+                            }
+
+                            public function priceWithTax(): float {
+                                $reducedPrice = $this->price * (1 - $this->discount);
+                                return $reducedPrice * (1 + self::TAX_RATE);
+                            }
+                        }
+
+                        $sale = new SaleProduct("Apfel", 0.50, 0.2);
+                        echo $sale->priceWithTax(); // eigene, überschriebene Version
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Abstrakte Klassen -->
+        <section>
+          <h2>Abstrakte Klassen</h2>
+          <ul>
+            <li>
+              Eine <code class="inline-code">abstract</code>-Klasse kann
+              nicht direkt mit <code class="inline-code">new</code>
+              erzeugt werden - sie dient nur als Basis für andere Klassen
+            </li>
+            <li>
+              Sie kann <b>abstrakte Methoden</b> enthalten - diese haben
+              keinen Codeblock, jede abgeleitete Klasse <b>muss</b> sie
+              implementieren
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        abstract class Shape {
+                            abstract public function calculateArea(): float;
+
+                            public function printArea(): void {
+                                echo "Fläche: " . $this->calculateArea();
+                            }
+                        }
+
+                        $shape = new Shape(); // Fehler: abstrakte Klasse
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Abstrakte Klassen implementieren -->
+        <section>
+          <h2>Abstrakte Klasse implementieren</h2>
+          <ul>
+            <li>
+              Konkrete Klassen erben von der abstrakten Klasse und liefern
+              die Umsetzung der abstrakten Methode
+            </li>
+            <li>
+              Nicht-abstrakte Methoden (wie <code class="inline-code">printArea()</code>)
+              werden ganz normal geerbt
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        class Circle extends Shape {
+                            public function __construct(private float $radius) {}
+
+                            public function calculateArea(): float {
+                                return M_PI * $this->radius ** 2;
+                            }
+                        }
+
+                        $circle = new Circle(3);
+                        $circle->printArea(); // "Fläche: 28.27..."
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Interfaces -->
+        <section>
+          <h2>Interfaces</h2>
+          <ul>
+            <li>
+              Ein <code class="inline-code">interface</code> schreibt vor,
+              <b>welche</b> Methoden eine Klasse haben muss - ohne selbst
+              eine Umsetzung vorzugeben
+            </li>
+            <li>
+              Eine Klasse setzt ein Interface mit
+              <code class="inline-code">implements</code> um und kann
+              dabei auch gleichzeitig von einer Klasse erben
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        interface Describable {
+                            public function describe(): string;
+                        }
+
+                        class Circle extends Shape implements Describable {
+                            public function __construct(private float $radius) {}
+
+                            public function calculateArea(): float {
+                                return M_PI * $this->radius ** 2;
+                            }
+
+                            public function describe(): string {
+                                return "Kreis mit Radius " . $this->radius;
+                            }
+                        }
+                    </code>
+                </pre>
+        </section>
+
+        <!-- readonly -->
+        <section>
+          <h2>Unveränderliche Eigenschaften mit <code class="inline-code">readonly</code></h2>
+          <ul>
+            <li>
+              Seit PHP 8.1 kann eine Eigenschaft als
+              <code class="inline-code">readonly</code> markiert werden -
+              sie darf nur <b>einmal</b>, direkt im Konstruktor, gesetzt
+              werden
+            </li>
+            <li>
+              Ein späterer Schreibversuch löst einen Fehler aus - nützlich
+              für Werte, die sich nach der Erzeugung nicht mehr ändern
+              sollen
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        class Point {
+                            public function __construct(
+                                public readonly float $x,
+                                public readonly float $y
+                            ) {}
+                        }
+
+                        $p = new Point(3, 4);
+                        echo $p->x;  // 3
+                        $p->x = 10;  // Fehler: readonly-Eigenschaft
+                    </code>
+                </pre>
+        </section>
+
+        <!-- instanceof -->
+        <section>
+          <h2>Der <code class="inline-code">instanceof</code>-Operator</h2>
+          <ul>
+            <li>
+              Mit <code class="inline-code">instanceof</code> prüft man,
+              ob ein Objekt von einer bestimmten Klasse (oder einem
+              Interface) ist
+            </li>
+            <li>
+              Praktisch, wenn ein Array Objekte verschiedener,
+              verwandter Klassen enthält
+            </li>
+          </ul>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        $shapes = [new Circle(3), new Product("Apfel", 0.5)];
+
+                        foreach ($shapes as $item) {
+                            if ($item instanceof Shape) {
+                                $item->printArea();
+                            }
+                        }
+                        // nur der Kreis wird ausgegeben - Product ist kein Shape
+                    </code>
+                </pre>
+        </section>
+
+        <!-- TL;DR -->
+        <section>
+          <h2>TL;DR</h2>
+          <ul>
+            <li>
+              Eine <b>Klasse</b> ist ein Bauplan für Objekte - mit
+              <code class="inline-code">new</code> wird daraus eine
+              konkrete <b>Instanz</b> erzeugt
+            </li>
+            <li>
+              Eigenschaften und Methoden gehören zusammen;
+              <code class="inline-code">$this</code> zeigt innerhalb einer
+              Methode auf das eigene Objekt
+            </li>
+            <li>
+              <code class="inline-code">public</code>,
+              <code class="inline-code">private</code> und
+              <code class="inline-code">protected</code> steuern die
+              Sichtbarkeit - Getter/Setter kapseln private Daten
+            </li>
+            <li>
+              <code class="inline-code">static</code> gehört der Klasse,
+              nicht dem Objekt; <code class="inline-code">const</code>
+              definiert unveränderliche Klassenwerte
+            </li>
+            <li>
+              <code class="inline-code">extends</code> vererbt,
+              <code class="inline-code">abstract</code>-Klassen und
+              <code class="inline-code">interface</code>s legen fest, was
+              abgeleitete Klassen können müssen
+            </li>
+          </ul>
+        </section>
+      </div>
+    </div>
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+      Reveal.initialize({
+        hash: true,
+        plugins: [RevealZoom, RevealMarkdown, RevealHighlight, RevealNotes],
+      });
+    </script>
+  </body>
+</html>
