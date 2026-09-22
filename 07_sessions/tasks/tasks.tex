@@ -1,0 +1,69 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+\usepackage{parskip}
+
+\setlength{\parindent}{0pt} % Keine Einrückungen
+
+\title{Modul 295 - Aufgabenblatt 07}
+\author{von Lukas Meier}
+\date{Unterricht vom 22.09.2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Projekt vorbereiten}
+
+Erstellen Sie im \texttt{htdocs}-Ordner Ihrer XAMPP-Installation einen neuen Ordner \texttt{php-sessions} und speichern Sie die Datei \texttt{index.php}, welche Sie auf dem Netzwerkordner finden, darin. Öffnen Sie danach \texttt{http://localhost/php-sessions/} im Browser.
+
+\section{Erste Session}
+
+Rufen Sie zu Beginn der Datei \texttt{session\_start()} auf. Speichern Sie danach Ihren Vornamen in \texttt{\$\_SESSION["{}name"{}]} und geben Sie ihn mit \texttt{echo} aus. Laden Sie die Seite im Browser mehrmals neu und beobachten Sie, dass der Name erhalten bleibt, obwohl die Variable bei jedem Aufruf neu gesetzt wird.
+
+\section{Seitenaufrufe zählen}
+
+Ergänzen Sie eine Session-Variable \texttt{\$\_SESSION["{}views"{}]}, die bei jedem Aufruf der Seite um \texttt{1} erhöht wird (verwenden Sie den Null-Coalescing-Operator \texttt{??}, um sie beim ersten Aufruf mit \texttt{0} zu initialisieren). Geben Sie die Anzahl Aufrufe im Format \texttt{"{}Sie haben diese Seite 3 Mal aufgerufen"{}} aus und laden Sie die Seite mehrmals neu, um den Zähler in Aktion zu sehen.
+
+\section{Session-ID}
+
+Geben Sie mit \texttt{session\_id()} die aktuelle Session-ID aus. Laden Sie die Seite neu und stellen Sie fest, dass sich die ID dabei nicht ändert - sie bleibt für denselben Browser gleich.
+
+\section{isset() und Begrüssung}
+
+Schreiben Sie eine Bedingung, die mit \texttt{isset()} prüft, ob \texttt{\$\_SESSION["{}name"{}]} gesetzt ist. Ist dies der Fall, geben Sie \texttt{"{}Hallo, <Name>!"{}} aus, sonst \texttt{"{}Hallo, Gast!"{}}.
+
+\section{Login simulieren}
+
+Ein echtes HTML-Formular folgt erst in einer späteren Lektion - simulieren Sie die Eingabe stattdessen über URL-Parameter. Prüfen Sie mit \texttt{\$\_GET["{}user"{}]} und \texttt{\$\_GET["{}pass"{}]} (mit \texttt{??} gegen fehlende Werte abgesichert), ob diese den Werten \texttt{"{}admin"{}} bzw. \texttt{"{}geheim"{}} entsprechen. Ist dies der Fall, setzen Sie \texttt{\$\_SESSION["{}username"{}] = "{}admin"{}}. Testen Sie dies, indem Sie die Seite einmal ohne und einmal mit \texttt{index.php?user=admin\&pass=geheim} aufrufen.
+
+\section{Geschützte Inhalte}
+
+Zeigen Sie abhängig von \texttt{isset(\$\_SESSION["{}username"{}])} entweder \texttt{"{}Willkommen, admin!"{}} oder den Hinweis \texttt{"{}Bitte zuerst einloggen: index.php?user=admin\&pass=geheim"{}} an. Rufen Sie die Seite einmal eingeloggt und einmal ausgeloggt auf, um beide Fälle zu prüfen.
+
+\section{Logout}
+
+Ergänzen Sie eine Prüfung auf den URL-Parameter \texttt{\$\_GET["{}logout"{}]}. Ist er gesetzt, geben Sie \texttt{"{}Sie wurden ausgeloggt."{}} aus, rufen Sie \texttt{session\_destroy()} auf und beenden Sie das Skript direkt danach mit \texttt{exit;}. Testen Sie den Aufruf \texttt{index.php?logout=1}.
+
+\section{Einzelnen Wert entfernen}
+
+Ergänzen Sie unabhängig vom Login eine Session-Variable \texttt{\$\_SESSION["{}theme"{}]}, die gleich nach \texttt{session\_start()} mit \texttt{"{}dark"{}} initialisiert wird, falls sie noch nicht existiert. Passen Sie den Logout aus Aufgabe 8 so an, dass nur \texttt{\$\_SESSION["{}username"{}]} mit \texttt{unset()} entfernt wird, \texttt{\$\_SESSION["{}theme"{}]} aber erhalten bleibt. Geben Sie beim Logout \texttt{\$\_SESSION["{}theme"{}]} zusätzlich aus, um zu zeigen, dass dieser Wert noch vorhanden ist.
+
+\section{session\_regenerate\_id()}
+
+Ergänzen Sie den Login aus Aufgabe 6 um einen Aufruf von \texttt{session\_regenerate\_id(true)}, bevor Sie \texttt{\$\_SESSION["{}username"{}]} setzen. Geben Sie vor und nach dem Login jeweils \texttt{session\_id()} aus und vergleichen Sie die beiden IDs im Browser.
+
+\section{Session-Timeout}
+
+Ergänzen Sie direkt nach \texttt{session\_start()} folgende Prüfung: Ist \texttt{\$\_SESSION["{}lastActivity"{}]} gesetzt und liegt der letzte Zugriff (\texttt{time() - \$\_SESSION["{}lastActivity"{}]}) mehr als \texttt{15} Sekunden zurück, rufen Sie \texttt{session\_destroy()} und danach erneut \texttt{session\_start()} auf, um mit einer leeren Session weiterzufahren. Setzen Sie am Ende dieses Blocks \texttt{\$\_SESSION["{}lastActivity"{}] = time()}. Testen Sie das Verhalten, indem Sie die Seite einmal sofort und einmal nach mehr als 15 Sekunden Wartezeit neu laden.
+
+\section{Flash-Message}
+
+Setzen Sie beim erfolgreichen Login aus Aufgabe 6/10 zusätzlich \texttt{\$\_SESSION["{}flash"{}] = "{}Login erfolgreich!"{}}. Geben Sie diese Nachricht - falls vorhanden - ganz am Anfang Ihrer Ausgabe aus und entfernen Sie sie danach sofort mit \texttt{unset()}, damit sie beim nächsten Neuladen nicht mehr erscheint.
+
+\section{Bonusaufgabe: Mini-Warenkorb mit Sessions}
+
+Definieren Sie eine Klasse \texttt{CartItem} mit den öffentlichen Eigenschaften \texttt{\$name} (string) und \texttt{\$price} (float), gesetzt über Constructor Property Promotion (vgl. Lektion 06). Legen Sie beim Aufruf von \texttt{index.php?add=Apfel\&price=0.50} ein neues \texttt{CartItem}-Objekt mit diesen Werten an und hängen Sie es an ein Array \texttt{\$\_SESSION["{}cart"{}]} an (initialisieren Sie dieses beim ersten Mal mit einem leeren Array). Geben Sie danach für jedes Objekt im Warenkorb eine Zeile im Format \texttt{"{}Apfel: 0.5 CHF"{}} sowie am Ende die Summe aller Preise aus. Rufen Sie die Seite mehrmals mit unterschiedlichen \texttt{add}- und \texttt{price}-Parametern auf und beobachten Sie, wie der Warenkorb über mehrere Requests hinweg wächst.
+
+\end{document}
