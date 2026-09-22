@@ -69,11 +69,29 @@
         <section>
           <h2>Lernziele dieser Lektion</h2>
           <ul>
-            <li>Erklären können, wieso HTTP zustandslos ist und welches Problem Sessions lösen</li>
-            <li>Eine Session mit <code class="inline-code">session_start()</code> starten und mit <code class="inline-code">$_SESSION</code> Daten speichern/lesen können</li>
-            <li>Den Zusammenhang zwischen Session-ID, Cookie und serverseitiger Speicherung erklären können</li>
-            <li>Einen einfachen Login-Mechanismus mit Sessions umsetzen können</li>
-            <li>Sessions sauber beenden (<code class="inline-code">session_destroy()</code>, <code class="inline-code">unset()</code>) und sich der wichtigsten Sicherheitsaspekte bewusst sein</li>
+            <li>
+              Erklären können, wieso HTTP zustandslos ist und welches Problem
+              Sessions lösen
+            </li>
+            <li>
+              Eine Session mit
+              <code class="inline-code">session_start()</code> starten und mit
+              <code class="inline-code">$_SESSION</code> Daten speichern/lesen
+              können
+            </li>
+            <li>
+              Den Zusammenhang zwischen Session-ID, Cookie und serverseitiger
+              Speicherung erklären können
+            </li>
+            <li>
+              Einen einfachen Login-Mechanismus mit Sessions umsetzen können
+            </li>
+            <li>
+              Sessions sauber beenden (<code class="inline-code"
+                >session_destroy()</code
+              >, <code class="inline-code">unset()</code>) und sich der
+              wichtigsten Sicherheitsaspekte bewusst sein
+            </li>
           </ul>
         </section>
 
@@ -82,8 +100,8 @@
           <h2>Rückblick: Klassen</h2>
           <ul>
             <li>
-              Mit <b>Klassen</b> haben wir Daten (Eigenschaften) und
-              Verhalten (Methoden) in Objekten gebündelt
+              Mit <b>Klassen</b> haben wir Daten (Eigenschaften) und Verhalten
+              (Methoden) in Objekten gebündelt
             </li>
             <li>
               Ein Objekt lebt aber nur so lange wie das PHP-Skript läuft -
@@ -102,16 +120,15 @@
           <ul>
             <li>
               Jeder Request des Browsers an den Server ist unabhängig - der
-              Server "erinnert" sich standardmässig nicht an vorherige
-              Requests
+              Server "erinnert" sich standardmässig nicht an vorherige Requests
             </li>
             <li>
-              Variablen eines Skripts existieren nur für die Dauer <b>dieses
-              einen</b> Requests - danach sind sie weg
+              Variablen eines Skripts existieren nur für die Dauer
+              <b>dieses einen</b> Requests - danach sind sie weg
             </li>
             <li>
-              Ohne Zusatzmechanismus würde z.B. ein Login-Status bei jedem
-              neuen Seitenaufruf verloren gehen
+              Ohne Zusatzmechanismus würde z.B. ein Login-Status bei jedem neuen
+              Seitenaufruf verloren gehen
             </li>
           </ul>
           <pre>
@@ -132,12 +149,12 @@
               Besucher über mehrere Seitenaufrufe hinweg zu speichern
             </li>
             <li>
-              Typische Anwendungen: Login-Status, Warenkorb,
-              Spracheinstellung, Formular-Zwischenspeicherung
+              Typische Anwendungen: Login-Status, Warenkorb, Spracheinstellung,
+              Formular-Zwischenspeicherung
             </li>
             <li>
-              Die Daten werden dazu <b>serverseitig</b> abgelegt - der
-              Browser merkt sich nur einen "Schlüssel" dazu
+              Die Daten werden dazu <b>serverseitig</b> abgelegt - der Browser
+              merkt sich nur einen "Schlüssel" dazu
             </li>
           </ul>
         </section>
@@ -156,8 +173,8 @@
               automatisch mit - so weiss der Server, "wer" anfragt
             </li>
             <li>
-              PHP übernimmt diesen Mechanismus automatisch, sobald man
-              Sessions verwendet
+              PHP übernimmt diesen Mechanismus automatisch, sobald man Sessions
+              verwendet
             </li>
           </ul>
         </section>
@@ -175,9 +192,8 @@
               bestehende fort
             </li>
             <li>
-              Wichtig: muss aufgerufen werden, <b>bevor</b> irgendeine
-              Ausgabe (<code class="inline-code">echo</code>, HTML) gesendet
-              wird
+              Wichtig: muss aufgerufen werden, <b>bevor</b> irgendeine Ausgabe
+              (<code class="inline-code">echo</code>, HTML) gesendet wird
             </li>
           </ul>
           <pre>
@@ -198,14 +214,14 @@
           <ul>
             <li>
               <code class="inline-code">session_start()</code> erzeugt beim
-              ersten Aufruf eine zufällige, eindeutige Session-ID und
-              schickt sie im Cookie <code class="inline-code">PHPSESSID</code>
+              ersten Aufruf eine zufällige, eindeutige Session-ID und schickt
+              sie im Cookie <code class="inline-code">PHPSESSID</code>
               an den Browser
             </li>
             <li>
               Bei jedem weiteren Request desselben Browsers wird diese ID
-              mitgeschickt - PHP findet damit die passenden Daten auf dem
-              Server wieder
+              mitgeschickt - PHP findet damit die passenden Daten auf dem Server
+              wieder
             </li>
           </ul>
           <pre>
@@ -223,12 +239,11 @@
           <ul>
             <li>
               <code class="inline-code">$_SESSION</code> ist ein
-              <b>superglobales Array</b> - wie <code class="inline-code">$_GET</code>,
-              aber von PHP serverseitig verwaltet
+              <b>superglobales Array</b> - wie
+              <code class="inline-code">$_GET</code>, aber von PHP serverseitig
+              verwaltet
             </li>
-            <li>
-              Werte werden ganz normal wie bei einem Array zugewiesen
-            </li>
+            <li>Werte werden ganz normal wie bei einem Array zugewiesen</li>
           </ul>
           <pre>
                     <code class="php" data-trim data-line-numbers>
@@ -245,8 +260,8 @@
           <h2><code class="inline-code">$_SESSION</code> - Werte lesen</h2>
           <ul>
             <li>
-              Beim nächsten Aufruf derselben Seite (z.B. durch Neuladen)
-              sind die zuvor gespeicherten Werte immer noch da
+              Beim nächsten Aufruf derselben Seite (z.B. durch Neuladen) sind
+              die zuvor gespeicherten Werte immer noch da
             </li>
           </ul>
           <pre>
@@ -264,8 +279,8 @@
           <h2>Beispiel: Seitenaufrufe zählen</h2>
           <ul>
             <li>
-              Praktisches Beispiel, bei dem man die Wirkung von Sessions
-              direkt sieht: Seite mehrmals neu laden (F5)
+              Praktisches Beispiel, bei dem man die Wirkung von Sessions direkt
+              sieht: Seite mehrmals neu laden (F5)
             </li>
           </ul>
           <pre>
@@ -300,15 +315,17 @@
 
         <!-- isset() prüfen -->
         <section>
-          <h2>Session-Variable prüfen mit <code class="inline-code">isset()</code></h2>
+          <h2>
+            Session-Variable prüfen mit <code class="inline-code">isset()</code>
+          </h2>
           <ul>
             <li>
               Vor dem Zugriff auf eine Session-Variable prüft man meist mit
               <code class="inline-code">isset()</code>, ob sie existiert
             </li>
             <li>
-              Sonst löst der Zugriff eine Warnung aus, falls die Variable
-              (noch) nicht gesetzt ist
+              Sonst löst der Zugriff eine Warnung aus, falls die Variable (noch)
+              nicht gesetzt ist
             </li>
           </ul>
           <pre>
@@ -328,13 +345,13 @@
         <section>
           <h2>Praxisbeispiel: Login</h2>
           <ul>
-            <li>
-              Login-Status ist der klassische Anwendungsfall für Sessions
-            </li>
+            <li>Login-Status ist der klassische Anwendungsfall für Sessions</li>
             <li>
               Echte Formulare folgen erst in einer späteren Lektion - hier
-              simulieren wir die Eingabe über URL-Parameter
-              (<code class="inline-code">$_GET</code>)
+              simulieren wir die Eingabe über URL-Parameter (<code
+                class="inline-code"
+                >$_GET</code
+              >)
             </li>
           </ul>
           <pre>
@@ -377,8 +394,8 @@
           <h2>Logout mit <code class="inline-code">session_destroy()</code></h2>
           <ul>
             <li>
-              <code class="inline-code">session_destroy()</code> löscht
-              alle Daten der aktuellen Session auf dem Server
+              <code class="inline-code">session_destroy()</code> löscht alle
+              Daten der aktuellen Session auf dem Server
             </li>
             <li>
               <code class="inline-code">session_start()</code> muss davor
@@ -399,11 +416,14 @@
 
         <!-- unset() -->
         <section>
-          <h2>Einzelne Werte entfernen mit <code class="inline-code">unset()</code></h2>
+          <h2>
+            Einzelne Werte entfernen mit
+            <code class="inline-code">unset()</code>
+          </h2>
           <ul>
             <li>
-              Um nicht die ganze Session, sondern nur einen einzelnen Wert
-              zu löschen, verwendet man <code class="inline-code">unset()</code>
+              Um nicht die ganze Session, sondern nur einen einzelnen Wert zu
+              löschen, verwendet man <code class="inline-code">unset()</code>
               - wie bei einem normalen Array
             </li>
           </ul>
@@ -422,90 +442,15 @@
           <h2>Sicherheit: Session-Fixation</h2>
           <ul>
             <li>
-              Bei einer <b>Session-Fixation</b>-Attacke schiebt ein
-              Angreifer einem Opfer eine ihm bereits bekannte Session-ID
-              unter
+              Bei einer <b>Session-Fixation</b>-Attacke schiebt ein Angreifer
+              einem Opfer eine ihm bereits bekannte Session-ID unter
             </li>
             <li>
-              Gefährlich vor allem rund um den Login: wechselt die ID beim
-              Login nicht, könnte der Angreifer danach dieselbe - jetzt
-              eingeloggte - Session verwenden
+              Gefährlich vor allem rund um den Login: wechselt die ID beim Login
+              nicht, könnte der Angreifer danach dieselbe - jetzt eingeloggte -
+              Session verwenden
             </li>
           </ul>
-        </section>
-
-        <!-- session_regenerate_id() -->
-        <section>
-          <h2><code class="inline-code">session_regenerate_id()</code></h2>
-          <ul>
-            <li>
-              Direkt nach einem erfolgreichen Login sollte eine neue
-              Session-ID erzeugt werden - die bisherigen Daten bleiben dabei
-              erhalten
-            </li>
-          </ul>
-          <pre>
-                    <code class="php" data-trim data-line-numbers>
-                        &lt;?php
-                        session_start();
-                        if ($loginErfolgreich) {
-                            session_regenerate_id(true); // true = alte Session-Datei löschen
-                            $_SESSION["username"] = "admin";
-                        }
-                    </code>
-                </pre>
-        </section>
-
-        <!-- Timeout -->
-        <section>
-          <h2>Session-Timeout selbst umsetzen</h2>
-          <ul>
-            <li>
-              PHP beendet Sessions nicht automatisch nach einer bestimmten
-              Zeit der Inaktivität - das muss man selbst prüfen
-            </li>
-            <li>
-              Übliches Muster: Zeitstempel des letzten Zugriffs mitspeichern
-              und bei jedem Request vergleichen
-            </li>
-          </ul>
-          <pre>
-                    <code class="php" data-trim data-line-numbers>
-                        &lt;?php
-                        session_start();
-                        $timeout = 600; // 10 Minuten
-                        if (isset($_SESSION["lastActivity"]) && time() - $_SESSION["lastActivity"] > $timeout) {
-                            session_destroy();
-                        }
-                        $_SESSION["lastActivity"] = time();
-                    </code>
-                </pre>
-        </section>
-
-        <!-- Flash-Messages -->
-        <section>
-          <h2>Flash-Messages</h2>
-          <ul>
-            <li>
-              Eine <b>Flash-Message</b> ist eine Nachricht, die nur beim
-              nächsten Seitenaufruf einmalig angezeigt und danach
-              automatisch wieder entfernt wird (z.B. "Login erfolgreich")
-            </li>
-          </ul>
-          <pre>
-                    <code class="php" data-trim data-line-numbers>
-                        &lt;?php
-                        session_start();
-                        // Beim Setzen (z.B. direkt nach dem Login):
-                        $_SESSION["flash"] = "Login erfolgreich!";
-
-                        // Beim Anzeigen (z.B. auf der nächsten Seite):
-                        if (isset($_SESSION["flash"])) {
-                            echo $_SESSION["flash"];
-                            unset($_SESSION["flash"]); // nur einmal anzeigen
-                        }
-                    </code>
-                </pre>
         </section>
 
         <!-- TL;DR -->
@@ -514,8 +459,8 @@
           <ul>
             <li>
               HTTP ist zustandslos - <b>Sessions</b> erlauben es, Daten
-              serverseitig über mehrere Requests hinweg für einen Besucher
-              zu speichern
+              serverseitig über mehrere Requests hinweg für einen Besucher zu
+              speichern
             </li>
             <li>
               <code class="inline-code">session_start()</code>
@@ -523,19 +468,18 @@
               Cookie mit der Session-ID
             </li>
             <li>
-              <code class="inline-code">$_SESSION</code> ist ein
-              superglobales Array zum Lesen/Schreiben;
+              <code class="inline-code">$_SESSION</code> ist ein superglobales
+              Array zum Lesen/Schreiben;
               <code class="inline-code">isset()</code> prüft auf Existenz,
-              <code class="inline-code">unset()</code> entfernt einzelne
-              Werte
+              <code class="inline-code">unset()</code> entfernt einzelne Werte
             </li>
             <li>
-              <code class="inline-code">session_destroy()</code> beendet
-              eine Session vollständig (z.B. beim Logout)
+              <code class="inline-code">session_destroy()</code> beendet eine
+              Session vollständig (z.B. beim Logout)
             </li>
             <li>
-              <code class="inline-code">session_regenerate_id()</code> nach
-              dem Login schützt vor Session-Fixation
+              <code class="inline-code">session_regenerate_id()</code> nach dem
+              Login schützt vor Session-Fixation
             </li>
           </ul>
         </section>
