@@ -1,0 +1,112 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+\usepackage{parskip}
+
+\setlength{\parindent}{0pt} % Keine Einrückungen
+\setlength{\emergencystretch}{3em} % verhindert, dass lange \texttt-Wörter in den Rand ragen
+
+\title{Modul 295 - Aufgabenblatt 08}
+\author{von Lukas Meier}
+\date{Unterricht vom 20.10.2026}
+
+\begin{document}
+
+\maketitle
+
+Dieses Aufgabenblatt wiederholt die Themen der Lektionen 01 bis 07 und dient als Vorbereitung auf die Prüfung I. Alle Aufgaben bauen auf einem kleinen Beispiel auf: der Verwaltung einer Bibliothek.
+
+\section{Projekt vorbereiten}
+
+Erstellen Sie im \texttt{htdocs}-Ordner Ihrer XAMPP-Installation einen neuen Ordner \texttt{php-repetition} und speichern Sie die Datei \texttt{index.php}, welche Sie auf dem Netzwerkordner finden, darin. Öffnen Sie danach \texttt{http://localhost/php-repetition/} im Browser.
+
+\section{Variablen und Datentypen}
+
+Legen Sie für ein Buch die Variablen \texttt{\$title} (\texttt{"{}Clean Code"{}}), \texttt{\$pages} (\texttt{464}), \texttt{\$rating} (\texttt{4.5}) und \texttt{\$available} (\texttt{true}) an. Geben Sie jede Variable mit \texttt{var\_dump()} aus und prüfen Sie, dass PHP jeweils den erwarteten Datentyp erkannt hat. Definieren Sie ausserdem mit \texttt{const} eine Konstante \texttt{MAX\_LOANS} mit dem Wert \texttt{3}.
+
+\section{Type Casting und Vergleiche}
+
+Ein Wert aus einer URL ist immer ein String. Legen Sie deshalb die Variable \texttt{\$input = "{}464"{}} an. Vergleichen Sie \texttt{\$input} einmal mit \texttt{==} und einmal mit \texttt{===} mit \texttt{\$pages} und geben Sie beide Ergebnisse mit \texttt{var\_dump()} aus. Wandeln Sie \texttt{\$input} danach mit \texttt{(int)} in eine Ganzzahl um und wiederholen Sie den Vergleich mit \texttt{===}.
+
+\section{Operatoren}
+
+Eine Person liest \texttt{25} Seiten pro Tag. Berechnen Sie mit \texttt{\$pages}, wie viele \emph{volle} Tage sie für das Buch braucht (\texttt{intdiv()}) und wie viele Seiten danach noch übrig bleiben (Modulo-Operator \texttt{\%}). Setzen Sie die Ausgabe Schritt für Schritt mit dem Operator \texttt{.=} in einer Variable \texttt{\$message} zusammen, z.B. \texttt{"{}18 volle Tage, danach noch 14 Seiten"{}}, und geben Sie sie aus.
+
+\section{Bedingungen}
+
+\begin{enumerate}
+    \item Geben Sie mit \texttt{if}, \texttt{elseif} und \texttt{else} anhand von \texttt{\$rating} eine Bewertung aus: ab \texttt{4.5} \texttt{"{}Top"{}}, ab \texttt{3} \texttt{"{}Gut"{}}, sonst \texttt{"{}Mittelmässig"{}}.
+    \item Geben Sie mit dem ternären Operator \texttt{?:} abhängig von \texttt{\$available} entweder \texttt{"{}ausleihbar"{}} oder \texttt{"{}ausgeliehen"{}} aus.
+    \item Lesen Sie den Namen der Person aus dem URL-Parameter \texttt{\$\_GET["{}user"{}]}. Verwenden Sie den Null-Coalescing-Operator \texttt{??}, damit \texttt{"{}Gast"{}} verwendet wird, falls der Parameter fehlt. Geben Sie \texttt{"{}Hallo, <Name>!"{}} aus und testen Sie die Seite mit und ohne \texttt{?user=Mia}.
+\end{enumerate}
+
+\section{Arrays}
+
+Legen Sie ein Array \texttt{\$books} an, das vier Bücher enthält. Jedes Buch ist ein assoziatives Array mit den Schlüsseln \texttt{"{}title"{}}, \texttt{"{}author"{}}, \texttt{"{}pages"{}} und \texttt{"{}available"{}}. Fügen Sie danach mit \texttt{[]} ein fünftes Buch hinzu. Geben Sie die Anzahl Bücher mit \texttt{count()} sowie den Titel des \emph{zweiten} Buches aus. Mindestens ein Buch soll \texttt{"{}available"{} => false} haben.
+
+\section{Schleifen}
+
+\begin{enumerate}
+    \item Geben Sie mit einer \texttt{foreach}-Schleife jedes Buch im Format \texttt{"{}Clean Code von Robert C. Martin (464 Seiten)"{}} aus. Überspringen Sie dabei mit \texttt{continue} alle Bücher, die nicht verfügbar sind.
+    \item Berechnen Sie in derselben Schleife die Summe der Seiten aller \emph{verfügbaren} Bücher und geben Sie sie nach der Schleife aus.
+    \item Geben Sie mit einer \texttt{for}-Schleife die Zahlen von \texttt{MAX\_LOANS} bis \texttt{1} rückwärts aus (\texttt{"{}3 2 1"{}}).
+\end{enumerate}
+
+\section{Funktionen}
+
+\begin{enumerate}
+    \item Schreiben Sie eine Funktion \texttt{readingDays(int \$pages, int \$pagesPerDay = 25): int}, welche die Anzahl Tage zurückgibt, die man für ein Buch braucht. Angefangene Tage zählen als ganzer Tag (verwenden Sie \texttt{ceil()} und wandeln Sie das Ergebnis mit \texttt{(int)} um). Testen Sie die Funktion einmal mit und einmal ohne zweites Argument.
+    \item Schreiben Sie eine Funktion \texttt{formatBook(array \$book): string}, die ein Buch-Array im Format aus Aufgabe 7 als String \emph{zurückgibt} (nicht ausgibt). Verwenden Sie die Funktion in einer neuen \texttt{foreach}-Schleife über alle Bücher.
+\end{enumerate}
+
+\section{Referenzen}
+
+Schreiben Sie eine Funktion \texttt{borrowBook(array \&\$book): void}, die \texttt{\$book["{}available"{}]} auf \texttt{false} setzt. Rufen Sie die Funktion mit \texttt{\$books[0]} auf und geben Sie \texttt{\$books[0]["{}available"{}]} vorher und nachher mit \texttt{var\_dump()} aus. Was passiert, wenn Sie das \texttt{\&} entfernen? Halten Sie Ihre Antwort als Kommentar fest.
+
+\section{Arrow Functions}
+
+\begin{enumerate}
+    \item Erstellen Sie mit \texttt{array\_filter()} und einer Arrow Function ein neues Array \texttt{\$longBooks}, das nur Bücher mit mehr als \texttt{300} Seiten enthält.
+    \item Erstellen Sie mit \texttt{array\_map()} und einer Arrow Function ein Array \texttt{\$titles}, das nur die Titel aller Bücher enthält. Geben Sie die Titel mit \texttt{implode("{}, "{}, \$titles)} als eine Zeile aus.
+\end{enumerate}
+
+\section{Klassen}
+
+Definieren Sie eine Klasse \texttt{Book} mit den \texttt{private}-Eigenschaften \texttt{\$title} (string), \texttt{\$author} (string), \texttt{\$pages} (int) und \texttt{\$available} (bool, Default \texttt{true}). Setzen Sie die Eigenschaften mit Constructor Property Promotion. Ergänzen Sie:
+
+\begin{itemize}
+    \item die Getter \texttt{getTitle()} und \texttt{isAvailable()},
+    \item eine Methode \texttt{describe(): string}, die \texttt{"{}Clean Code von Robert C. Martin (464 Seiten)"{}} zurückgibt,
+    \item eine Methode \texttt{borrow(): bool}, die das Buch ausleiht und \texttt{true} zurückgibt. Ist das Buch bereits ausgeliehen, gibt sie \texttt{false} zurück.
+\end{itemize}
+
+Erzeugen Sie ein \texttt{Book}-Objekt und rufen Sie \texttt{borrow()} zweimal auf. Geben Sie beide Rückgabewerte mit \texttt{var\_dump()} aus.
+
+\section{Vererbung}
+
+Erstellen Sie eine Klasse \texttt{EBook}, die von \texttt{Book} erbt und zusätzlich die Eigenschaft \texttt{\$fileSizeMb} (float) besitzt. Überschreiben Sie die Methode \texttt{describe()} so, dass sie mit \texttt{parent::describe()} den Text der Elternklasse übernimmt und \texttt{"{} - E-Book, 2.5 MB"{}} anhängt. Erzeugen Sie ein \texttt{EBook}-Objekt und geben Sie \texttt{describe()} aus.
+
+\section{Sessions: Merkliste}
+
+Rufen Sie ganz am Anfang der Datei \texttt{session\_start()} auf. Bauen Sie danach eine Merkliste:
+
+\begin{itemize}
+    \item Wird die Seite mit \texttt{?remember=<Titel>} aufgerufen, fügen Sie den Titel dem Array \texttt{\$\_SESSION["{}watchlist"{}]} hinzu - aber nur, wenn er noch nicht darin vorkommt (\texttt{in\_array()}). Initialisieren Sie das Array beim ersten Mal mit \texttt{??} als leeres Array.
+    \item Wird die Seite mit \texttt{?clear=1} aufgerufen, entfernen Sie die Merkliste mit \texttt{unset()}.
+    \item Geben Sie die Anzahl Einträge sowie alle Titel der Merkliste aus.
+\end{itemize}
+
+Testen Sie die Merkliste, indem Sie mehrere Titel nacheinander hinzufügen und die Seite neu laden.
+
+\section{Bonusaufgabe: Ausleih-Limit}
+
+Erweitern Sie die Merkliste um Ausleihen. Speichern Sie die ausgeliehenen Titel in \texttt{\$\_SESSION["{}loans"{}]}.
+
+\begin{itemize}
+    \item \texttt{?borrow=<Titel>} leiht einen Titel aus. Ist das Limit \texttt{MAX\_LOANS} bereits erreicht oder ist der Titel schon ausgeliehen, wird stattdessen eine passende Fehlermeldung angezeigt.
+    \item \texttt{?return=<Titel>} gibt einen Titel zurück. Suchen Sie dazu den Index mit \texttt{array\_search()} und entfernen Sie den Eintrag mit \texttt{unset()}.
+    \item Speichern Sie nach jeder erfolgreichen Aktion eine Flash-Message in \texttt{\$\_SESSION["{}flash"{}]} (z.B. \texttt{"{}Clean Code wurde ausgeliehen."{}}). Geben Sie sie direkt nach der Verarbeitung von \texttt{borrow} und \texttt{return} aus und entfernen Sie sie danach mit \texttt{unset()}, damit sie beim Neuladen nicht erneut erscheint.
+\end{itemize}
+
+\end{document}
