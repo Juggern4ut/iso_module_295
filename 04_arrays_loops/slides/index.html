@@ -17,6 +17,15 @@
     <link rel="stylesheet" href="plugin/highlight/monokai.css" />
 
     <style>
+      :root {
+        --accent: #80ed99;
+        --accent-2: #ffd166;
+        --panel: rgba(255, 255, 255, 0.07);
+        --border: rgba(255, 255, 255, 0.22);
+        --danger: #ff6b6b;
+        --ok: #7bd88f;
+      }
+
       td {
         font-size: 21px;
       }
@@ -34,6 +43,179 @@
       thead td {
         font-weight: bold;
         font-size: 24px;
+      }
+
+      .reveal p {
+        line-height: 1.35;
+      }
+
+      .lead {
+        font-size: 0.85em;
+      }
+
+      .small {
+        font-size: 0.7em;
+      }
+
+      .muted {
+        color: #bbbbbb;
+      }
+
+      .accent {
+        color: var(--accent);
+      }
+
+      .ok {
+        color: var(--ok);
+      }
+
+      .danger {
+        color: var(--danger);
+      }
+
+      .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+        margin-top: 24px;
+      }
+
+      .grid-3 {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 14px;
+        margin-top: 24px;
+      }
+
+      /* verhindert, dass breite Code-Blöcke ein Grid sprengen */
+      .grid-2 > *,
+      .grid-3 > * {
+        min-width: 0;
+      }
+
+      .panel {
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 18px;
+        background: var(--panel);
+        text-align: left;
+        font-size: 70%;
+      }
+
+      .panel h3 {
+        margin-top: 0;
+        margin-bottom: 10px;
+        color: var(--accent);
+        font-size: 1.3em;
+      }
+
+      .panel ul {
+        margin: 0 0 0 1em;
+      }
+
+      .panel p {
+        margin: 0;
+      }
+
+      .badge {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 999px;
+        font-size: 0.55em;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+        border: 1px solid var(--border);
+        margin-bottom: 10px;
+      }
+
+      .badge--quiz {
+        color: var(--accent-2);
+        border-color: var(--accent-2);
+      }
+
+      .badge--danger {
+        color: var(--danger);
+        border-color: var(--danger);
+      }
+
+      .flow {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr auto 1fr;
+        gap: 10px;
+        align-items: center;
+        margin-top: 24px;
+        font-size: 0.62em;
+      }
+
+      .flow .box {
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 18px 12px;
+        background: var(--panel);
+      }
+
+      .flow .arrow {
+        font-size: 1.15em;
+        color: var(--accent-2);
+      }
+
+      .reveal table.compare {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .reveal table.compare td,
+      .reveal table.compare th {
+        border: 1px solid var(--border);
+        padding: 8px 10px;
+        font-size: 24px;
+        text-align: left;
+      }
+
+      .reveal table.compare th {
+        color: var(--accent);
+        font-size: 26px;
+      }
+
+      .callout {
+        margin-top: 24px;
+        padding: 14px 20px;
+        border-left: 4px solid var(--accent);
+        background: rgba(128, 237, 153, 0.12);
+        text-align: left;
+        font-size: 0.66em;
+      }
+
+      .callout--danger {
+        border-left-color: var(--danger);
+        background: rgba(237, 128, 128, 0.12);
+      }
+
+      .callout--warn {
+        border-left-color: var(--accent-2);
+        background: rgba(255, 209, 102, 0.12);
+      }
+
+      .callout > * {
+        margin: 0 !important;
+      }
+
+      .answer {
+        font-size: 0.7em;
+        color: var(--accent-2);
+      }
+
+      /* kompakter Code, z.B. in grid-2-Spalten */
+      .reveal pre.code-sm {
+        width: 100%;
+      }
+
+      .reveal pre.code-sm td {
+        font-size: 18px;
+      }
+
+      .tldr li {
+        font-size: 0.85em;
       }
     </style>
   </head>
@@ -80,19 +262,14 @@
 
         <!-- Rückblick -->
         <section>
+          <span class="badge">Rückblick</span>
           <h2>Rückblick: Bedingungen</h2>
-          <ul>
-            <li>
-              Mit <code class="inline-code">if</code> /
-              <code class="inline-code">elseif</code> /
-              <code class="inline-code">else</code> steuern wir den
-              Programmablauf abhängig von Bedingungen
-            </li>
-            <li>
-              Diese Bausteine brauchen wir gleich wieder - innerhalb von
-              Schleifen
-            </li>
-          </ul>
+          <p class="lead">
+            Mit <code class="inline-code">if</code> /
+            <code class="inline-code">elseif</code> /
+            <code class="inline-code">else</code> steuern wir den
+            Programmablauf abhängig von Bedingungen
+          </p>
           <pre>
                     <code class="php" data-trim data-line-numbers>
                         &lt;?php
@@ -105,12 +282,19 @@
                         }
                     </code>
                 </pre>
+          <div class="callout">
+            <p>
+              Diese Bausteine brauchen wir gleich wieder - innerhalb von
+              Schleifen
+            </p>
+          </div>
         </section>
 
         <!-- Was ist ein Array -->
         <section>
+          <span class="badge">Grundlagen</span>
           <h2>Was ist ein Array?</h2>
-          <ul>
+          <ul class="lead">
             <li>
               Ein Array ist eine <b>Variable</b>, die mehrere Werte auf
               einmal speichern kann
@@ -118,10 +302,6 @@
             <li>
               Statt für jeden Wert eine eigene Variable anzulegen, fasst man
               zusammengehörige Werte in einem Array zusammen
-            </li>
-            <li>
-              Jedes Element im Array hat einen <b>Schlüssel</b> (Index) und
-              einen <b>Wert</b>
             </li>
           </ul>
           <pre>
@@ -136,22 +316,22 @@
                         $fruits = ["Apfel", "Birne", "Kiwi"];
                     </code>
                 </pre>
+          <div class="callout">
+            <p>
+              Jedes Element im Array hat einen <b>Schlüssel</b> (Index) und
+              einen <b>Wert</b>
+            </p>
+          </div>
         </section>
 
         <!-- Indizierte Arrays anlegen -->
         <section>
+          <span class="badge">Grundlagen</span>
           <h2>Indizierte Arrays anlegen</h2>
-          <ul>
-            <li>
-              Bei einem <b>indizierten Array</b> vergibt PHP automatisch
-              numerische Schlüssel, beginnend bei <code class="inline-code">0</code>
-            </li>
-            <li>
-              Die eckige Klammer-Schreibweise <code class="inline-code">[]</code>
-              ist heute Standard, die alte Funktion
-              <code class="inline-code">array()</code> funktioniert weiterhin
-            </li>
-          </ul>
+          <p class="lead">
+            Bei einem <b>indizierten Array</b> vergibt PHP automatisch
+            numerische Schlüssel, beginnend bei <code class="inline-code">0</code>
+          </p>
           <pre>
                     <code class="php" data-trim data-line-numbers>
                         &lt;?php
@@ -163,20 +343,34 @@
                         echo $fruits[2]; // "Kiwi"
                     </code>
                 </pre>
+          <div class="callout callout--warn">
+            <p>
+              Die eckige Klammer-Schreibweise <code class="inline-code">[]</code>
+              ist heute Standard, die alte Funktion
+              <code class="inline-code">array()</code> funktioniert weiterhin
+            </p>
+          </div>
         </section>
 
         <!-- Zugriff und Ändern -->
         <section>
+          <span class="badge">Grundlagen</span>
           <h2>Elemente lesen und ändern</h2>
-          <ul>
-            <li>
-              Der Zugriff erfolgt über den Schlüssel in eckigen Klammern
-            </li>
-            <li>
-              Ein neues Element wird einfach mit einem neuen Schlüssel
-              zugewiesen - oder ohne Schlüssel angehängt
-            </li>
-          </ul>
+          <div class="grid-2">
+            <div class="panel">
+              <h3>Lesen</h3>
+              <p>
+                Der Zugriff erfolgt über den Schlüssel in eckigen Klammern
+              </p>
+            </div>
+            <div class="panel">
+              <h3>Hinzufügen</h3>
+              <p>
+                Ein neues Element wird einfach mit einem neuen Schlüssel
+                zugewiesen - oder ohne Schlüssel angehängt
+              </p>
+            </div>
+          </div>
           <pre>
                     <code class="php" data-trim data-line-numbers>
                         &lt;?php
@@ -193,8 +387,9 @@
 
         <!-- Assoziative Arrays -->
         <section>
+          <span class="badge">Grundlagen</span>
           <h2>Assoziative Arrays</h2>
-          <ul>
+          <ul class="lead">
             <li>
               Bei einem <b>assoziativen Array</b> definiert man die
               Schlüssel selbst - meist als String
@@ -221,8 +416,9 @@
 
         <!-- Mehrdimensionale Arrays -->
         <section>
+          <span class="badge">Grundlagen</span>
           <h2>Mehrdimensionale Arrays</h2>
-          <ul>
+          <ul class="lead">
             <li>
               Ein Array-Element kann selbst wieder ein Array sein - so
               entstehen verschachtelte Strukturen
@@ -248,21 +444,31 @@
 
         <!-- Verhalten: dynamisch, count -->
         <section>
+          <span class="badge">Grundlagen</span>
           <h2>Verhalten von Arrays</h2>
-          <ul>
-            <li>
-              Arrays sind <b>dynamisch</b> - sie wachsen und schrumpfen
-              automatisch, es gibt keine feste Grösse
-            </li>
-            <li>
-              Ein Array kann Werte unterschiedlichen Typs enthalten
-              (Strings, Zahlen, Booleans, sogar weitere Arrays)
-            </li>
-            <li>
-              Mit <code class="inline-code">count()</code> ermittelt man die
-              Anzahl Elemente
-            </li>
-          </ul>
+          <div class="grid-3" style="margin-top: 10px">
+            <div class="panel">
+              <h3>Dynamisch</h3>
+              <p>
+                Arrays sind <b>dynamisch</b> - sie wachsen und schrumpfen
+                automatisch, es gibt keine feste Grösse
+              </p>
+            </div>
+            <div class="panel">
+              <h3>Gemischte Typen</h3>
+              <p>
+                Ein Array kann Werte unterschiedlichen Typs enthalten
+                (Strings, Zahlen, Booleans, sogar weitere Arrays)
+              </p>
+            </div>
+            <div class="panel">
+              <h3>Anzahl</h3>
+              <p>
+                Mit <code class="inline-code">count()</code> ermittelt man
+                die Anzahl Elemente
+              </p>
+            </div>
+          </div>
           <pre>
                     <code class="php" data-trim data-line-numbers>
                         &lt;?php
@@ -273,20 +479,41 @@
                 </pre>
         </section>
 
+        <!-- Quiz 1 -->
+        <section>
+          <span class="badge badge--quiz">Quiz</span>
+          <h2>Was gibt dieser Code aus?</h2>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        $fruits = ["Apfel", "Birne"];
+                        $fruits[] = "Kiwi";
+                        $fruits[0] = "Mango";
+
+                        echo count($fruits) . " " . $fruits[0];
+                    </code>
+                </pre>
+          <p class="fragment answer">
+            3 Mango - <code class="inline-code">[]</code> hängt ein Element
+            an, <code class="inline-code">$fruits[0]</code> wird überschrieben
+          </p>
+        </section>
+
         <!-- Array ausgeben -->
         <section>
+          <span class="badge">Grundlagen</span>
           <h2>Arrays ausgeben</h2>
-          <ul>
-            <li>
+          <div class="callout callout--danger" style="margin-top: 0">
+            <p>
               <code class="inline-code">echo</code> funktioniert nicht
               direkt mit Arrays
-            </li>
-            <li>
-              <code class="inline-code">print_r()</code> zeigt den Inhalt
-              lesbar an, <code class="inline-code">var_dump()</code> zeigt
-              zusätzlich die Datentypen
-            </li>
-          </ul>
+            </p>
+          </div>
+          <p class="lead">
+            <code class="inline-code">print_r()</code> zeigt den Inhalt
+            lesbar an, <code class="inline-code">var_dump()</code> zeigt
+            zusätzlich die Datentypen
+          </p>
           <pre>
                     <code class="php" data-trim data-line-numbers>
                         &lt;?php
@@ -303,8 +530,9 @@
 
         <!-- Elemente hinzufügen/entfernen -->
         <section>
+          <span class="badge">Array-Funktionen</span>
           <h2>Elemente hinzufügen und entfernen</h2>
-          <table>
+          <table class="compare">
             <tr>
               <td><code class="inline-code">array_push($arr, $val)</code></td>
               <td>Element am Ende hinzufügen</td>
@@ -330,22 +558,32 @@
 
         <!-- In Array suchen -->
         <section>
+          <span class="badge">Array-Funktionen</span>
           <h2>Im Array suchen</h2>
-          <ul>
-            <li>
-              <code class="inline-code">in_array()</code> prüft, ob ein
-              <b>Wert</b> im Array vorkommt
-            </li>
-            <li>
-              <code class="inline-code">array_search()</code> liefert den
-              <b>Schlüssel</b> eines gesuchten Werts (oder
-              <code class="inline-code">false</code>)
-            </li>
-            <li>
-              <code class="inline-code">array_key_exists()</code> prüft, ob
-              ein bestimmter <b>Schlüssel</b> existiert
-            </li>
-          </ul>
+          <div class="grid-3">
+            <div class="panel">
+              <h3>Wert?</h3>
+              <p>
+                <code class="inline-code">in_array()</code> prüft, ob ein
+                <b>Wert</b> im Array vorkommt
+              </p>
+            </div>
+            <div class="panel">
+              <h3>Wo?</h3>
+              <p>
+                <code class="inline-code">array_search()</code> liefert den
+                <b>Schlüssel</b> eines gesuchten Werts (oder
+                <code class="inline-code">false</code>)
+              </p>
+            </div>
+            <div class="panel">
+              <h3>Schlüssel?</h3>
+              <p>
+                <code class="inline-code">array_key_exists()</code> prüft,
+                ob ein bestimmter <b>Schlüssel</b> existiert
+              </p>
+            </div>
+          </div>
           <pre>
                     <code class="php" data-trim data-line-numbers>
                         &lt;?php
@@ -360,8 +598,9 @@
 
         <!-- Arrays sortieren -->
         <section>
+          <span class="badge">Array-Funktionen</span>
           <h2>Arrays sortieren</h2>
-          <table>
+          <table class="compare">
             <tr>
               <td><code class="inline-code">sort()</code></td>
               <td>Aufsteigend sortieren, Schlüssel neu vergeben</td>
@@ -391,8 +630,9 @@
 
         <!-- Weitere Array-Funktionen -->
         <section>
+          <span class="badge">Array-Funktionen</span>
           <h2>Weitere nützliche Array-Funktionen</h2>
-          <table>
+          <table class="compare">
             <tr>
               <td><code class="inline-code">array_merge($a, $b)</code></td>
               <td>Zwei Arrays zusammenführen</td>
@@ -425,8 +665,9 @@
 
         <!-- Wozu Schleifen -->
         <section>
+          <span class="badge">Schleifen</span>
           <h2>Wozu Schleifen?</h2>
-          <ul>
+          <ul class="lead" style="font-size: 0.75em">
             <li>
               Schleifen (Loops) führen einen Codeblock <b>mehrmals</b> aus,
               solange eine Bedingung zutrifft
@@ -455,8 +696,9 @@
 
         <!-- Übersicht Loop-Arten -->
         <section>
+          <span class="badge">Schleifen</span>
           <h2>Arten von Schleifen in PHP</h2>
-          <table>
+          <table class="compare">
             <tr>
               <td><code class="inline-code">while</code></td>
               <td>Solange eine Bedingung zutrifft (Prüfung vorher)</td>
@@ -479,8 +721,9 @@
 
         <!-- while -->
         <section>
+          <span class="badge">Schleifen</span>
           <h2><code class="inline-code">while</code>-Schleife</h2>
-          <p>
+          <p class="lead">
             Die Bedingung wird <b>vor</b> jedem Durchlauf geprüft. Ist sie
             von Anfang an <code class="inline-code">false</code>, wird der
             Codeblock kein einziges Mal ausgeführt.
@@ -501,12 +744,8 @@
 
         <!-- do-while -->
         <section>
+          <span class="badge">Schleifen</span>
           <h2><code class="inline-code">do-while</code>-Schleife</h2>
-          <p>
-            Der Codeblock wird zuerst <b>einmal ausgeführt</b> und die
-            Bedingung erst danach geprüft - daher läuft er mindestens
-            einmal.
-          </p>
           <pre>
                     <code class="php" data-trim data-line-numbers>
                         &lt;?php
@@ -519,12 +758,20 @@
                         // Ausgabe: 10 - obwohl die Bedingung nie zutrifft!
                     </code>
                 </pre>
+          <div class="callout callout--warn">
+            <p>
+              Der Codeblock wird zuerst <b>einmal ausgeführt</b> und die
+              Bedingung erst danach geprüft - daher läuft er mindestens
+              einmal.
+            </p>
+          </div>
         </section>
 
         <!-- for -->
         <section>
+          <span class="badge">Schleifen</span>
           <h2><code class="inline-code">for</code>-Schleife</h2>
-          <p>
+          <p class="lead">
             Fasst Startwert, Bedingung und Schrittzähler in einer Zeile
             zusammen - ideal, wenn die Anzahl Durchläufe von Anfang an klar
             ist.
@@ -543,8 +790,9 @@
 
         <!-- for über Array -->
         <section>
+          <span class="badge">Schleifen</span>
           <h2><code class="inline-code">for</code> mit Array-Index</h2>
-          <p>
+          <p class="lead">
             Mit <code class="inline-code">count()</code> lässt sich auch ein
             Array mit einer <code class="inline-code">for</code>-Schleife
             durchlaufen - dabei hat man Zugriff auf den Index.
@@ -563,11 +811,11 @@
 
         <!-- foreach -->
         <section>
+          <span class="badge">Schleifen</span>
           <h2><code class="inline-code">foreach</code>-Schleife</h2>
-          <p>
+          <p class="lead">
             Durchläuft jedes Element eines Arrays automatisch - ohne
-            Zähler und ohne Gefahr, sich beim Index zu vertun. Der
-            Standardweg, um Arrays zu durchlaufen.
+            Zähler und ohne Gefahr, sich beim Index zu vertun.
           </p>
           <pre>
                     <code class="php" data-trim data-line-numbers>
@@ -580,12 +828,16 @@
                         // Ausgabe: ApfelBirneKiwi
                     </code>
                 </pre>
+          <div class="callout">
+            <p>Der Standardweg, um Arrays zu durchlaufen.</p>
+          </div>
         </section>
 
         <!-- foreach mit Key/Value -->
         <section>
+          <span class="badge">Schleifen</span>
           <h2><code class="inline-code">foreach</code> mit Schlüssel und Wert</h2>
-          <p>
+          <p class="lead">
             Mit <code class="inline-code">as $key => $value</code> erhält
             man zusätzlich den Schlüssel - unerlässlich bei assoziativen
             Arrays.
@@ -609,19 +861,19 @@
 
         <!-- break/continue -->
         <section>
+          <span class="badge">Schleifen</span>
           <h2><code class="inline-code">break</code> und
           <code class="inline-code">continue</code></h2>
-          <ul>
-            <li>
-              <code class="inline-code">break</code> beendet die Schleife
-              sofort komplett
-            </li>
-            <li>
-              <code class="inline-code">continue</code> überspringt nur den
-              aktuellen Durchlauf und macht beim nächsten weiter
-            </li>
-          </ul>
-          <pre>
+          <div class="grid-2">
+            <div>
+              <div class="panel">
+                <h3>break</h3>
+                <p>
+                  <code class="inline-code">break</code> beendet die
+                  Schleife sofort komplett
+                </p>
+              </div>
+              <pre class="code-sm">
                     <code class="php" data-trim data-line-numbers>
                         &lt;?php
                         for ($i = 1; $i &lt;= 10; $i++) {
@@ -631,31 +883,67 @@
                             echo $i;
                         }
                         // Ausgabe: 1234
-
+                    </code>
+                </pre>
+            </div>
+            <div>
+              <div class="panel">
+                <h3>continue</h3>
+                <p>
+                  <code class="inline-code">continue</code> überspringt nur
+                  den aktuellen Durchlauf und macht beim nächsten weiter
+                </p>
+              </div>
+              <pre class="code-sm">
+                    <code class="php" data-trim data-line-numbers>
                         for ($i = 1; $i &lt;= 5; $i++) {
                             if ($i % 2 == 0) {
-                                continue; // gerade Zahlen überspringen
+                                // gerade Zahlen überspringen
+                                continue;
                             }
                             echo $i;
                         }
                         // Ausgabe: 135
                     </code>
                 </pre>
+            </div>
+          </div>
+        </section>
+
+        <!-- Quiz 2 -->
+        <section>
+          <span class="badge badge--quiz">Quiz</span>
+          <h2>Was gibt dieser Code aus?</h2>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        for ($i = 1; $i &lt;= 6; $i++) {
+                            if ($i == 2) {
+                                continue;
+                            }
+                            if ($i == 5) {
+                                break;
+                            }
+                            echo $i;
+                        }
+                    </code>
+                </pre>
+          <p class="fragment answer">
+            134 - die 2 wird übersprungen, bei 5 stoppt die Schleife (6
+            wird nie erreicht)
+          </p>
         </section>
 
         <!-- Endlosschleifen -->
         <section>
+          <span class="badge badge--danger">Fehlerquelle</span>
           <h2>Vorsicht: Endlosschleifen</h2>
-          <ul>
-            <li>
+          <div class="callout callout--danger" style="margin-top: 0">
+            <p>
               Wird die Bedingung nie <code class="inline-code">false</code>,
               läuft die Schleife für immer weiter und blockiert das Skript
-            </li>
-            <li>
-              Häufigste Ursache: der Zähler wird vergessen oder falsch
-              verändert
-            </li>
-          </ul>
+            </p>
+          </div>
           <pre>
                     <code class="php" data-trim data-line-numbers>
                         &lt;?php
@@ -667,12 +955,19 @@
                         }
                     </code>
                 </pre>
+          <div class="callout callout--warn">
+            <p>
+              Häufigste Ursache: der Zähler wird vergessen oder falsch
+              verändert
+            </p>
+          </div>
         </section>
 
         <!-- Kombiniertes Beispiel -->
         <section>
+          <span class="badge">Praxis</span>
           <h2>Schleifen und Arrays kombiniert</h2>
-          <p>
+          <p class="lead">
             Ein typisches Muster: mit einer Schleife alle Elemente
             durchgehen und dabei eine Bedingung prüfen.
           </p>
@@ -696,7 +991,7 @@
         <!-- TL;DR -->
         <section>
           <h2>TL;DR</h2>
-          <ul>
+          <ul class="tldr">
             <li>
               Ein <b>Array</b> speichert mehrere Werte in einer Variable -
               <b>indiziert</b> (automatische Nummerierung) oder

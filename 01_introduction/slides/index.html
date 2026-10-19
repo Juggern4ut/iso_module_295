@@ -17,6 +17,15 @@
     <link rel="stylesheet" href="plugin/highlight/monokai.css" />
 
     <style>
+      :root {
+        --accent: #80ed99;
+        --accent-2: #ffd166;
+        --panel: rgba(255, 255, 255, 0.07);
+        --border: rgba(255, 255, 255, 0.22);
+        --danger: #ff6b6b;
+        --ok: #7bd88f;
+      }
+
       td {
         font-size: 21px;
       }
@@ -34,6 +43,179 @@
       thead td {
         font-weight: bold;
         font-size: 24px;
+      }
+
+      .reveal p {
+        line-height: 1.35;
+      }
+
+      .lead {
+        font-size: 0.85em;
+      }
+
+      .small {
+        font-size: 0.7em;
+      }
+
+      .muted {
+        color: #bbbbbb;
+      }
+
+      .accent {
+        color: var(--accent);
+      }
+
+      .ok {
+        color: var(--ok);
+      }
+
+      .danger {
+        color: var(--danger);
+      }
+
+      .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+        margin-top: 24px;
+      }
+
+      /* verhindert, dass breite Code-Blöcke ein Grid sprengen */
+      .grid-2 > * {
+        min-width: 0;
+      }
+
+      .panel {
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 18px;
+        background: var(--panel);
+        text-align: left;
+        font-size: 70%;
+      }
+
+      .panel h3 {
+        margin-top: 0;
+        margin-bottom: 10px;
+        color: var(--accent);
+        font-size: 1.3em;
+      }
+
+      .panel ul {
+        margin: 0 0 0 1em;
+      }
+
+      .panel p {
+        margin: 0;
+      }
+
+      .panel pre {
+        width: 100%;
+        font-size: 0.85em;
+        margin: 10px 0 0 0;
+      }
+
+      .badge {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 999px;
+        font-size: 0.55em;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+        border: 1px solid var(--border);
+        margin-bottom: 10px;
+      }
+
+      .badge--quiz {
+        color: var(--accent-2);
+        border-color: var(--accent-2);
+      }
+
+      .badge--danger {
+        color: var(--danger);
+        border-color: var(--danger);
+      }
+
+      .flow {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr auto 1fr;
+        gap: 10px;
+        align-items: center;
+        margin-top: 24px;
+        font-size: 0.62em;
+      }
+
+      .flow .box {
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 18px 12px;
+        background: var(--panel);
+      }
+
+      .flow .arrow {
+        font-size: 1.15em;
+        color: var(--accent-2);
+      }
+
+      .callout {
+        margin-top: 24px;
+        padding: 14px 20px;
+        border-left: 4px solid var(--accent);
+        background: rgba(128, 237, 153, 0.12);
+        text-align: left;
+        font-size: 0.66em;
+      }
+
+      .callout--danger {
+        border-left-color: var(--danger);
+        background: rgba(237, 128, 128, 0.12);
+      }
+
+      .callout--warn {
+        border-left-color: var(--accent-2);
+        background: rgba(255, 209, 102, 0.12);
+      }
+
+      .callout > * {
+        margin: 0 !important;
+      }
+
+      .answer {
+        font-size: 0.7em;
+        color: var(--accent-2);
+      }
+
+      .tldr li {
+        font-size: 0.85em;
+      }
+
+      .grid-3 {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 14px;
+        margin-top: 24px;
+      }
+
+      .grid-3 > * {
+        min-width: 0;
+      }
+
+      .reveal table.compare {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .reveal table.compare td,
+      .reveal table.compare th {
+        border: 1px solid var(--border);
+        padding: 8px 10px;
+        font-size: 24px;
+        text-align: left;
+      }
+
+      .reveal table.compare th {
+        color: var(--accent);
+        font-size: 26px;
       }
     </style>
   </head>
@@ -85,38 +267,67 @@
 
         <!-- Was ist PHP -->
         <section>
+          <span class="badge">Grundlagen</span>
           <h2>Was ist PHP?</h2>
-          <ul>
-            <li>
-              <b>PHP</b> steht für <i>"PHP: Hypertext Preprocessor"</i> (ein
-              rekursives Akronym)
-            </li>
-            <li>Eine <b>serverseitige</b> Skriptsprache</li>
-            <li>Wird auf dem <b>Server</b> ausgeführt, nicht im Browser</li>
-            <li>Der Server liefert dem Client fertiges <b>HTML</b> aus</li>
-          </ul>
+          <p class="lead">
+            <b>PHP</b> steht für <i>"PHP: Hypertext Preprocessor"</i> (ein
+            rekursives Akronym)
+          </p>
+          <div class="grid-2">
+            <div class="panel">
+              <h3>Serverseitig</h3>
+              <ul>
+                <li>Eine <b>serverseitige</b> Skriptsprache</li>
+                <li>Wird auf dem <b>Server</b> ausgeführt, nicht im Browser</li>
+              </ul>
+            </div>
+            <div class="panel">
+              <h3>Ergebnis</h3>
+              <p>Der Server liefert dem Client fertiges <b>HTML</b> aus</p>
+            </div>
+          </div>
         </section>
 
         <!-- Was ist PHP - Ablauf -->
         <section>
+          <span class="badge">Grundlagen</span>
           <h2>Was ist PHP?</h2>
-          <p>So läuft eine Anfrage an eine PHP-Seite ab:</p>
-          <ol>
-            <li>
+          <p class="lead">So läuft eine Anfrage an eine PHP-Seite ab:</p>
+          <div
+            class="flow"
+            style="grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr"
+          >
+            <div class="box">
+              <b>1.</b><br />
               Browser fordert eine <code class="inline-code">.php</code>-Datei
               vom Server an
-            </li>
-            <li>Der Server führt den PHP-Code aus</li>
-            <li>PHP generiert daraus HTML (und ggf. CSS/JS)</li>
-            <li>Der Server sendet das fertige HTML an den Browser zurück</li>
-          </ol>
-          <p>Der Browser sieht <b>niemals</b> den PHP-Quellcode selbst.</p>
+            </div>
+            <div class="arrow">→</div>
+            <div class="box">
+              <b>2.</b><br />
+              Der Server führt den PHP-Code aus
+            </div>
+            <div class="arrow">→</div>
+            <div class="box">
+              <b>3.</b><br />
+              PHP generiert daraus HTML (und ggf. CSS/JS)
+            </div>
+            <div class="arrow">→</div>
+            <div class="box">
+              <b>4.</b><br />
+              Der Server sendet das fertige HTML an den Browser zurück
+            </div>
+          </div>
+          <div class="callout">
+            <p>Der Browser sieht <b>niemals</b> den PHP-Quellcode selbst.</p>
+          </div>
         </section>
 
         <!-- Fakten -->
         <section>
+          <span class="badge">Hintergrund</span>
           <h2>Einige Fakten zu PHP</h2>
-          <table>
+          <table class="compare">
             <tr>
               <td>Erfinder</td>
               <td>Rasmus Lerdorf</td>
@@ -146,119 +357,163 @@
 
         <!-- Fakten - Verbreitung -->
         <section>
+          <span class="badge">Hintergrund</span>
           <h2>Einige Fakten zu PHP</h2>
-          <ul>
-            <li>
+          <div class="callout">
+            <p>
               PHP wird auf einem sehr grossen Teil aller Websites weltweit
               eingesetzt
-            </li>
-            <li>Bekannte Systeme, die (teilweise) auf PHP basieren:</li>
-            <ul>
-              <li>WordPress</li>
-              <li>Wikipedia (MediaWiki)</li>
-              <li>Facebook (ursprünglich)</li>
-              <li>Shopware</li>
-            </ul>
-          </ul>
+            </p>
+          </div>
+          <div class="grid-2">
+            <div class="panel">
+              <h3>Verbreitung</h3>
+              <p>Bekannte Systeme, die (teilweise) auf PHP basieren:</p>
+            </div>
+            <div class="panel">
+              <ul>
+                <li>WordPress</li>
+                <li>Wikipedia (MediaWiki)</li>
+                <li>Facebook (ursprünglich)</li>
+                <li>Shopware</li>
+              </ul>
+            </div>
+          </div>
         </section>
 
         <!-- Warum PHP -->
         <section>
+          <span class="badge">Grundlagen</span>
           <h2>Warum PHP?</h2>
-          <ul>
-            <li>
-              <b>Einfacher Einstieg:</b> Übersichtliche Syntax, viele
-              Lernressourcen
-            </li>
-            <li>
-              <b>Weit verbreitet:</b> Grosse Community, viele Frameworks (z.B.
-              Laravel, Symfony)
-            </li>
-            <li>
-              <b>Günstiges Hosting:</b> Fast jeder Webhoster unterstützt PHP
-              nativ
-            </li>
-            <li>
-              <b>Direkt in HTML einbettbar:</b> Kein separater Build-Step nötig
-            </li>
-            <li>
-              <b>Plattformunabhängig:</b> Läuft auf Windows, Linux und macOS
-            </li>
-          </ul>
+          <div class="grid-3">
+            <div class="panel">
+              <h3>Einfacher Einstieg</h3>
+              <p>Übersichtliche Syntax, viele Lernressourcen</p>
+            </div>
+            <div class="panel">
+              <h3>Weit verbreitet</h3>
+              <p>Grosse Community, viele Frameworks (z.B. Laravel, Symfony)</p>
+            </div>
+            <div class="panel">
+              <h3>Günstiges Hosting</h3>
+              <p>Fast jeder Webhoster unterstützt PHP nativ</p>
+            </div>
+          </div>
+          <div class="grid-2">
+            <div class="panel">
+              <h3>Direkt in HTML einbettbar</h3>
+              <p>Kein separater Build-Step nötig</p>
+            </div>
+            <div class="panel">
+              <h3>Plattformunabhängig</h3>
+              <p>Läuft auf Windows, Linux und macOS</p>
+            </div>
+          </div>
         </section>
 
         <!-- Voraussetzungen -->
         <section>
+          <span class="badge">Setup</span>
           <h2>Voraussetzungen</h2>
           <p>
             Um PHP-Dateien im Browser zu öffnen, benötigen wir einen
             <b>Webserver mit PHP</b>.
           </p>
-          <p>Die einfachste Lösung dafür heisst <b>XAMPP</b>.</p>
+          <div class="callout">
+            <p>Die einfachste Lösung dafür heisst <b>XAMPP</b>.</p>
+          </div>
         </section>
 
         <!-- Was ist XAMPP -->
         <section>
+          <span class="badge">Setup</span>
           <h2>Was ist XAMPP?</h2>
-          <ul>
-            <li>
-              Ein kostenloses Software-Paket, das alles Nötige auf einmal
-              installiert:
-            </li>
-            <ul>
-              <li><b>X</b> - läuft auf Windows, Linux und macOS</li>
-              <li><b>A</b>pache (Webserver)</li>
-              <li><b>M</b>ariaDB/MySQL (Datenbank)</li>
-              <li><b>P</b>HP</li>
-              <li><b>P</b>erl</li>
-            </ul>
-            <li>Kein manuelles Einrichten von Apache oder PHP nötig</li>
-            <li>
-              Download unter <code class="inline-code">apachefriends.org</code>
-            </li>
-          </ul>
+          <div class="grid-2">
+            <div class="panel">
+              <h3>Paket</h3>
+              <p>
+                Ein kostenloses Software-Paket, das alles Nötige auf einmal
+                installiert:
+              </p>
+              <ul>
+                <li><b>X</b> - läuft auf Windows, Linux und macOS</li>
+                <li><b>A</b>pache (Webserver)</li>
+                <li><b>M</b>ariaDB/MySQL (Datenbank)</li>
+                <li><b>P</b>HP</li>
+                <li><b>P</b>erl</li>
+              </ul>
+            </div>
+            <div class="panel">
+              <h3>Vorteil</h3>
+              <ul>
+                <li>Kein manuelles Einrichten von Apache oder PHP nötig</li>
+                <li>
+                  Download unter
+                  <code class="inline-code">apachefriends.org</code>
+                </li>
+              </ul>
+            </div>
+          </div>
         </section>
 
         <!-- XAMPP installieren -->
         <section>
+          <span class="badge">Setup</span>
           <h2>XAMPP installieren</h2>
-          <ol>
-            <li>
+          <div class="flow">
+            <div class="box">
+              <b>1. Download</b><br />
               Installer für Ihr Betriebssystem von
               <code class="inline-code">apachefriends.org</code> herunterladen
-            </li>
-            <li>
+            </div>
+            <div class="arrow">→</div>
+            <div class="box">
+              <b>2. Installieren</b><br />
               Installer ausführen (Standardeinstellungen übernehmen genügt)
-            </li>
-            <li>Das <b>XAMPP Control Panel</b> öffnen</li>
-          </ol>
+            </div>
+            <div class="arrow">→</div>
+            <div class="box">
+              <b>3. Öffnen</b><br />
+              Das <b>XAMPP Control Panel</b> öffnen
+            </div>
+          </div>
         </section>
 
         <!-- XAMPP Control Panel -->
         <section>
+          <span class="badge">Setup</span>
           <h2>Server starten</h2>
-          <p>
+          <p class="lead">
             Im XAMPP Control Panel neben
             <code class="inline-code">Apache</code> auf <b>Start</b> klicken.
           </p>
-          <ul>
-            <li>Das Modul wird grün hinterlegt, sobald es läuft</li>
-            <li>
-              <code class="inline-code">MySQL</code> wird für diese Lektion noch
-              nicht benötigt
-            </li>
-            <li>Mit <b>Stop</b> wird der Server wieder angehalten</li>
-          </ul>
+          <div class="grid-2">
+            <div class="panel">
+              <h3>Start</h3>
+              <ul>
+                <li>Das Modul wird grün hinterlegt, sobald es läuft</li>
+                <li>Mit <b>Stop</b> wird der Server wieder angehalten</li>
+              </ul>
+            </div>
+            <div class="panel">
+              <h3>MySQL</h3>
+              <p>
+                <code class="inline-code">MySQL</code> wird für diese Lektion
+                noch nicht benötigt
+              </p>
+            </div>
+          </div>
         </section>
 
         <!-- htdocs -->
         <section>
+          <span class="badge">Setup</span>
           <h2>Der htdocs-Ordner</h2>
-          <p>
+          <p class="lead">
             Apache liefert nur Dateien aus, die sich im Ordner
             <code class="inline-code">htdocs</code> befinden.
           </p>
-          <table>
+          <table class="compare">
             <tr>
               <td>Windows</td>
               <td><code class="inline-code">C:\xampp\htdocs\</code></td>
@@ -276,16 +531,19 @@
               <td><code class="inline-code">/opt/lampp/htdocs/</code></td>
             </tr>
           </table>
-          <p>
-            Erstellen Sie darin einen eigenen Projektordner, z.B.
-            <code class="inline-code">php-intro</code>.
-          </p>
+          <div class="callout">
+            <p>
+              Erstellen Sie darin einen eigenen Projektordner, z.B.
+              <code class="inline-code">php-intro</code>.
+            </p>
+          </div>
         </section>
 
         <!-- Aufruf im Browser -->
         <section>
+          <span class="badge">Setup</span>
           <h2>Aufruf im Browser</h2>
-          <p>
+          <p class="lead">
             Läuft Apache, ist jedes Projekt im
             <code class="inline-code">htdocs</code>-Ordner über
             <code class="inline-code">localhost</code> erreichbar - ganz ohne
@@ -296,17 +554,20 @@
                         http://localhost/php-intro/
                     </code>
                 </pre>
-          <p>
-            Apache sucht im aufgerufenen Ordner automatisch nach einer
-            <code class="inline-code">index.php</code> (oder
-            <code class="inline-code">index.html</code>).
-          </p>
+          <div class="callout">
+            <p>
+              Apache sucht im aufgerufenen Ordner automatisch nach einer
+              <code class="inline-code">index.php</code> (oder
+              <code class="inline-code">index.html</code>).
+            </p>
+          </div>
         </section>
 
         <!-- Hello World -->
         <section>
+          <span class="badge">Praxis</span>
           <h2>Hello World</h2>
-          <p>
+          <p class="lead">
             PHP-Code wird mit den Tags
             <code class="inline-code">&lt;?php ... ?&gt;</code> eingeleitet und
             beendet.
@@ -317,40 +578,51 @@
                         echo "Hallo Welt!";
                     </code>
                 </pre>
-          <p>
-            Speichern Sie diesen Code als
-            <code class="inline-code">index.php</code> in Ihrem Projektordner
-            unter <code class="inline-code">htdocs</code>.
-          </p>
+          <div class="callout">
+            <p>
+              Speichern Sie diesen Code als
+              <code class="inline-code">index.php</code> in Ihrem Projektordner
+              unter <code class="inline-code">htdocs</code>.
+            </p>
+          </div>
         </section>
 
         <!-- Hello World - im Browser -->
         <section>
+          <span class="badge">Praxis</span>
           <h2>Hello World</h2>
-          <ul>
-            <li>
+          <div class="flow">
+            <div class="box">
+              <b>Apache</b><br />
               Im XAMPP Control Panel sicherstellen, dass
               <code class="inline-code">Apache</code> läuft
-            </li>
-            <li>
+            </div>
+            <div class="arrow">→</div>
+            <div class="box">
+              <b>Browser</b><br />
               Im Browser
               <code class="inline-code">http://localhost/php-intro/</code>
               öffnen
-            </li>
-            <li>
+            </div>
+            <div class="arrow">→</div>
+            <div class="box">
+              <b>Ergebnis</b><br />
               Ausgabe im Browser: <code class="inline-code">Hallo Welt!</code>
-            </li>
-          </ul>
-          <p>
-            <code class="inline-code">echo</code> gibt Text aus, welcher direkt
-            in das an den Browser gesendete HTML geschrieben wird.
-          </p>
+            </div>
+          </div>
+          <div class="callout">
+            <p>
+              <code class="inline-code">echo</code> gibt Text aus, welcher
+              direkt in das an den Browser gesendete HTML geschrieben wird.
+            </p>
+          </div>
         </section>
 
         <!-- Hello World - kombiniert mit HTML -->
         <section>
+          <span class="badge">Praxis</span>
           <h2>Hello World</h2>
-          <p>PHP kann beliebig oft mit HTML kombiniert werden.</p>
+          <p class="lead">PHP kann beliebig oft mit HTML kombiniert werden.</p>
           <pre>
                     <code class="php" data-trim data-line-numbers>
                         &lt;!DOCTYPE html&gt;
@@ -367,37 +639,48 @@
 
         <!-- Variablen -->
         <section>
+          <span class="badge">Grundlagen</span>
           <h2>Grundlagen: Variablen</h2>
-          <ul>
-            <li>
-              Variablen beginnen in PHP immer mit einem
-              <code class="inline-code">$</code>
-            </li>
-            <li>
-              PHP ist <b>lose typisiert</b> - eine Typangabe ist nicht nötig
-            </li>
-            <li>
-              Der Typ wird automatisch anhand des zugewiesenen Wertes bestimmt
-            </li>
-            <li>
-              Variablennamen sind
-              <code class="inline-code">case-sensitive</code>
-            </li>
-          </ul>
-          <pre>
+          <div class="grid-2">
+            <div class="panel">
+              <h3>Regeln</h3>
+              <ul>
+                <li>
+                  Variablen beginnen in PHP immer mit einem
+                  <code class="inline-code">$</code>
+                </li>
+                <li>
+                  PHP ist <b>lose typisiert</b> - eine Typangabe ist nicht nötig
+                </li>
+                <li>
+                  Der Typ wird automatisch anhand des zugewiesenen Wertes
+                  bestimmt
+                </li>
+                <li>
+                  Variablennamen sind
+                  <code class="inline-code">case-sensitive</code>
+                </li>
+              </ul>
+            </div>
+            <div class="panel">
+              <h3>Beispiel</h3>
+              <pre>
                     <code class="php" data-trim data-line-numbers>
                         &lt;?php
                         $name = "Anna";
                         $age = 24;
                     </code>
                 </pre>
+            </div>
+          </div>
         </section>
 
         <!-- Variablen - Datentypen -->
         <section>
+          <span class="badge">Grundlagen</span>
           <h2>Grundlagen: Variablen</h2>
-          <p>Die wichtigsten Datentypen in PHP:</p>
-          <table>
+          <p class="lead">Die wichtigsten Datentypen in PHP:</p>
+          <table class="compare">
             <tr>
               <td><code class="inline-code">string</code></td>
               <td>Zeichenkette</td>
@@ -436,6 +719,7 @@
 
         <!-- Variablen - Beispiel -->
         <section>
+          <span class="badge">Praxis</span>
           <h2>Grundlagen: Variablen</h2>
           <pre>
                     <code class="php" data-trim data-line-numbers>
@@ -451,16 +735,43 @@
                         var_dump($price);
                     </code>
                 </pre>
-          <p>
-            <code class="inline-code">var_dump()</code> zeigt Wert
-            <b>und</b> Typ einer Variable an - sehr nützlich beim Debuggen.
+          <div class="callout">
+            <p>
+              <code class="inline-code">var_dump()</code> zeigt Wert
+              <b>und</b> Typ einer Variable an - sehr nützlich beim Debuggen.
+            </p>
+          </div>
+        </section>
+
+        <!-- Quiz 1 -->
+        <section>
+          <span class="badge badge--quiz">Quiz</span>
+          <h2>Was gibt dieser Code aus?</h2>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        $a = "24";
+                        $b = 24;
+                        $c = 24.0;
+
+                        var_dump($a);
+                        var_dump($b);
+                        var_dump($c);
+                    </code>
+                </pre>
+          <p class="fragment answer">
+            string(2) "24" · int(24) · float(24) - der Typ hängt nur vom
+            zugewiesenen Wert ab
           </p>
         </section>
 
         <!-- Variablen - Strings kombinieren -->
         <section>
+          <span class="badge">Grundlagen</span>
           <h2>Grundlagen: Variablen</h2>
-          <p>Texte und Variablen lassen sich auf zwei Arten kombinieren:</p>
+          <p class="lead">
+            Texte und Variablen lassen sich auf zwei Arten kombinieren:
+          </p>
           <pre>
                     <code class="php" data-trim data-line-numbers>
                         &lt;?php
@@ -473,26 +784,52 @@
                         echo "Hallo $name!";
                     </code>
                 </pre>
-          <ul>
-            <li>
-              <code class="inline-code">.</code> verbindet (konkateniert)
-              Strings
-            </li>
-            <li>
-              Variablen in <code class="inline-code">"..."</code> werden
-              automatisch ersetzt
-            </li>
-            <li>
+          <div class="grid-2">
+            <div class="panel">
+              <p>
+                <code class="inline-code">.</code> verbindet (konkateniert)
+                Strings
+              </p>
+            </div>
+            <div class="panel">
+              <p>
+                Variablen in <code class="inline-code">"..."</code> werden
+                automatisch ersetzt
+              </p>
+            </div>
+          </div>
+          <div class="callout callout--warn">
+            <p>
               In <code class="inline-code">'...'</code> (einfache
               Anführungszeichen) funktioniert das <b>nicht</b>
-            </li>
-          </ul>
+            </p>
+          </div>
+        </section>
+
+        <!-- Quiz 2 -->
+        <section>
+          <span class="badge badge--quiz">Quiz</span>
+          <h2>Was gibt dieser Code aus?</h2>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        $name = "Anna";
+                        $age = 24;
+
+                        echo "Hallo " . $name . "! ";
+                        echo 'Alter: $age';
+                    </code>
+                </pre>
+          <p class="fragment answer">
+            Hallo Anna! Alter: $age - in einfachen Anführungszeichen wird
+            <code class="inline-code">$age</code> nicht ersetzt
+          </p>
         </section>
 
         <!-- TL;DR -->
         <section>
           <h2>TL;DR</h2>
-          <ul>
+          <ul class="tldr">
             <li>
               PHP ist eine serverseitige Skriptsprache von Rasmus Lerdorf (seit
               1994)
