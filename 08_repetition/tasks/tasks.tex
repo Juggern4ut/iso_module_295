@@ -106,7 +106,7 @@ Erweitern Sie die Merkliste um Ausleihen. Speichern Sie die ausgeliehenen Titel 
 \begin{itemize}
     \item \texttt{?borrow=<Titel>} leiht einen Titel aus. Ist das Limit \texttt{MAX\_LOANS} bereits erreicht oder ist der Titel schon ausgeliehen, wird stattdessen eine passende Fehlermeldung angezeigt.
     \item \texttt{?return=<Titel>} gibt einen Titel zurück. Suchen Sie dazu den Index mit \texttt{array\_search()} und entfernen Sie den Eintrag mit \texttt{unset()}.
-    \item Speichern Sie nach jeder erfolgreichen Aktion eine Flash-Message in \texttt{\$\_SESSION["{}flash"{}]} (z.B. \texttt{"{}Clean Code wurde ausgeliehen."{}}). Geben Sie sie direkt nach der Verarbeitung von \texttt{borrow} und \texttt{return} aus und entfernen Sie sie danach mit \texttt{unset()}, damit sie beim Neuladen nicht erneut erscheint.
+    \item Geben Sie nach jeder erfolgreichen Aktion eine Bestätigung aus (z.B. \texttt{"{}Clean Code wurde ausgeliehen."{}}).
 \end{itemize}
 
 \end{document}

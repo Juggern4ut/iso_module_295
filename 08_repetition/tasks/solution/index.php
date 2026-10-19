@@ -215,7 +215,7 @@ if (isset($_GET["borrow"])) {
         echo "Fehler: Sie dürfen maximal " . MAX_LOANS . " Bücher ausleihen.<br>";
     } else {
         $_SESSION["loans"][] = $bookTitle;
-        $_SESSION["flash"] = $bookTitle . " wurde ausgeliehen.";
+        echo $bookTitle . " wurde ausgeliehen.<br>";
     }
 }
 
@@ -224,14 +224,8 @@ if (isset($_GET["return"])) {
 
     if ($index !== false) { // !== nötig, da Index 0 sonst als false gilt
         unset($_SESSION["loans"][$index]);
-        $_SESSION["flash"] = $_GET["return"] . " wurde zurückgegeben.";
+        echo $_GET["return"] . " wurde zurückgegeben.<br>";
     }
-}
-
-// Flash-Message einmal ausgeben und danach sofort entfernen
-if (isset($_SESSION["flash"])) {
-    echo "<b>" . $_SESSION["flash"] . "</b><br>";
-    unset($_SESSION["flash"]);
 }
 
 echo "Ausgeliehen (" . count($_SESSION["loans"]) . "/" . MAX_LOANS . "): ";
