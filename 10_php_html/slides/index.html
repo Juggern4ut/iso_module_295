@@ -1,0 +1,971 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+
+    <title>Modul 295 - Lektion 10</title>
+
+    <link rel="stylesheet" href="dist/reset.css" />
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/black.css" />
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css" />
+
+    <style>
+      :root {
+        --accent: #80ed99;
+        --accent-2: #ffd166;
+        --panel: rgba(255, 255, 255, 0.07);
+        --border: rgba(255, 255, 255, 0.22);
+        --danger: #ff6b6b;
+        --ok: #7bd88f;
+      }
+
+      td {
+        font-size: 21px;
+      }
+
+      .inline-code {
+        font-family:
+          "Consolas", "Monaco", "Andale Mono", "Ubuntu Mono", monospace;
+        display: inline-block;
+        background-color: #2d2d2d;
+        padding: 2px 4px;
+        border-radius: 2px;
+        font-size: 75%;
+      }
+
+      thead td {
+        font-weight: bold;
+        font-size: 24px;
+      }
+
+      .reveal p {
+        line-height: 1.35;
+      }
+
+      .lead {
+        font-size: 0.85em;
+      }
+
+      .small {
+        font-size: 0.7em;
+      }
+
+      .muted {
+        color: #bbbbbb;
+      }
+
+      .accent {
+        color: var(--accent);
+      }
+
+      .ok {
+        color: var(--ok);
+      }
+
+      .danger {
+        color: var(--danger);
+      }
+
+      .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+        margin-top: 24px;
+      }
+
+      /* verhindert, dass breite Code-Blöcke ein Grid sprengen */
+      .grid-2 > * {
+        min-width: 0;
+      }
+
+      .panel {
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 18px;
+        background: var(--panel);
+        text-align: left;
+        font-size: 70%;
+      }
+
+      .panel h3 {
+        margin-top: 0;
+        margin-bottom: 10px;
+        color: var(--accent);
+        font-size: 1.3em;
+      }
+
+      .panel ul {
+        margin: 0 0 0 1em;
+      }
+
+      .panel p {
+        margin: 0;
+      }
+
+      .badge {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 999px;
+        font-size: 0.55em;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+        border: 1px solid var(--border);
+        margin-bottom: 10px;
+      }
+
+      .badge--quiz {
+        color: var(--accent-2);
+        border-color: var(--accent-2);
+      }
+
+      .badge--danger {
+        color: var(--danger);
+        border-color: var(--danger);
+      }
+
+      .flow {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr auto 1fr;
+        gap: 10px;
+        align-items: center;
+        margin-top: 24px;
+        font-size: 0.62em;
+      }
+
+      .flow .box {
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 18px 12px;
+        background: var(--panel);
+      }
+
+      .flow .arrow {
+        font-size: 1.15em;
+        color: var(--accent-2);
+      }
+
+      .callout {
+        margin-top: 24px;
+        padding: 14px 20px;
+        border-left: 4px solid var(--accent);
+        background: rgba(128, 237, 153, 0.12);
+        text-align: left;
+        font-size: 0.66em;
+      }
+
+      .callout--danger {
+        border-left-color: var(--danger);
+        background: rgba(237, 128, 128, 0.12);
+      }
+
+      .callout--warn {
+        border-left-color: var(--accent-2);
+        background: rgba(255, 209, 102, 0.12);
+      }
+
+      .callout > * {
+        margin: 0 !important;
+      }
+
+      .answer {
+        font-size: 0.7em;
+        color: var(--accent-2);
+      }
+
+      .tldr li {
+        font-size: 0.85em;
+      }
+
+      .reveal table.compare {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .reveal table.compare td,
+      .reveal table.compare th {
+        border: 1px solid var(--border);
+        padding: 8px 10px;
+        font-size: 24px;
+        text-align: left;
+      }
+
+      .reveal table.compare th {
+        color: var(--accent);
+        font-size: 26px;
+      }
+
+      /* reveal-Theme entfernt sonst den unteren Rahmen der letzten Zeile */
+      .reveal table.compare tbody tr:last-child td {
+        border-bottom: 1px solid var(--border);
+      }
+
+      .reveal pre.code-sm {
+        width: 100%;
+      }
+
+      .reveal pre.code-sm td {
+        font-size: 18px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <!-- Modulfolie -->
+        <section>
+          <h2>Modul 295</h2>
+          <hr />
+          <h3>Backend für Applikationen realisieren</h3>
+          <img
+            style="width: 200px"
+            src="assets/img/web-icon.png"
+            alt="Web Icon"
+          />
+        </section>
+
+        <!-- Titelfolie -->
+        <section>
+          <h2>10 - PHP &amp; HTML</h2>
+          <hr />
+          <h3>Dynamische Webseiten erzeugen</h3>
+          <img
+            style="width: 240px"
+            src="assets/img/php-logo.svg"
+            alt="PHP Logo"
+          />
+        </section>
+
+        <!-- Lernziele -->
+        <section>
+          <h2>Lernziele dieser Lektion</h2>
+          <ul>
+            <li>PHP und HTML in einer Datei kombinieren und die Kurzschreibweise <code class="inline-code">&lt;?= ?&gt;</code> einsetzen können</li>
+            <li>Mit Schleifen und Bedingungen (alternative Syntax) HTML-Listen und -Tabellen aus Arrays erzeugen können</li>
+            <li>Ausgaben mit <code class="inline-code">htmlspecialchars()</code> gegen XSS absichern können</li>
+            <li>Wiederkehrende Seitenteile mit <code class="inline-code">require</code> in eigene Dateien auslagern können</li>
+            <li>Links mit URL-Parametern erzeugen und auswerten können</li>
+          </ul>
+        </section>
+
+        <!-- Rückblick -->
+        <section>
+          <span class="badge">Rückblick</span>
+          <h2>Wo stehen wir?</h2>
+          <div class="grid-2">
+            <div class="panel">
+              <h3>Bisher</h3>
+              <p>
+                Wir haben mit <code class="inline-code">echo</code> vor allem
+                <b>einzelne Werte</b> ausgegeben - Text ohne Struktur
+              </p>
+            </div>
+            <div class="panel">
+              <h3>Heute</h3>
+              <p>
+                PHP erzeugt <b>ganze HTML-Seiten</b>: Listen, Tabellen und
+                Links aus unseren Daten
+              </p>
+            </div>
+          </div>
+          <div class="callout">
+            <p>
+              Grundlage für die nächsten Lektionen: Formulare, Validierung und
+              Dateien bauen alle darauf auf
+            </p>
+          </div>
+        </section>
+
+        <!-- PHP-Modus und HTML-Modus -->
+        <section>
+          <span class="badge">Grundlagen</span>
+          <h2>PHP-Modus und HTML-Modus</h2>
+          <ul class="lead">
+            <li>
+              Alles <b>ausserhalb</b> von
+              <code class="inline-code">&lt;?php ... ?&gt;</code> wird
+              unverändert an den Browser gesendet
+            </li>
+            <li>
+              Alles <b>innerhalb</b> wird auf dem Server ausgeführt - nur die
+              Ausgabe landet im HTML
+            </li>
+          </ul>
+          <pre>
+                    <code class="php-template" data-trim data-line-numbers="1,3,5">
+                        &lt;?php $name = "Anna"; ?&gt;
+                        &lt;h1&gt;Willkommen&lt;/h1&gt;
+                        &lt;p&gt;Hallo &lt;?php echo $name; ?&gt;&lt;/p&gt;
+                        &lt;p&gt;Heute ist ein schöner Tag.&lt;/p&gt;
+                        &lt;?php echo "&lt;p&gt;Tschüss!&lt;/p&gt;"; ?&gt;
+                    </code>
+                </pre>
+          <div class="callout">
+            <p>
+              Man kann beliebig oft zwischen PHP und HTML hin und her wechseln
+            </p>
+          </div>
+        </section>
+
+        <!-- Was kommt im Browser an? -->
+        <section>
+          <span class="badge">Grundlagen</span>
+          <h2>Was kommt im Browser an?</h2>
+          <div class="grid-2">
+            <div>
+              <p class="small accent">index.php (auf dem Server)</p>
+              <pre class="code-sm">
+                    <code class="php-template" data-trim data-line-numbers>
+                        &lt;?php $name = "Anna"; ?&gt;
+                        &lt;h1&gt;Willkommen&lt;/h1&gt;
+                        &lt;p&gt;Hallo &lt;?php echo $name; ?&gt;&lt;/p&gt;
+                    </code>
+                </pre>
+            </div>
+            <div>
+              <p class="small accent">Antwort (im Browser)</p>
+              <pre class="code-sm">
+                    <code class="html" data-trim data-line-numbers>
+                        &lt;h1&gt;Willkommen&lt;/h1&gt;
+                        &lt;p&gt;Hallo Anna&lt;/p&gt;
+                    </code>
+                </pre>
+            </div>
+          </div>
+          <div class="callout callout--warn">
+            <p>
+              Tipp: Mit <b>Ctrl + U</b> zeigt der Browser den Seitenquelltext
+              an - dort sieht man genau, welches HTML PHP erzeugt hat
+            </p>
+          </div>
+        </section>
+
+        <!-- Kurzschreibweise -->
+        <section>
+          <span class="badge">Grundlagen</span>
+          <h2>Kurzschreibweise <code class="inline-code">&lt;?=</code></h2>
+          <p class="lead">
+            Für einzelne Ausgaben gibt es eine kürzere Schreibweise - sie
+            entspricht <code class="inline-code">&lt;?php echo ...; ?&gt;</code>
+          </p>
+          <div class="grid-2">
+            <div>
+              <p class="small muted">lang</p>
+              <pre class="code-sm">
+                    <code class="php-template" data-trim>
+                        &lt;p&gt;Hallo &lt;?php echo $name; ?&gt;&lt;/p&gt;
+                    </code>
+                </pre>
+            </div>
+            <div>
+              <p class="small accent">kurz</p>
+              <pre class="code-sm">
+                    <code class="php-template" data-trim>
+                        &lt;p&gt;Hallo &lt;?= $name ?&gt;&lt;/p&gt;
+                    </code>
+                </pre>
+            </div>
+          </div>
+          <div class="callout">
+            <p>
+              Hinter <code class="inline-code">&lt;?=</code> darf ein beliebiger
+              Ausdruck stehen, z.B.
+              <code class="inline-code">&lt;?= $preis * 2 ?&gt;</code> - ein
+              Semikolon ist nicht nötig
+            </p>
+          </div>
+        </section>
+
+        <!-- echo vs Template -->
+        <section>
+          <span class="badge">Grundlagen</span>
+          <h2>HTML in Strings oder HTML mit PHP?</h2>
+          <div class="grid-2">
+            <div class="panel">
+              <h3>HTML in <code class="inline-code">echo</code></h3>
+              <pre class="code-sm">
+                    <code class="php" data-trim>
+                        &lt;?php
+                        echo "&lt;h2&gt;" . $titel . "&lt;/h2&gt;";
+                        echo "&lt;p class=\"info\"&gt;" . $text . "&lt;/p&gt;";
+                    </code>
+                </pre>
+              <p class="danger">Unübersichtlich, Anführungszeichen müssen maskiert werden</p>
+            </div>
+            <div class="panel">
+              <h3>PHP im HTML</h3>
+              <pre class="code-sm">
+                    <code class="php-template" data-trim>
+                        &lt;h2&gt;&lt;?= $titel ?&gt;&lt;/h2&gt;
+                        &lt;p class="info"&gt;&lt;?= $text ?&gt;&lt;/p&gt;
+                    </code>
+                </pre>
+              <p class="ok">Lesbar, der Editor erkennt das HTML</p>
+            </div>
+          </div>
+          <div class="callout">
+            <p>
+              Faustregel: Viel HTML mit wenig PHP &rarr; PHP ins HTML
+              einbetten, nicht umgekehrt
+            </p>
+          </div>
+        </section>
+
+        <!-- Quiz 1 -->
+        <section>
+          <span class="badge badge--quiz">Quiz</span>
+          <h2>Was sieht man im Seitenquelltext?</h2>
+          <pre>
+                    <code class="php-template" data-trim data-line-numbers>
+                        &lt;?php $preis = 4.5; // Kommentar A ?&gt;
+                        &lt;!-- Kommentar B --&gt;
+                        &lt;p&gt;Preis: &lt;?= $preis * 2 ?&gt; CHF&lt;/p&gt;
+                    </code>
+                </pre>
+          <p class="fragment answer">
+            <code class="inline-code">&lt;!-- Kommentar B --&gt;</code> und
+            <code class="inline-code">&lt;p&gt;Preis: 9 CHF&lt;/p&gt;</code> -
+            der PHP-Kommentar A bleibt auf dem Server, der HTML-Kommentar B
+            wird mitgeschickt
+          </p>
+        </section>
+
+        <!-- Schleifen mit HTML -->
+        <section>
+          <span class="badge">Schleifen</span>
+          <h2>Listen mit <code class="inline-code">foreach</code> erzeugen</h2>
+          <p class="lead">
+            Die Schleife kann mitten im HTML beginnen und enden - alles
+            dazwischen wird pro Durchlauf ausgegeben
+          </p>
+          <pre>
+                    <code class="php-template" data-trim data-line-numbers="4,6">
+                        &lt;?php $farben = ["Rot", "Grün", "Blau"]; ?&gt;
+
+                        &lt;ul&gt;
+                            &lt;?php foreach ($farben as $farbe) { ?&gt;
+                                &lt;li&gt;&lt;?= $farbe ?&gt;&lt;/li&gt;
+                            &lt;?php } ?&gt;
+                        &lt;/ul&gt;
+                    </code>
+                </pre>
+          <div class="callout callout--warn">
+            <p>
+              Funktioniert, aber die einzelne Klammer
+              <code class="inline-code">&lt;?php } ?&gt;</code> ist schwer zu
+              lesen - welche Schleife endet hier?
+            </p>
+          </div>
+        </section>
+
+        <!-- Alternative Syntax -->
+        <section>
+          <span class="badge">Schleifen</span>
+          <h2>Alternative Syntax</h2>
+          <p class="lead">
+            Statt <code class="inline-code">{ }</code> schreibt man einen
+            Doppelpunkt und beendet den Block mit
+            <code class="inline-code">endforeach;</code>
+          </p>
+          <pre>
+                    <code class="php-template" data-trim data-line-numbers="2,4">
+                        &lt;ul&gt;
+                            &lt;?php foreach ($farben as $farbe): ?&gt;
+                                &lt;li&gt;&lt;?= $farbe ?&gt;&lt;/li&gt;
+                            &lt;?php endforeach; ?&gt;
+                        &lt;/ul&gt;
+                    </code>
+                </pre>
+          <table class="compare">
+            <thead>
+              <tr><th>Anweisung</th><th>Beginn</th><th>Ende</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>foreach</td><td><code class="inline-code">foreach (...):</code></td><td><code class="inline-code">endforeach;</code></td></tr>
+              <tr><td>for</td><td><code class="inline-code">for (...):</code></td><td><code class="inline-code">endfor;</code></td></tr>
+              <tr><td>if</td><td><code class="inline-code">if (...):</code></td><td><code class="inline-code">endif;</code></td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- Tabelle aus Array -->
+        <section>
+          <span class="badge">Praxis</span>
+          <h2>Tabelle aus einem Array</h2>
+          <pre class="code-sm">
+                    <code class="php-template" data-trim data-line-numbers>
+                        &lt;?php
+                        $produkte = [
+                            ["name" =&gt; "Äpfel", "preis" =&gt; 3.5],
+                            ["name" =&gt; "Brot", "preis" =&gt; 6.5],
+                        ];
+                        ?&gt;
+                        &lt;table&gt;
+                            &lt;?php foreach ($produkte as $p): ?&gt;
+                                &lt;tr&gt;
+                                    &lt;td&gt;&lt;?= $p["name"] ?&gt;&lt;/td&gt;
+                                    &lt;td&gt;&lt;?= number_format($p["preis"], 2) ?&gt; CHF&lt;/td&gt;
+                                &lt;/tr&gt;
+                            &lt;?php endforeach; ?&gt;
+                        &lt;/table&gt;
+                    </code>
+                </pre>
+          <p class="small muted">
+            <code class="inline-code">number_format($zahl, 2)</code> gibt eine
+            Zahl mit 2 Nachkommastellen aus, z.B. <code class="inline-code">3.50</code>
+          </p>
+        </section>
+
+        <!-- Bedingungen im HTML -->
+        <section>
+          <span class="badge">Bedingungen</span>
+          <h2>Bedingungen im HTML</h2>
+          <p class="lead">
+            Auch <code class="inline-code">if</code> /
+            <code class="inline-code">else</code> gibt es in der alternativen
+            Syntax - damit werden ganze HTML-Blöcke ein- oder ausgeblendet
+          </p>
+          <pre>
+                    <code class="php-template" data-trim data-line-numbers>
+                        &lt;?php if ($p["vorrat"] === 0): ?&gt;
+                            &lt;span class="leer"&gt;Ausverkauft&lt;/span&gt;
+                        &lt;?php elseif ($p["vorrat"] &lt; 5): ?&gt;
+                            &lt;span&gt;Nur noch &lt;?= $p["vorrat"] ?&gt; Stück&lt;/span&gt;
+                        &lt;?php else: ?&gt;
+                            &lt;span&gt;An Lager&lt;/span&gt;
+                        &lt;?php endif; ?&gt;
+                    </code>
+                </pre>
+        </section>
+
+        <!-- Dynamische Attribute -->
+        <section>
+          <span class="badge">Praxis</span>
+          <h2>Dynamische Attribute</h2>
+          <p class="lead">
+            PHP kann auch Werte <b>innerhalb</b> von HTML-Attributen erzeugen,
+            z.B. CSS-Klassen oder Links
+          </p>
+          <pre>
+                    <code class="php-template" data-trim data-line-numbers>
+                        &lt;tr class="&lt;?= $p["vorrat"] === 0 ? "leer" : "" ?&gt;"&gt;
+                            &lt;td&gt;&lt;?= $p["name"] ?&gt;&lt;/td&gt;
+                        &lt;/tr&gt;
+
+                        &lt;img src="bilder/&lt;?= $p["bild"] ?&gt;" alt="&lt;?= $p["name"] ?&gt;"&gt;
+                    </code>
+                </pre>
+          <div class="callout callout--warn">
+            <p>
+              Die doppelten Anführungszeichen innerhalb von
+              <code class="inline-code">&lt;?= ?&gt;</code> sind kein Problem:
+              PHP wird zuerst ausgeführt, der Browser sieht nur das Ergebnis,
+              z.B. <code class="inline-code">class="leer"</code>
+            </p>
+          </div>
+        </section>
+
+        <!-- Quiz 2 -->
+        <section>
+          <span class="badge badge--quiz">Quiz</span>
+          <h2>Wie viele <code class="inline-code">&lt;li&gt;</code> entstehen?</h2>
+          <pre>
+                    <code class="php-template" data-trim data-line-numbers>
+                        &lt;?php $zahlen = [3, 8, 1, 6]; ?&gt;
+                        &lt;ul&gt;
+                        &lt;?php foreach ($zahlen as $z): ?&gt;
+                            &lt;?php if ($z &gt; 4): ?&gt;
+                                &lt;li&gt;&lt;?= $z ?&gt;&lt;/li&gt;
+                            &lt;?php endif; ?&gt;
+                        &lt;?php endforeach; ?&gt;
+                        &lt;/ul&gt;
+                    </code>
+                </pre>
+          <p class="fragment answer">
+            Zwei: <code class="inline-code">&lt;li&gt;8&lt;/li&gt;</code> und
+            <code class="inline-code">&lt;li&gt;6&lt;/li&gt;</code> - nur Zahlen
+            grösser als 4 erzeugen einen Listeneintrag
+          </p>
+        </section>
+
+        <!-- XSS -->
+        <section>
+          <span class="badge badge--danger">Sicherheit</span>
+          <h2>Gefahr: Eingaben direkt ausgeben</h2>
+          <pre>
+                    <code class="php-template" data-trim data-line-numbers>
+                        &lt;?php $name = $_GET["name"] ?? "Gast"; ?&gt;
+                        &lt;p&gt;Hallo &lt;?= $name ?&gt;&lt;/p&gt;
+                    </code>
+                </pre>
+          <p class="lead">
+            Aufruf mit
+            <code class="inline-code">index.php?name=&lt;script&gt;alert('Hack')&lt;/script&gt;</code>
+          </p>
+          <div class="callout callout--danger">
+            <p>
+              Der Browser führt das eingeschleuste JavaScript aus. Das nennt
+              man <b>Cross-Site-Scripting (XSS)</b> - so können z.B.
+              Session-Cookies gestohlen werden
+            </p>
+          </div>
+        </section>
+
+        <!-- htmlspecialchars -->
+        <section>
+          <span class="badge badge--danger">Sicherheit</span>
+          <h2><code class="inline-code">htmlspecialchars()</code></h2>
+          <p class="lead">
+            Wandelt Zeichen mit Sonderbedeutung in HTML in harmlose
+            <b>Entities</b> um - der Browser zeigt sie nur noch als Text an
+          </p>
+          <div class="grid-2">
+            <table class="compare">
+              <thead>
+                <tr><th>Zeichen</th><th>wird zu</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code class="inline-code">&lt;</code></td><td><code class="inline-code">&amp;lt;</code></td></tr>
+                <tr><td><code class="inline-code">&gt;</code></td><td><code class="inline-code">&amp;gt;</code></td></tr>
+                <tr><td><code class="inline-code">&amp;</code></td><td><code class="inline-code">&amp;amp;</code></td></tr>
+                <tr><td><code class="inline-code">"</code></td><td><code class="inline-code">&amp;quot;</code></td></tr>
+                <tr><td><code class="inline-code">'</code></td><td><code class="inline-code">&amp;#039;</code></td></tr>
+              </tbody>
+            </table>
+            <div>
+              <pre class="code-sm">
+                    <code class="php-template" data-trim>
+                        &lt;?= htmlspecialchars($name) ?&gt;
+                    </code>
+                </pre>
+              <div class="callout">
+                <p>
+                  Regel: Alles, was von <b>aussen</b> kommt (URL, Formular,
+                  Datei), bei der Ausgabe immer maskieren
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Hilfsfunktion e() -->
+        <section>
+          <span class="badge">Praxis</span>
+          <h2>Kurze Hilfsfunktion <code class="inline-code">e()</code></h2>
+          <p class="lead">
+            <code class="inline-code">htmlspecialchars()</code> ist lang und
+            wird oft gebraucht - eine eigene Funktion (vgl. Lektion 05) spart
+            Schreibarbeit
+          </p>
+          <pre>
+                    <code class="php-template" data-trim data-line-numbers>
+                        &lt;?php
+                        function e(string $text): string
+                        {
+                            return htmlspecialchars($text);
+                        }
+                        ?&gt;
+                        &lt;p&gt;Hallo &lt;?= e($name) ?&gt;&lt;/p&gt;
+                        &lt;a href="profil.php?name=&lt;?= e($name) ?&gt;"&gt;Profil&lt;/a&gt;
+                    </code>
+                </pre>
+          <div class="callout callout--warn">
+            <p>
+              Der Name <code class="inline-code">e()</code> (für "escape") ist
+              eine verbreitete Konvention, z.B. im Framework Laravel
+            </p>
+          </div>
+        </section>
+
+        <!-- Quiz 3 -->
+        <section>
+          <span class="badge badge--quiz">Quiz</span>
+          <h2>Was zeigt der Browser an?</h2>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        $name = "&lt;b&gt;Anna&lt;/b&gt;";
+                        echo "&lt;p&gt;" . htmlspecialchars($name) . "&lt;/p&gt;";
+                    </code>
+                </pre>
+          <p class="fragment answer">
+            Den Text <code class="inline-code">&lt;b&gt;Anna&lt;/b&gt;</code>
+            inklusive der spitzen Klammern, nicht fett. Nur der Inhalt von
+            <code class="inline-code">$name</code> wird maskiert, das
+            <code class="inline-code">&lt;p&gt;</code> bleibt ein echter Absatz
+          </p>
+        </section>
+
+        <!-- Dateien einbinden -->
+        <section>
+          <span class="badge">Dateien</span>
+          <h2>Wiederkehrende Teile auslagern</h2>
+          <p class="lead">
+            Kopf, Navigation und Fusszeile sind auf jeder Seite gleich - statt
+            sie zu kopieren, lagert man sie in eigene Dateien aus
+          </p>
+          <div class="flow">
+            <div class="box">
+              <b>header.php</b><br />
+              <code class="inline-code">&lt;!DOCTYPE html&gt;</code>,
+              <code class="inline-code">&lt;head&gt;</code>, Navigation
+            </div>
+            <div class="arrow">+</div>
+            <div class="box">
+              <b>index.php</b><br />
+              der eigentliche Inhalt der Seite
+            </div>
+            <div class="arrow">+</div>
+            <div class="box">
+              <b>footer.php</b><br />
+              Fusszeile,
+              <code class="inline-code">&lt;/body&gt;&lt;/html&gt;</code>
+            </div>
+          </div>
+          <div class="callout">
+            <p>
+              Änderungen am Layout müssen so nur noch an <b>einer</b> Stelle
+              gemacht werden
+            </p>
+          </div>
+        </section>
+
+        <!-- require -->
+        <section>
+          <span class="badge">Dateien</span>
+          <h2>Dateien einbinden mit <code class="inline-code">require</code></h2>
+          <div class="grid-2">
+            <div>
+              <p class="small accent">index.php</p>
+              <pre class="code-sm">
+                    <code class="php-template" data-trim data-line-numbers>
+                        &lt;?php
+                        $title = "Startseite";
+                        require "header.php";
+                        ?&gt;
+                        &lt;p&gt;Willkommen!&lt;/p&gt;
+                        &lt;?php require "footer.php"; ?&gt;
+                    </code>
+                </pre>
+            </div>
+            <div>
+              <p class="small accent">header.php</p>
+              <pre class="code-sm">
+                    <code class="php-template" data-trim data-line-numbers>
+                        &lt;!DOCTYPE html&gt;
+                        &lt;html lang="de"&gt;
+                        &lt;head&gt;
+                            &lt;title&gt;&lt;?= $title ?&gt;&lt;/title&gt;
+                        &lt;/head&gt;
+                        &lt;body&gt;
+                    </code>
+                </pre>
+            </div>
+          </div>
+          <div class="callout">
+            <p>
+              Die eingebundene Datei wird an dieser Stelle eingefügt und sieht
+              alle Variablen, die vorher definiert wurden (hier
+              <code class="inline-code">$title</code>)
+            </p>
+          </div>
+        </section>
+
+        <!-- include vs require -->
+        <section>
+          <span class="badge">Dateien</span>
+          <h2><code class="inline-code">include</code> oder <code class="inline-code">require</code>?</h2>
+          <table class="compare">
+            <thead>
+              <tr><th>Befehl</th><th>Wenn die Datei fehlt ...</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code class="inline-code">include</code></td><td>Warnung, das Skript läuft weiter</td></tr>
+              <tr><td><code class="inline-code">require</code></td><td>Fehler, das Skript bricht ab</td></tr>
+              <tr><td><code class="inline-code">require_once</code></td><td>wie <code class="inline-code">require</code>, bindet die Datei aber höchstens <b>einmal</b> ein</td></tr>
+            </tbody>
+          </table>
+          <div class="callout">
+            <p>
+              Für Dateien, ohne die die Seite nicht funktioniert, immer
+              <code class="inline-code">require</code> verwenden.
+              <code class="inline-code">require_once</code> eignet sich für
+              Dateien mit Funktionen oder Klassen, die nicht doppelt definiert
+              werden dürfen
+            </p>
+          </div>
+        </section>
+
+        <!-- Aufbau einer Seite -->
+        <section>
+          <span class="badge">Praxis</span>
+          <h2>Aufbau einer PHP-Seite</h2>
+          <pre class="code-sm">
+                    <code class="php-template" data-trim data-line-numbers="1-6|7-14">
+                        &lt;?php
+                        // 1. Logik: Daten laden, Eingaben verarbeiten
+                        session_start();
+                        require_once "funktionen.php";
+                        $produkte = ladeProdukte();
+                        $title = "Produkte";
+                        // 2. Ausgabe: nur noch HTML mit wenig PHP
+                        require "header.php";
+                        ?&gt;
+                        &lt;ul&gt;
+                            &lt;?php foreach ($produkte as $p): ?&gt;
+                                &lt;li&gt;&lt;?= e($p["name"]) ?&gt;&lt;/li&gt;
+                            &lt;?php endforeach; ?&gt;
+                        &lt;/ul&gt;
+                    </code>
+                </pre>
+          <div class="callout callout--warn">
+            <p>
+              Logik oben, Ausgabe unten: so steht
+              <code class="inline-code">session_start()</code> garantiert vor
+              der ersten Ausgabe
+            </p>
+          </div>
+        </section>
+
+        <!-- Links mit Parametern -->
+        <section>
+          <span class="badge">Praxis</span>
+          <h2>Links mit URL-Parametern</h2>
+          <p class="lead">
+            Jedes Produkt verlinkt auf eine Detailseite - der Index im Array
+            wird als Parameter <code class="inline-code">id</code> mitgegeben
+          </p>
+          <pre>
+                    <code class="php-template" data-trim data-line-numbers>
+                        &lt;?php foreach ($produkte as $id =&gt; $p): ?&gt;
+                            &lt;li&gt;
+                                &lt;a href="produkt.php?id=&lt;?= $id ?&gt;"&gt;
+                                    &lt;?= e($p["name"]) ?&gt;
+                                &lt;/a&gt;
+                            &lt;/li&gt;
+                        &lt;?php endforeach; ?&gt;
+                    </code>
+                </pre>
+          <p class="small muted">
+            Ergibt z.B. <code class="inline-code">&lt;a href="produkt.php?id=1"&gt;Brot&lt;/a&gt;</code>
+          </p>
+        </section>
+
+        <!-- Detailseite -->
+        <section>
+          <span class="badge">Praxis</span>
+          <h2>Die Detailseite</h2>
+          <pre class="code-sm">
+                    <code class="php-template" data-trim data-line-numbers>
+                        &lt;?php
+                        require_once "daten.php"; // enthält $produkte
+                        $id = (int) ($_GET["id"] ?? -1);
+                        $produkt = $produkte[$id] ?? null;
+                        ?&gt;
+                        &lt;?php if ($produkt === null): ?&gt;
+                            &lt;p&gt;Produkt nicht gefunden.&lt;/p&gt;
+                        &lt;?php else: ?&gt;
+                            &lt;h1&gt;&lt;?= e($produkt["name"]) ?&gt;&lt;/h1&gt;
+                            &lt;p&gt;&lt;?= number_format($produkt["preis"], 2) ?&gt; CHF&lt;/p&gt;
+                        &lt;?php endif; ?&gt;
+                        &lt;a href="index.php"&gt;Zurück zur Übersicht&lt;/a&gt;
+                    </code>
+                </pre>
+          <div class="callout callout--danger">
+            <p>
+              URL-Parameter kann jeder beliebig ändern - immer mit einem
+              ungültigen Wert rechnen (z.B. <code class="inline-code">?id=999</code>)
+            </p>
+          </div>
+        </section>
+
+        <!-- Typische Fehler -->
+        <section>
+          <span class="badge badge--danger">Achtung</span>
+          <h2>Typische Fehler</h2>
+          <div class="grid-2">
+            <div class="panel">
+              <h3><code class="inline-code">endforeach</code> vergessen</h3>
+              <p>
+                Führt zu <i>unexpected end of file</i> - der Fehler wird
+                in der <b>letzten</b> Zeile gemeldet
+              </p>
+            </div>
+            <div class="panel">
+              <h3><code class="inline-code">;</code> statt <code class="inline-code">:</code></h3>
+              <p>
+                Nach <code class="inline-code">foreach (...)</code> und
+                <code class="inline-code">if (...)</code> folgt ein Doppelpunkt
+              </p>
+            </div>
+            <div class="panel">
+              <h3>Ausgabe nicht maskiert</h3>
+              <p>
+                Daten von aussen ohne
+                <code class="inline-code">htmlspecialchars()</code> &rarr; XSS
+              </p>
+            </div>
+            <div class="panel">
+              <h3>Falscher Pfad</h3>
+              <p>
+                Tippfehler im Dateinamen bei
+                <code class="inline-code">require</code> &rarr; Abbruch
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- TL;DR -->
+        <section>
+          <h2>TL;DR</h2>
+          <ul class="tldr">
+            <li>
+              Alles ausserhalb von <code class="inline-code">&lt;?php ?&gt;</code>
+              geht unverändert an den Browser;
+              <code class="inline-code">&lt;?= $x ?&gt;</code> gibt einen Wert aus
+            </li>
+            <li>
+              Die alternative Syntax
+              (<code class="inline-code">foreach (...):</code> ...
+              <code class="inline-code">endforeach;</code>,
+              <code class="inline-code">if (...):</code> ...
+              <code class="inline-code">endif;</code>) macht Schleifen und
+              Bedingungen im HTML lesbar
+            </li>
+            <li>
+              Daten von aussen immer mit
+              <code class="inline-code">htmlspecialchars()</code> ausgeben -
+              sonst droht XSS
+            </li>
+            <li>
+              <code class="inline-code">require</code> bindet wiederkehrende
+              Teile wie Header und Footer ein
+            </li>
+            <li>
+              Links mit <code class="inline-code">?id=...</code> übergeben Werte
+              an die nächste Seite - nächste Lektion: Formulare
+            </li>
+          </ul>
+        </section>
+      </div>
+    </div>
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+      Reveal.initialize({
+        hash: true,
+        plugins: [RevealZoom, RevealMarkdown, RevealHighlight, RevealNotes],
+      });
+    </script>
+  </body>
+</html>

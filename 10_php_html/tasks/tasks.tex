@@ -1,0 +1,90 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+\usepackage{parskip}
+
+\setlength{\parindent}{0pt} % Keine Einrückungen
+\setlength{\emergencystretch}{3em}
+
+\title{Modul 295 - Aufgabenblatt 10}
+\author{von Lukas Meier}
+\date{Unterricht vom 03.11.2026}
+
+\begin{document}
+
+\maketitle
+
+In dieser Lektion bauen Sie Schritt für Schritt die Webseite eines kleinen Hofladens. Die Produkte sind bereits als Array in der Datei \texttt{index.php} vorhanden. Schauen Sie sich nach jeder Aufgabe mit \textbf{Ctrl + U} den Seitenquelltext an, um zu sehen, welches HTML PHP erzeugt hat.
+
+\section{Projekt vorbereiten}
+
+Erstellen Sie im \texttt{htdocs}-Ordner Ihrer XAMPP-Installation einen neuen Ordner \texttt{php-html} und speichern Sie die Datei \texttt{index.php}, welche Sie auf dem Netzwerkordner finden, darin. Öffnen Sie danach \texttt{http://localhost/php-html/} im Browser.
+
+\section{Überschrift und Datum}
+
+Geben Sie den Inhalt von \texttt{\$shopName} mit der Kurzschreibweise \texttt{<?= ... ?>} im \texttt{<h1>} und im \texttt{<title>} der Seite aus. Ergänzen Sie unter der Überschrift einen Absatz \texttt{"{}Heute ist der 03.11.2026"{}}, wobei Sie das aktuelle Datum mit \texttt{date("{}d.m.Y"{})} erzeugen. Kontrollieren Sie im Seitenquelltext, dass kein PHP-Code mehr sichtbar ist.
+
+\section{Liste der Kategorien}
+
+Erzeugen Sie aus dem Array \texttt{\$kategorien} eine ungeordnete Liste (\texttt{<ul>}) mit einem \texttt{<li>} pro Kategorie. Verwenden Sie dazu \texttt{foreach} in der alternativen Syntax (\texttt{foreach (...):} \ldots{} \texttt{endforeach;}).
+
+\section{Produkttabelle}
+
+Geben Sie alle Produkte aus \texttt{\$produkte} in einer HTML-Tabelle aus. Die Tabelle hat eine Kopfzeile mit den Spalten \emph{Produkt}, \emph{Kategorie}, \emph{Preis} und \emph{Vorrat} und danach eine Zeile pro Produkt. Geben Sie den Preis mit \texttt{number\_format(\$preis, 2)} und dem Zusatz \texttt{CHF} aus, also z.B. \texttt{3.50 CHF}.
+
+\section{Vorrat anzeigen}
+
+Ersetzen Sie die Zahl in der Spalte \emph{Vorrat} mit \texttt{if (...):} / \texttt{elseif (...):} / \texttt{else:} / \texttt{endif;} durch einen Text:
+
+\begin{itemize}
+    \item Vorrat \texttt{0}: \texttt{"{}Ausverkauft"{}}
+    \item Vorrat kleiner als \texttt{5}: \texttt{"{}Nur noch 3 Stück"{}} (mit der jeweiligen Anzahl)
+    \item sonst: \texttt{"{}An Lager"{}}
+\end{itemize}
+
+\section{Dynamische Attribute}
+
+Geben Sie allen Tabellenzeilen von ausverkauften Produkten die CSS-Klasse \texttt{ausverkauft} (z.B. \texttt{<tr class="{}ausverkauft"{}>}). Die passende CSS-Regel ist bereits vorhanden, die Zeilen erscheinen danach grau und durchgestrichen. Verwenden Sie dazu den ternären Operator innerhalb von \texttt{<?= ... ?>}.
+
+Geben Sie zusätzlich unter der Tabelle aus, wie viele Produkte verfügbar sind, z.B. \texttt{"{}4 von 6 Produkten sind an Lager."{}}
+
+\section{Begrüssung und htmlspecialchars()}
+
+Lesen Sie oben in der Datei den URL-Parameter \texttt{name} mit \texttt{\$\_GET["{}name"{}] ?? "{}Gast"{}} in die Variable \texttt{\$besucher} ein und geben Sie unter dem Datum \texttt{"{}Willkommen, Anna!"{}} aus.
+
+\begin{enumerate}
+    \item Testen Sie die Seite mit \texttt{index.php?name=Anna} und danach mit \texttt{index.php?name=<b>Anna</b>}. Was fällt Ihnen auf?
+    \item Testen Sie mit \texttt{index.php?name=<script>alert(1)</script>}.
+    \item Definieren Sie eine Funktion \texttt{e(string \$text): string}, die \texttt{htmlspecialchars(\$text)} zurückgibt, und verwenden Sie sie für die Ausgabe von \texttt{\$besucher}. Wiederholen Sie die beiden Tests und schauen Sie sich den Seitenquelltext an.
+    \item Verwenden Sie \texttt{e()} ab jetzt auch für die Ausgabe der Produktnamen und Kategorien.
+\end{enumerate}
+
+\section{Dateien auslagern}
+
+Teilen Sie \texttt{index.php} in mehrere Dateien auf:
+
+\begin{itemize}
+    \item \texttt{daten.php}: die Variablen \texttt{\$shopName}, \texttt{\$kategorien} und \texttt{\$produkte}
+    \item \texttt{funktionen.php}: die Funktion \texttt{e()}
+    \item \texttt{header.php}: alles vom \texttt{<!DOCTYPE html>} bis und mit der Überschrift \texttt{<h1>}. Der \texttt{<title>} soll aus der Variable \texttt{\$title} und dem Shopnamen bestehen, z.B. \texttt{"{}Produkte - Hofladen Sonnenhof"{}}.
+    \item \texttt{footer.php}: eine Fusszeile \texttt{<footer>} mit \texttt{"{}\copyright{} 2026 Hofladen Sonnenhof"{}} (Jahr mit \texttt{date("{}Y"{})}) sowie die schliessenden Tags \texttt{</body>} und \texttt{</html>}
+\end{itemize}
+
+Binden Sie die Dateien in \texttt{index.php} mit \texttt{require\_once} (Daten und Funktionen) bzw. \texttt{require} (Header und Footer) ein. Setzen Sie \texttt{\$title} \emph{vor} dem Einbinden von \texttt{header.php}. Die Seite muss danach genau gleich aussehen wie vorher.
+
+\section{Detailseite}
+
+Machen Sie in der Tabelle aus jedem Produktnamen einen Link auf \texttt{produkt.php?id=0}, \texttt{produkt.php?id=1} usw. Verwenden Sie dazu den Index des Arrays (\texttt{foreach (\$produkte as \$id => \$p):}).
+
+Erstellen Sie danach die Datei \texttt{produkt.php}. Sie bindet dieselben vier Dateien ein und liest die ID mit \texttt{(int) (\$\_GET["{}id"{}] ?? -1)} ein. Existiert ein Produkt mit dieser ID, zeigt die Seite dessen Name als Überschrift sowie Kategorie, Preis und Vorrat an, und der \texttt{<title>} enthält den Produktnamen. Existiert es nicht (z.B. \texttt{produkt.php?id=99}), erscheint \texttt{"{}Produkt nicht gefunden."{}}. In beiden Fällen gibt es einen Link \texttt{"{}Zurück zur Übersicht"{}} auf \texttt{index.php}.
+
+\section{Bonusaufgabe: Nach Kategorie filtern}
+
+Machen Sie aus der Liste der Kategorien aus Aufgabe 3 eine Navigation (\texttt{<nav>}) mit Links auf \texttt{index.php?kategorie=Obst} usw. sowie einem zusätzlichen Link \texttt{"{}Alle"{}} auf \texttt{index.php}.
+
+Ist der Parameter \texttt{kategorie} gesetzt, zeigt die Tabelle nur noch die Produkte dieser Kategorie an. Verwenden Sie dazu \texttt{array\_filter()} mit einer Arrow Function (vgl. Lektion 05). Da \texttt{array\_filter()} die Schlüssel des Arrays beibehält, funktionieren die Links auf die Detailseite weiterhin.
+
+Der Link der aktuell gewählten Kategorie (bzw. \texttt{"{}Alle"{}}, wenn keine gewählt ist) erhält die CSS-Klasse \texttt{aktiv} und wird dadurch fett dargestellt. Achten Sie darauf, dass der Wert von \texttt{\$\_GET["{}kategorie"{}]} nur über \texttt{e()} ausgegeben wird.
+
+\end{document}
