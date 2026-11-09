@@ -1,0 +1,95 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+\usepackage{parskip}
+
+\setlength{\parindent}{0pt} % Keine Einrückungen
+\setlength{\emergencystretch}{3em}
+
+\title{Modul 295 - Aufgabenblatt 11}
+\author{von Lukas Meier}
+\date{Unterricht vom 10.11.2026}
+
+\begin{document}
+
+\maketitle
+
+In dieser Lektion erhält der Hofladen aus Lektion 10 ein Suchfeld und ein Bestellformular. Die Produkte, die Versandkosten und die Zusatzoptionen sind bereits als Variablen in der Datei \texttt{index.php} vorhanden, ebenso die Funktion \texttt{e()} aus der letzten Lektion. Verwenden Sie \texttt{e()} für jede Ausgabe von Werten, die aus einem Formular stammen.
+
+\section{Projekt vorbereiten}
+
+Erstellen Sie im \texttt{htdocs}-Ordner Ihrer XAMPP-Installation einen neuen Ordner \texttt{php-formulare} und speichern Sie die Datei \texttt{index.php}, welche Sie auf dem Netzwerkordner finden, darin. Öffnen Sie danach \texttt{http://localhost/php-formulare/} im Browser.
+
+\section{Suchformular mit GET}
+
+Erstellen Sie ein Formular mit \texttt{method="{}get"{}}, einem Suchfeld (\texttt{<input type="{}search"{}>}) mit dem Namen \texttt{suche} und einem Button \texttt{"{}Suchen"{}}.
+
+\begin{enumerate}
+    \item Ist \texttt{\$\_GET["{}suche"{}]} gesetzt, geben Sie unter dem Formular \texttt{"{}Suchergebnisse für: Brot"{}} aus (mit dem jeweiligen Suchbegriff).
+    \item Geben Sie darunter in einer Liste alle Produkte aus, deren Name den Suchbegriff enthält. Verwenden Sie dazu \texttt{stripos(\$p["{}name"{}], \$suche) !== false}; \texttt{stripos()} sucht ohne Rücksicht auf Gross- und Kleinschreibung. Wird nichts gefunden, erscheint \texttt{"{}Keine Produkte gefunden."{}}
+    \item Suchen Sie nach \texttt{brot} und schauen Sie sich die URL an. Ändern Sie den Suchbegriff danach direkt in der URL.
+\end{enumerate}
+
+\section{Bestellformular}
+
+Erstellen Sie unter der Überschrift \emph{Bestellung} ein Formular mit \texttt{method="{}post"{}} und ohne \texttt{action}. Es enthält folgende Felder, jeweils mit einem \texttt{<label>}:
+
+\begin{itemize}
+    \item \emph{Name}: Textfeld mit dem Namen \texttt{name}
+    \item \emph{Produkt}: Auswahlliste (\texttt{<select>}) mit dem Namen \texttt{produkt}. Erzeugen Sie die Optionen mit \texttt{foreach} aus \texttt{\$produkte}. Als \texttt{value} dient der Index im Array, als Text der Name und der Preis, z.B. \texttt{"{}Karotten (2.80 CHF)"{}}.
+    \item \emph{Menge}: Zahlenfeld (\texttt{type="{}number"{}}) mit dem Namen \texttt{menge}, \texttt{min="{}1"{}} und dem Startwert \texttt{1}
+    \item \emph{Lieferung}: zwei Radio-Buttons mit dem Namen \texttt{lieferung} und den Werten \texttt{abholen} (\emph{Im Laden abholen}, vorausgewählt) und \texttt{post} (\emph{Per Post})
+    \item \emph{Bemerkung}: mehrzeiliges Textfeld (\texttt{<textarea>}) mit dem Namen \texttt{bemerkung}
+    \item ein Button \texttt{"{}Bestellen"{}}
+\end{itemize}
+
+Öffnen Sie die Entwicklertools des Browsers (F12), wechseln Sie in den Tab \emph{Netzwerk} und schicken Sie das Formular ab. Suchen Sie den Request und schauen Sie sich unter \emph{Payload} (bzw. \emph{Anfrage}) an, welche Daten gesendet wurden. Vergleichen Sie mit der URL.
+
+\section{Bestellung verarbeiten}
+
+Prüfen Sie oben in der Datei mit \texttt{\$\_SERVER["{}REQUEST\_METHOD"{}] === "{}POST"{}}, ob das Formular abgeschickt wurde. Ist dies der Fall:
+
+\begin{itemize}
+    \item Lesen Sie alle Felder mit \texttt{??} in Variablen ein. Entfernen Sie bei \texttt{name} und \texttt{bemerkung} mit \texttt{trim()} Leerzeichen am Anfang und Ende. Wandeln Sie \texttt{produkt} und \texttt{menge} mit \texttt{(int)} in Zahlen um.
+    \item Zeigen Sie oberhalb des Formulars eine Bestellbestätigung in einem \texttt{<div class="{}bestaetigung"{}>} an, z.B. \texttt{"{}Danke, Anna! Sie haben 3 x Karotten bestellt."{}}
+    \item Geben Sie die gewählte Lieferart als Text aus (\texttt{"{}Abholung im Laden"{}} bzw. \texttt{"{}Lieferung per Post"{}}) sowie die Bemerkung, falls eine eingegeben wurde.
+\end{itemize}
+
+Beim normalen Aufruf der Seite (ohne Absenden) darf keine Bestätigung und keine Warnung erscheinen.
+
+\section{Preis berechnen}
+
+Berechnen Sie den Gesamtpreis der Bestellung aus Menge und Preis des gewählten Produkts. Bei Lieferung per Post kommen die Versandkosten aus \texttt{\$versand} dazu. Geben Sie den Gesamtpreis mit \texttt{number\_format()} in der Bestätigung aus, z.B. \texttt{"{}Total: 16.90 CHF"{}}.
+
+Der Preis wird bewusst \emph{nicht} im Formular mitgeschickt, sondern auf dem Server aus \texttt{\$produkte} gelesen. Überlegen Sie sich, warum.
+
+\section{Newsletter}
+
+Ergänzen Sie das Formular mit einer Checkbox \texttt{newsletter} (Wert \texttt{ja}) und dem Text \emph{Newsletter abonnieren}. Geben Sie in der Bestätigung entweder \texttt{"{}Sie erhalten ab jetzt unseren Newsletter."{}} oder nichts aus. Testen Sie beide Fälle und stellen Sie sicher, dass auch ohne angehakte Checkbox keine Warnung erscheint.
+
+\section{Zusatzoptionen}
+
+Erzeugen Sie aus dem Array \texttt{\$extras} für jede Zusatzoption eine Checkbox mit dem Namen \texttt{extras[]}. Als \texttt{value} dient der Schlüssel (z.B. \texttt{geschenk}), als Text der Name und der Preis.
+
+Lesen Sie die gewählten Optionen mit \texttt{\$\_POST["{}extras"{}] ?? []} als Array ein. Listen Sie sie in der Bestätigung auf und rechnen Sie deren Preise zum Total dazu. Ignorieren Sie Werte, die es in \texttt{\$extras} nicht gibt (Tipp: \texttt{isset(\$extras[\$key])}).
+
+\section{Eingaben erhalten}
+
+Nach dem Absenden ist das Formular wieder leer. Sorgen Sie dafür, dass alle Felder die zuletzt abgeschickten Werte anzeigen:
+
+\begin{itemize}
+    \item Textfelder: Attribut \texttt{value}, bei \texttt{<textarea>} der Inhalt zwischen den Tags
+    \item Auswahlliste: Attribut \texttt{selected} bei der gewählten Option
+    \item Radio-Buttons und Checkboxen: Attribut \texttt{checked}
+\end{itemize}
+
+Initialisieren Sie die Variablen dazu \emph{vor} der \texttt{if}-Abfrage aus Aufgabe 4 mit Standardwerten (z.B. \texttt{\$menge = 1;}, \texttt{\$lieferung = "{}abholen"{}};). Testen Sie mit dem Namen \texttt{Anna "{}die Grosse"{}} und prüfen Sie im Seitenquelltext, dass das \texttt{value}-Attribut korrekt maskiert ist.
+
+\section{Bonusaufgabe: Bestellungen sammeln}
+
+Speichern Sie jede abgeschickte Bestellung (Name, Produktname, Menge und Total) als assoziatives Array in \texttt{\$\_SESSION["{}bestellungen"{}]} (vgl. Lektion 07). Zeigen Sie unter dem Formular eine Tabelle aller bisherigen Bestellungen sowie die Summe aller Totale an. Ein Link \texttt{"{}Liste leeren"{}} auf \texttt{index.php?leeren=1} entfernt alle Bestellungen aus der Session.
+
+Schicken Sie eine Bestellung ab und drücken Sie danach \textbf{F5}. Was passiert, und warum? Eine Lösung dafür lernen Sie in der nächsten Lektion kennen.
+
+\end{document}

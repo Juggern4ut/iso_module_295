@@ -1,0 +1,923 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+
+    <title>Modul 295 - Lektion 11</title>
+
+    <link rel="stylesheet" href="dist/reset.css" />
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/black.css" />
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css" />
+
+    <style>
+      :root {
+        --accent: #80ed99;
+        --accent-2: #ffd166;
+        --panel: rgba(255, 255, 255, 0.07);
+        --border: rgba(255, 255, 255, 0.22);
+        --danger: #ff6b6b;
+        --ok: #7bd88f;
+      }
+
+      td {
+        font-size: 21px;
+      }
+
+      .inline-code {
+        font-family:
+          "Consolas", "Monaco", "Andale Mono", "Ubuntu Mono", monospace;
+        display: inline-block;
+        background-color: #2d2d2d;
+        padding: 2px 4px;
+        border-radius: 2px;
+        font-size: 75%;
+      }
+
+      thead td {
+        font-weight: bold;
+        font-size: 24px;
+      }
+
+      .reveal p {
+        line-height: 1.35;
+      }
+
+      .lead {
+        font-size: 0.85em;
+      }
+
+      .small {
+        font-size: 0.7em;
+      }
+
+      .muted {
+        color: #bbbbbb;
+      }
+
+      .accent {
+        color: var(--accent);
+      }
+
+      .ok {
+        color: var(--ok);
+      }
+
+      .danger {
+        color: var(--danger);
+      }
+
+      .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+        margin-top: 24px;
+      }
+
+      /* verhindert, dass breite Code-Blöcke ein Grid sprengen */
+      .grid-2 > * {
+        min-width: 0;
+      }
+
+      .panel {
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 18px;
+        background: var(--panel);
+        text-align: left;
+        font-size: 70%;
+      }
+
+      .panel h3 {
+        margin-top: 0;
+        margin-bottom: 10px;
+        color: var(--accent);
+        font-size: 1.3em;
+      }
+
+      .panel ul {
+        margin: 0 0 0 1em;
+      }
+
+      .panel p {
+        margin: 0;
+      }
+
+      .badge {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 999px;
+        font-size: 0.55em;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+        border: 1px solid var(--border);
+        margin-bottom: 10px;
+      }
+
+      .badge--quiz {
+        color: var(--accent-2);
+        border-color: var(--accent-2);
+      }
+
+      .badge--danger {
+        color: var(--danger);
+        border-color: var(--danger);
+      }
+
+      .flow {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr auto 1fr;
+        gap: 10px;
+        align-items: center;
+        margin-top: 24px;
+        font-size: 0.62em;
+      }
+
+      .flow .box {
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 18px 12px;
+        background: var(--panel);
+      }
+
+      .flow .arrow {
+        font-size: 1.15em;
+        color: var(--accent-2);
+      }
+
+      .callout {
+        margin-top: 24px;
+        padding: 14px 20px;
+        border-left: 4px solid var(--accent);
+        background: rgba(128, 237, 153, 0.12);
+        text-align: left;
+        font-size: 0.66em;
+      }
+
+      .callout--danger {
+        border-left-color: var(--danger);
+        background: rgba(237, 128, 128, 0.12);
+      }
+
+      .callout--warn {
+        border-left-color: var(--accent-2);
+        background: rgba(255, 209, 102, 0.12);
+      }
+
+      .callout > * {
+        margin: 0 !important;
+      }
+
+      .answer {
+        font-size: 0.7em;
+        color: var(--accent-2);
+      }
+
+      .tldr li {
+        font-size: 0.85em;
+      }
+
+      .reveal table.compare {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .reveal table.compare td,
+      .reveal table.compare th {
+        border: 1px solid var(--border);
+        padding: 8px 10px;
+        font-size: 24px;
+        text-align: left;
+      }
+
+      .reveal table.compare th {
+        color: var(--accent);
+        font-size: 26px;
+      }
+
+      /* reveal-Theme entfernt sonst den unteren Rahmen der letzten Zeile */
+      .reveal table.compare tbody tr:last-child td {
+        border-bottom: 1px solid var(--border);
+      }
+
+      .reveal pre.code-sm {
+        width: 100%;
+      }
+
+      .reveal pre.code-sm td {
+        font-size: 18px;
+      }
+
+      .grid-3 {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 18px;
+        margin-top: 24px;
+      }
+
+      .grid-3 > * {
+        min-width: 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <!-- Modulfolie -->
+        <section>
+          <h2>Modul 295</h2>
+          <hr />
+          <h3>Backend für Applikationen realisieren</h3>
+          <img
+            style="width: 200px"
+            src="assets/img/web-icon.png"
+            alt="Web Icon"
+          />
+        </section>
+
+        <!-- Titelfolie -->
+        <section>
+          <h2>11 - Formulare</h2>
+          <hr />
+          <h3>Eingaben der Benutzer verarbeiten</h3>
+          <img
+            style="width: 240px"
+            src="assets/img/php-logo.svg"
+            alt="PHP Logo"
+          />
+        </section>
+
+        <!-- Lernziele -->
+        <section>
+          <h2>Lernziele dieser Lektion</h2>
+          <ul>
+            <li>Erklären können, wie Formulardaten vom Browser zum PHP-Skript gelangen (<code class="inline-code">action</code>, <code class="inline-code">method</code>, <code class="inline-code">name</code>)</li>
+            <li>Den Unterschied zwischen GET und POST kennen und passend einsetzen können</li>
+            <li>Eingaben mit <code class="inline-code">$_GET</code> und <code class="inline-code">$_POST</code> auslesen und prüfen können, ob ein Formular abgeschickt wurde</li>
+            <li>Textfelder, Auswahllisten, Radio-Buttons und Checkboxen in PHP auswerten können</li>
+            <li>Eingaben nach dem Absenden wieder im Formular anzeigen können</li>
+          </ul>
+        </section>
+
+        <!-- Rückblick -->
+        <section>
+          <span class="badge">Rückblick</span>
+          <h2>Wo stehen wir?</h2>
+          <div class="grid-2">
+            <div class="panel">
+              <h3>Lektion 10</h3>
+              <p>
+                Werte über Links an PHP übergeben, z.B.
+                <code class="inline-code">produkt.php?id=2</code> - die URL
+                haben <b>wir</b> erzeugt
+              </p>
+            </div>
+            <div class="panel">
+              <h3>Heute</h3>
+              <p>
+                Die <b>Benutzer</b> geben die Werte selbst ein - der Browser
+                schickt sie per Formular an unser Skript
+              </p>
+            </div>
+          </div>
+          <div class="callout">
+            <p>
+              Formulare sind die wichtigste Art, wie Daten von aussen in eine
+              Webapplikation gelangen: Login, Suche, Bestellung, Kontakt, ...
+            </p>
+          </div>
+        </section>
+
+        <!-- HTML-Repetition -->
+        <section>
+          <span class="badge">Repetition HTML</span>
+          <h2>Ein Formular in HTML</h2>
+          <pre>
+                    <code class="html" data-trim data-line-numbers="1,3,6">
+                        &lt;form action="danke.php" method="post"&gt;
+                            &lt;label for="vorname"&gt;Vorname&lt;/label&gt;
+                            &lt;input type="text" id="vorname" name="vorname"&gt;
+
+                            &lt;label for="email"&gt;E-Mail&lt;/label&gt;
+                            &lt;input type="email" id="email" name="email"&gt;
+
+                            &lt;button type="submit"&gt;Senden&lt;/button&gt;
+                        &lt;/form&gt;
+                    </code>
+                </pre>
+          <div class="callout callout--warn">
+            <p>
+              Aus HTML bekannt - für PHP zählen vor allem drei Dinge:
+              <code class="inline-code">action</code>,
+              <code class="inline-code">method</code> und
+              <code class="inline-code">name</code>
+            </p>
+          </div>
+        </section>
+
+        <!-- action, method, name -->
+        <section>
+          <span class="badge">Grundlagen</span>
+          <h2>Die drei wichtigen Attribute</h2>
+          <div class="grid-3">
+            <div class="panel">
+              <h3>action</h3>
+              <p>
+                <b>Wohin</b> werden die Daten geschickt? Die URL des
+                PHP-Skripts. Fehlt sie, geht es an die <b>aktuelle Seite</b>
+              </p>
+            </div>
+            <div class="panel">
+              <h3>method</h3>
+              <p>
+                <b>Wie</b> werden die Daten geschickt?
+                <code class="inline-code">get</code> (Standard) oder
+                <code class="inline-code">post</code>
+              </p>
+            </div>
+            <div class="panel">
+              <h3>name</h3>
+              <p>
+                Unter <b>welchem Schlüssel</b> landet der Wert in
+                <code class="inline-code">$_GET</code> bzw.
+                <code class="inline-code">$_POST</code>?
+              </p>
+            </div>
+          </div>
+          <div class="callout callout--danger">
+            <p>
+              Ein Feld ohne <code class="inline-code">name</code> wird
+              <b>nicht</b> mitgeschickt - die <code class="inline-code">id</code>
+              ist nur für <code class="inline-code">&lt;label&gt;</code> und CSS
+            </p>
+          </div>
+        </section>
+
+        <!-- Ablauf -->
+        <section>
+          <span class="badge">Grundlagen</span>
+          <h2>Vom Formular zum PHP-Skript</h2>
+          <div class="flow">
+            <div class="box">
+              <b>Browser</b><br />
+              Benutzer füllt das Formular aus und klickt auf
+              <i>Senden</i>
+            </div>
+            <div class="arrow">&rarr;</div>
+            <div class="box">
+              <b>Request</b><br />
+              <code class="inline-code">vorname=Anna&amp;email=anna@example.ch</code>
+            </div>
+            <div class="arrow">&rarr;</div>
+            <div class="box">
+              <b>PHP</b><br />
+              <code class="inline-code">$_POST["vorname"]</code><br />
+              enthält <code class="inline-code">"Anna"</code>
+            </div>
+          </div>
+          <div class="callout">
+            <p>
+              Der Browser baut aus allen Feldern Paare
+              <code class="inline-code">name=wert</code> - PHP legt sie
+              automatisch in einem assoziativen Array ab
+            </p>
+          </div>
+        </section>
+
+        <!-- GET -->
+        <section>
+          <span class="badge">GET</span>
+          <h2>Formular mit <code class="inline-code">method="get"</code></h2>
+          <div class="grid-2">
+            <div>
+              <p class="small accent">suche.php</p>
+              <pre class="code-sm">
+                    <code class="php-template" data-trim data-line-numbers>
+                        &lt;form action="suche.php" method="get"&gt;
+                            &lt;input type="search" name="q"&gt;
+                            &lt;button&gt;Suchen&lt;/button&gt;
+                        &lt;/form&gt;
+
+                        &lt;?php if (isset($_GET["q"])): ?&gt;
+                            &lt;p&gt;Gesucht: &lt;?= e($_GET["q"]) ?&gt;&lt;/p&gt;
+                        &lt;?php endif; ?&gt;
+                    </code>
+                </pre>
+            </div>
+            <div>
+              <p class="small accent">URL nach dem Absenden</p>
+              <pre class="code-sm">
+                    <code class="plaintext" data-trim>
+                        suche.php?q=Birnen
+                    </code>
+                </pre>
+              <p class="small">
+                Genau wie unsere Links aus Lektion 10 - die Werte stehen
+                sichtbar in der URL
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- POST -->
+        <section>
+          <span class="badge">POST</span>
+          <h2>Formular mit <code class="inline-code">method="post"</code></h2>
+          <div class="grid-2">
+            <div>
+              <p class="small accent">login.php</p>
+              <pre class="code-sm">
+                    <code class="php-template" data-trim data-line-numbers>
+                        &lt;form action="login.php" method="post"&gt;
+                            &lt;input type="text" name="user"&gt;
+                            &lt;input type="password" name="pass"&gt;
+                            &lt;button&gt;Login&lt;/button&gt;
+                        &lt;/form&gt;
+
+                        &lt;?php
+                        $user = $_POST["user"] ?? "";
+                        $pass = $_POST["pass"] ?? "";
+                    </code>
+                </pre>
+            </div>
+            <div>
+              <p class="small accent">URL nach dem Absenden</p>
+              <pre class="code-sm">
+                    <code class="plaintext" data-trim>
+                        login.php
+                    </code>
+                </pre>
+              <p class="small">
+                Die Daten werden im <b>Body</b> des Requests geschickt - in den
+                DevTools unter <i>Netzwerk &rarr; Payload</i> sichtbar
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- GET vs POST -->
+        <section>
+          <span class="badge">Vergleich</span>
+          <h2>GET oder POST?</h2>
+          <table class="compare">
+            <thead>
+              <tr><th></th><th>GET</th><th>POST</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Daten stehen</td><td>in der URL</td><td>im Body des Requests</td></tr>
+              <tr><td>Lesezeichen / Link teilen</td><td class="ok">möglich</td><td class="danger">nicht möglich</td></tr>
+              <tr><td>Im Verlauf / Server-Log</td><td class="danger">ja</td><td class="ok">nein</td></tr>
+              <tr><td>Datenmenge</td><td>begrenzt (URL-Länge)</td><td>gross</td></tr>
+              <tr><td>Einsatz</td><td>Daten <b>abfragen</b>: Suche, Filter</td><td>Daten <b>ändern</b>: Login, Bestellung</td></tr>
+            </tbody>
+          </table>
+          <div class="callout callout--warn">
+            <p>
+              POST ist <b>nicht verschlüsselt</b> - nur weniger sichtbar. Für
+              Sicherheit sorgt erst HTTPS
+            </p>
+          </div>
+        </section>
+
+        <!-- Quiz 1 -->
+        <section>
+          <span class="badge badge--quiz">Quiz</span>
+          <h2>Was enthält <code class="inline-code">$_POST</code>?</h2>
+          <pre>
+                    <code class="html" data-trim data-line-numbers>
+                        &lt;form method="post"&gt;
+                            &lt;input type="text" id="vorname"&gt;
+                            &lt;input type="text" name="nachname"&gt;
+                            &lt;button&gt;Senden&lt;/button&gt;
+                        &lt;/form&gt;
+                    </code>
+                </pre>
+          <p class="small muted">Eingabe: Vorname "Anna", Nachname "Meier"</p>
+          <p class="fragment answer">
+            Nur <code class="inline-code">["nachname" =&gt; "Meier"]</code> -
+            das erste Feld hat kein <code class="inline-code">name</code>-Attribut
+            und wird nicht mitgeschickt
+          </p>
+        </section>
+
+        <!-- Wurde abgeschickt? -->
+        <section>
+          <span class="badge">Verarbeitung</span>
+          <h2>Wurde das Formular abgeschickt?</h2>
+          <p class="lead">
+            Beim ersten Aufruf ist <code class="inline-code">$_POST</code> leer -
+            die Verarbeitung soll erst nach dem Absenden laufen
+          </p>
+          <pre>
+                    <code class="php" data-trim data-line-numbers="2">
+                        &lt;?php
+                        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+                            $vorname = $_POST["vorname"] ?? "";
+                            // ... Eingaben verarbeiten
+                        }
+                    </code>
+                </pre>
+          <div class="callout">
+            <p>
+              <code class="inline-code">$_SERVER["REQUEST_METHOD"]</code>
+              enthält <code class="inline-code">"GET"</code> beim normalen
+              Aufruf der Seite und <code class="inline-code">"POST"</code>
+              nach dem Absenden eines POST-Formulars
+            </p>
+          </div>
+        </section>
+
+        <!-- Alles in einer Datei -->
+        <section>
+          <span class="badge">Praxis</span>
+          <h2>Alles in einer Datei</h2>
+          <pre class="code-sm">
+                    <code class="php-template" data-trim data-line-numbers="1-6|7-13">
+                        &lt;?php
+                        $gesendet = false;
+                        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+                            $vorname = $_POST["vorname"] ?? "";
+                            $gesendet = true;
+                        }
+                        ?&gt;
+                        &lt;?php if ($gesendet): ?&gt;
+                            &lt;p&gt;Danke, &lt;?= e($vorname) ?&gt;!&lt;/p&gt;
+                        &lt;?php else: ?&gt;
+                            &lt;form method="post"&gt; ... &lt;/form&gt;
+                        &lt;?php endif; ?&gt;
+                    </code>
+                </pre>
+          <div class="callout callout--warn">
+            <p>
+              Ohne <code class="inline-code">action</code> schickt das Formular
+              an sich selbst - so bleiben Formular und Verarbeitung
+              übersichtlich zusammen
+            </p>
+          </div>
+        </section>
+
+        <!-- Eingabefelder -->
+        <section>
+          <span class="badge">Eingabefelder</span>
+          <h2>Was kommt in PHP an?</h2>
+          <table class="compare">
+            <thead>
+              <tr><th>Feld</th><th>gesendet wird</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code class="inline-code">&lt;input type="text"&gt;</code>, <code class="inline-code">&lt;textarea&gt;</code></td><td>der eingegebene Text (evtl. <code class="inline-code">""</code>)</td></tr>
+              <tr><td><code class="inline-code">&lt;input type="number"&gt;</code></td><td>die Zahl - aber als <b>String</b>, z.B. <code class="inline-code">"3"</code></td></tr>
+              <tr><td><code class="inline-code">&lt;select&gt;</code></td><td>das <code class="inline-code">value</code> der gewählten <code class="inline-code">&lt;option&gt;</code></td></tr>
+              <tr><td><code class="inline-code">&lt;input type="radio"&gt;</code></td><td>das <code class="inline-code">value</code> des gewählten Buttons - <b>nichts</b>, wenn keiner gewählt ist</td></tr>
+              <tr><td><code class="inline-code">&lt;input type="checkbox"&gt;</code></td><td>das <code class="inline-code">value</code>, wenn angehakt - sonst <b>nichts</b></td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- Select und Radio -->
+        <section>
+          <span class="badge">Eingabefelder</span>
+          <h2>Auswahlliste und Radio-Buttons</h2>
+          <div class="grid-2" style="grid-template-columns: 1.2fr 0.8fr">
+            <div>
+              <p class="small accent">Optionen aus einem Array</p>
+              <pre class="code-sm">
+                    <code class="php-template" data-trim data-line-numbers>
+                        &lt;select name="produkt"&gt;
+                            &lt;?php foreach ($produkte as $id =&gt; $p): ?&gt;
+                                &lt;option value="&lt;?= $id ?&gt;"&gt;
+                                    &lt;?= e($p["name"]) ?&gt;
+                                &lt;/option&gt;
+                            &lt;?php endforeach; ?&gt;
+                        &lt;/select&gt;
+                    </code>
+                </pre>
+            </div>
+            <div>
+              <p class="small accent">Gleicher <code class="inline-code">name</code> = eine Gruppe</p>
+              <pre class="code-sm">
+                    <code class="html" data-trim data-line-numbers>
+                        &lt;input type="radio"
+                               name="lieferung"
+                               value="abholen"&gt; Abholen
+                        &lt;input type="radio"
+                               name="lieferung"
+                               value="post"&gt; Per Post
+                    </code>
+                </pre>
+            </div>
+          </div>
+          <div class="callout">
+            <p>
+              In PHP kommt nur das <code class="inline-code">value</code> an,
+              nicht der angezeigte Text: z.B.
+              <code class="inline-code">$_POST["produkt"]</code> &rarr;
+              <code class="inline-code">"2"</code>,
+              <code class="inline-code">$_POST["lieferung"]</code> &rarr;
+              <code class="inline-code">"post"</code>
+            </p>
+          </div>
+        </section>
+
+        <!-- Checkbox -->
+        <section>
+          <span class="badge">Eingabefelder</span>
+          <h2>Checkboxen</h2>
+          <pre>
+                    <code class="php-template" data-trim data-line-numbers="1|3-5">
+                        &lt;input type="checkbox" name="newsletter" value="ja"&gt;
+
+                        &lt;?php
+                        // true, wenn angehakt - sonst false
+                        $newsletter = isset($_POST["newsletter"]);
+                    </code>
+                </pre>
+          <div class="grid-2">
+            <div class="panel">
+              <h3>Angehakt</h3>
+              <p><code class="inline-code">$_POST["newsletter"]</code> ist <code class="inline-code">"ja"</code></p>
+            </div>
+            <div class="panel">
+              <h3>Nicht angehakt</h3>
+              <p>Der Schlüssel <code class="inline-code">"newsletter"</code> <b>existiert nicht</b></p>
+            </div>
+          </div>
+          <div class="callout callout--danger">
+            <p>
+              <code class="inline-code">$_POST["newsletter"]</code> ohne
+              <code class="inline-code">isset()</code> oder
+              <code class="inline-code">??</code> führt zur Warnung
+              <i>Undefined array key</i>
+            </p>
+          </div>
+        </section>
+
+        <!-- Mehrfachauswahl -->
+        <section>
+          <span class="badge">Eingabefelder</span>
+          <h2>Mehrere Werte mit <code class="inline-code">name="...[]"</code></h2>
+          <div class="grid-2">
+            <div>
+              <pre class="code-sm">
+                    <code class="html" data-trim data-line-numbers>
+                        &lt;input type="checkbox" name="extras[]"
+                               value="geschenk"&gt; Geschenkpapier
+                        &lt;input type="checkbox" name="extras[]"
+                               value="karte"&gt; Grusskarte
+                        &lt;input type="checkbox" name="extras[]"
+                               value="express"&gt; Express
+                    </code>
+                </pre>
+            </div>
+            <div>
+              <pre class="code-sm">
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        $extras = $_POST["extras"] ?? [];
+                        // z.B. ["geschenk", "express"]
+                        foreach ($extras as $extra) {
+                            echo e($extra) . "&lt;br&gt;";
+                        }
+                    </code>
+                </pre>
+            </div>
+          </div>
+          <div class="callout">
+            <p>
+              Die eckigen Klammern im <code class="inline-code">name</code>
+              sagen PHP: Sammle alle Werte in einem <b>Array</b>. Ist nichts
+              angehakt, fehlt der Schlüssel - darum
+              <code class="inline-code">?? []</code>
+            </p>
+          </div>
+        </section>
+
+        <!-- Quiz 2 -->
+        <section>
+          <span class="badge badge--quiz">Quiz</span>
+          <h2>Was gibt dieser Code aus?</h2>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        // &lt;input type="number" name="menge"&gt;, eingegeben: 3
+                        $menge = $_POST["menge"];
+
+                        if ($menge === 3) {
+                            echo "Drei Stück";
+                        } else {
+                            echo "Etwas anderes";
+                        }
+                    </code>
+                </pre>
+          <p class="fragment answer">
+            <code class="inline-code">Etwas anderes</code> - Formularwerte sind
+            immer Strings: <code class="inline-code">"3" === 3</code> ist
+            <code class="inline-code">false</code> (vgl. Lektion 02)
+          </p>
+        </section>
+
+        <!-- Strings umwandeln -->
+        <section>
+          <span class="badge">Verarbeitung</span>
+          <h2>Eingaben aufbereiten</h2>
+          <pre>
+                    <code class="php" data-trim data-line-numbers="2|3|4">
+                        &lt;?php
+                        $name   = trim($_POST["name"] ?? "");
+                        $menge  = (int) ($_POST["menge"] ?? 0);
+                        $extras = $_POST["extras"] ?? [];
+
+                        $total = $menge * $preis;
+                    </code>
+                </pre>
+          <table class="compare">
+            <tbody>
+              <tr><td><code class="inline-code">trim()</code></td><td>entfernt Leerzeichen am Anfang und Ende: <code class="inline-code">"  Anna "</code> &rarr; <code class="inline-code">"Anna"</code></td></tr>
+              <tr><td><code class="inline-code">(int)</code> / <code class="inline-code">(float)</code></td><td>wandelt in eine Zahl um: <code class="inline-code">"3"</code> &rarr; <code class="inline-code">3</code>, aber auch <code class="inline-code">"abc"</code> &rarr; <code class="inline-code">0</code></td></tr>
+            </tbody>
+          </table>
+          <div class="callout callout--warn">
+            <p>
+              Ob die Eingaben <b>gültig</b> sind (z.B. Menge grösser als 0),
+              prüfen wir in der nächsten Lektion
+            </p>
+          </div>
+        </section>
+
+        <!-- Sticky Form -->
+        <section>
+          <span class="badge">Praxis</span>
+          <h2>Eingaben im Formular erhalten</h2>
+          <pre class="code-sm">
+                    <code class="php-template" data-trim data-line-numbers="1-5|6|8-11">
+                        &lt;?php
+                        $name = trim($_POST["name"] ?? "");
+                        $lieferung = $_POST["lieferung"] ?? "abholen";
+                        $produkt = (int) ($_POST["produkt"] ?? 0);
+                        ?&gt;
+                        &lt;input type="text" name="name" value="&lt;?= e($name) ?&gt;"&gt;
+
+                        &lt;input type="radio" name="lieferung" value="post"
+                            &lt;?= $lieferung === "post" ? "checked" : "" ?&gt;&gt; Per Post
+                        &lt;option value="2" &lt;?= $produkt === 2 ? "selected" : "" ?&gt;&gt;
+                            Karotten&lt;/option&gt;
+                    </code>
+                </pre>
+          <div class="callout">
+            <p>
+              Sonst ist das Formular nach dem Absenden wieder leer.
+              Text &rarr; <code class="inline-code">value</code>, Radio und
+              Checkbox &rarr; <code class="inline-code">checked</code>, Option
+              &rarr; <code class="inline-code">selected</code>
+            </p>
+          </div>
+        </section>
+
+        <!-- Sicherheit -->
+        <section>
+          <span class="badge badge--danger">Sicherheit</span>
+          <h2>Formulardaten kommen von aussen</h2>
+          <div class="grid-2">
+            <div class="panel">
+              <h3>Immer maskieren</h3>
+              <p>
+                Eingaben bei der Ausgabe immer mit
+                <code class="inline-code">e()</code> /
+                <code class="inline-code">htmlspecialchars()</code> ausgeben -
+                auch im <code class="inline-code">value</code>-Attribut
+              </p>
+            </div>
+            <div class="panel">
+              <h3>Nichts glauben</h3>
+              <p>
+                Mit den DevTools kann jeder ein
+                <code class="inline-code">value</code> ändern, Optionen
+                ergänzen oder <code class="inline-code">maxlength</code>
+                entfernen
+              </p>
+            </div>
+          </div>
+          <div class="callout callout--danger">
+            <p>
+              Auch <code class="inline-code">&lt;input type="hidden"&gt;</code>
+              ist nur unsichtbar, nicht geschützt - z.B. nie einen Preis in
+              einem versteckten Feld mitschicken
+            </p>
+          </div>
+        </section>
+
+        <!-- Quiz 3 -->
+        <section>
+          <span class="badge badge--quiz">Quiz</span>
+          <h2>Was passiert hier?</h2>
+          <pre>
+                    <code class="php-template" data-trim data-line-numbers>
+                        &lt;form method="post"&gt;
+                            &lt;input type="checkbox" name="agb" value="ja"&gt; AGB gelesen
+                            &lt;button&gt;Bestellen&lt;/button&gt;
+                        &lt;/form&gt;
+                        &lt;?php
+                        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+                            echo "AGB: " . $_POST["agb"];
+                        }
+                    </code>
+                </pre>
+          <p class="small muted">Der Benutzer klickt auf "Bestellen", ohne die Checkbox anzuhaken</p>
+          <p class="fragment answer">
+            Warnung <i>Undefined array key "agb"</i>, danach wird
+            <code class="inline-code">AGB: </code> ausgegeben - besser
+            <code class="inline-code">isset($_POST["agb"])</code>
+          </p>
+        </section>
+
+        <!-- Typische Fehler -->
+        <section>
+          <span class="badge badge--danger">Achtung</span>
+          <h2>Typische Fehler</h2>
+          <div class="grid-2">
+            <div class="panel">
+              <h3><code class="inline-code">name</code> fehlt</h3>
+              <p>
+                Das Feld wird nicht gesendet, obwohl es eine
+                <code class="inline-code">id</code> hat
+              </p>
+            </div>
+            <div class="panel">
+              <h3>Falsches Array</h3>
+              <p>
+                <code class="inline-code">method="post"</code>, aber im Code
+                <code class="inline-code">$_GET</code> gelesen (oder umgekehrt)
+              </p>
+            </div>
+            <div class="panel">
+              <h3>Checkbox ohne <code class="inline-code">isset()</code></h3>
+              <p>
+                Nicht angehakte Checkboxen fehlen in
+                <code class="inline-code">$_POST</code> &rarr; Warnung
+              </p>
+            </div>
+            <div class="panel">
+              <h3><code class="inline-code">===</code> mit Zahl</h3>
+              <p>
+                <code class="inline-code">$_POST["menge"] === 3</code> ist nie
+                wahr - zuerst mit <code class="inline-code">(int)</code>
+                umwandeln
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- TL;DR -->
+        <section>
+          <h2>TL;DR</h2>
+          <ul class="tldr">
+            <li>
+              <code class="inline-code">action</code> = wohin,
+              <code class="inline-code">method</code> = wie,
+              <code class="inline-code">name</code> = Schlüssel in
+              <code class="inline-code">$_GET</code> /
+              <code class="inline-code">$_POST</code>
+            </li>
+            <li>
+              GET für Abfragen (Werte in der URL), POST für Daten, die etwas
+              verändern
+            </li>
+            <li>
+              <code class="inline-code">$_SERVER["REQUEST_METHOD"] === "POST"</code>
+              prüft, ob das Formular abgeschickt wurde
+            </li>
+            <li>
+              Checkboxen und Radio-Buttons fehlen, wenn nichts gewählt ist -
+              <code class="inline-code">isset()</code> bzw.
+              <code class="inline-code">??</code> verwenden;
+              <code class="inline-code">name="x[]"</code> ergibt ein Array
+            </li>
+            <li>
+              Alle Werte sind Strings und kommen von aussen: aufbereiten,
+              mit <code class="inline-code">e()</code> ausgeben - nächste
+              Lektion: Validierung
+            </li>
+          </ul>
+        </section>
+      </div>
+    </div>
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+      Reveal.initialize({
+        hash: true,
+        plugins: [RevealZoom, RevealMarkdown, RevealHighlight, RevealNotes],
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,880 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+
+    <title>Modul 295 - Lektion 12</title>
+
+    <link rel="stylesheet" href="dist/reset.css" />
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/black.css" />
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css" />
+
+    <style>
+      :root {
+        --accent: #80ed99;
+        --accent-2: #ffd166;
+        --panel: rgba(255, 255, 255, 0.07);
+        --border: rgba(255, 255, 255, 0.22);
+        --danger: #ff6b6b;
+        --ok: #7bd88f;
+      }
+
+      td {
+        font-size: 21px;
+      }
+
+      .inline-code {
+        font-family:
+          "Consolas", "Monaco", "Andale Mono", "Ubuntu Mono", monospace;
+        display: inline-block;
+        background-color: #2d2d2d;
+        padding: 2px 4px;
+        border-radius: 2px;
+        font-size: 75%;
+      }
+
+      thead td {
+        font-weight: bold;
+        font-size: 24px;
+      }
+
+      .reveal p {
+        line-height: 1.35;
+      }
+
+      .lead {
+        font-size: 0.85em;
+      }
+
+      .small {
+        font-size: 0.7em;
+      }
+
+      .muted {
+        color: #bbbbbb;
+      }
+
+      .accent {
+        color: var(--accent);
+      }
+
+      .ok {
+        color: var(--ok);
+      }
+
+      .danger {
+        color: var(--danger);
+      }
+
+      .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+        margin-top: 24px;
+      }
+
+      /* verhindert, dass breite Code-Blöcke ein Grid sprengen */
+      .grid-2 > * {
+        min-width: 0;
+      }
+
+      .panel {
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 18px;
+        background: var(--panel);
+        text-align: left;
+        font-size: 70%;
+      }
+
+      .panel h3 {
+        margin-top: 0;
+        margin-bottom: 10px;
+        color: var(--accent);
+        font-size: 1.3em;
+      }
+
+      .panel ul {
+        margin: 0 0 0 1em;
+      }
+
+      .panel p {
+        margin: 0;
+      }
+
+      .badge {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 999px;
+        font-size: 0.55em;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+        border: 1px solid var(--border);
+        margin-bottom: 10px;
+      }
+
+      .badge--quiz {
+        color: var(--accent-2);
+        border-color: var(--accent-2);
+      }
+
+      .badge--danger {
+        color: var(--danger);
+        border-color: var(--danger);
+      }
+
+      .flow {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr auto 1fr;
+        gap: 10px;
+        align-items: center;
+        margin-top: 24px;
+        font-size: 0.62em;
+      }
+
+      .flow .box {
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 18px 12px;
+        background: var(--panel);
+      }
+
+      .flow .arrow {
+        font-size: 1.15em;
+        color: var(--accent-2);
+      }
+
+      .callout {
+        margin-top: 24px;
+        padding: 14px 20px;
+        border-left: 4px solid var(--accent);
+        background: rgba(128, 237, 153, 0.12);
+        text-align: left;
+        font-size: 0.66em;
+      }
+
+      .callout--danger {
+        border-left-color: var(--danger);
+        background: rgba(237, 128, 128, 0.12);
+      }
+
+      .callout--warn {
+        border-left-color: var(--accent-2);
+        background: rgba(255, 209, 102, 0.12);
+      }
+
+      .callout > * {
+        margin: 0 !important;
+      }
+
+      .answer {
+        font-size: 0.7em;
+        color: var(--accent-2);
+      }
+
+      .tldr li {
+        font-size: 0.85em;
+      }
+
+      .reveal table.compare {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .reveal table.compare td,
+      .reveal table.compare th {
+        border: 1px solid var(--border);
+        padding: 8px 10px;
+        font-size: 24px;
+        text-align: left;
+      }
+
+      .reveal table.compare th {
+        color: var(--accent);
+        font-size: 26px;
+      }
+
+      /* reveal-Theme entfernt sonst den unteren Rahmen der letzten Zeile */
+      .reveal table.compare tbody tr:last-child td {
+        border-bottom: 1px solid var(--border);
+      }
+
+      .reveal pre.code-sm {
+        width: 100%;
+      }
+
+      .reveal pre.code-sm td {
+        font-size: 18px;
+      }
+
+      .grid-3 {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 18px;
+        margin-top: 24px;
+      }
+
+      .grid-3 > * {
+        min-width: 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <!-- Modulfolie -->
+        <section>
+          <h2>Modul 295</h2>
+          <hr />
+          <h3>Backend für Applikationen realisieren</h3>
+          <img
+            style="width: 200px"
+            src="assets/img/web-icon.png"
+            alt="Web Icon"
+          />
+        </section>
+
+        <!-- Titelfolie -->
+        <section>
+          <h2>12 - Formulare II &amp; Validierung</h2>
+          <hr />
+          <h3>Eingaben prüfen und sauber verarbeiten</h3>
+          <img
+            style="width: 240px"
+            src="assets/img/php-logo.svg"
+            alt="PHP Logo"
+          />
+        </section>
+
+        <!-- Lernziele -->
+        <section>
+          <h2>Lernziele dieser Lektion</h2>
+          <ul>
+            <li>Erklären können, wieso Eingaben immer auf dem Server validiert werden müssen</li>
+            <li>Pflichtfelder, Zahlen, E-Mail-Adressen und Auswahlen mit <code class="inline-code">trim()</code>, <code class="inline-code">filter_var()</code> und <code class="inline-code">in_array()</code> prüfen können</li>
+            <li>Fehlermeldungen in einem Array sammeln und beim passenden Feld anzeigen können</li>
+            <li>Die Validierung in eine Funktion auslagern können</li>
+            <li>Mit Post/Redirect/Get und einer Flash-Meldung doppeltes Absenden verhindern können</li>
+          </ul>
+        </section>
+
+        <!-- Rückblick -->
+        <section>
+          <span class="badge">Rückblick</span>
+          <h2>Was kann schiefgehen?</h2>
+          <p class="lead">
+            Unser Bestellformular aus Lektion 11 nimmt alles an, was geschickt
+            wird:
+          </p>
+          <div class="grid-3">
+            <div class="panel">
+              <h3>Leer</h3>
+              <p>Bestellung ohne Namen</p>
+            </div>
+            <div class="panel">
+              <h3>Unsinn</h3>
+              <p>Menge <code class="inline-code">-5</code> ergibt ein negatives Total</p>
+            </div>
+            <div class="panel">
+              <h3>Doppelt</h3>
+              <p><b>F5</b> nach dem Absenden bestellt nochmals</p>
+            </div>
+          </div>
+          <div class="callout">
+            <p>
+              Heute: Eingaben <b>validieren</b>, Fehler verständlich anzeigen
+              und doppeltes Absenden verhindern
+            </p>
+          </div>
+        </section>
+
+        <!-- HTML5-Validierung -->
+        <section>
+          <span class="badge">Clientseitig</span>
+          <h2>Validierung im Browser</h2>
+          <p class="lead">HTML kann schon vieles prüfen, bevor das Formular abgeschickt wird:</p>
+          <pre>
+                    <code class="html" data-trim data-line-numbers>
+                        &lt;input type="text"   name="name"  required maxlength="50"&gt;
+                        &lt;input type="email"  name="email" required&gt;
+                        &lt;input type="number" name="menge" min="1" max="20"&gt;
+                        &lt;input type="text"   name="plz"   pattern="[0-9]{4}"&gt;
+                    </code>
+                </pre>
+          <div class="callout">
+            <p>
+              Vorteil: Der Benutzer erhält <b>sofort</b> eine Rückmeldung,
+              ohne dass ein Request zum Server geht
+            </p>
+          </div>
+        </section>
+
+        <!-- Client vs Server -->
+        <section>
+          <span class="badge badge--danger">Sicherheit</span>
+          <h2>Reicht das nicht?</h2>
+          <div class="grid-2">
+            <div class="panel">
+              <h3>Clientseitig (HTML / JS)</h3>
+              <ul>
+                <li class="ok">schnelle Rückmeldung</li>
+                <li class="danger">lässt sich in den DevTools entfernen</li>
+                <li class="danger">wird umgangen, wenn man Requests direkt schickt</li>
+              </ul>
+            </div>
+            <div class="panel">
+              <h3>Serverseitig (PHP)</h3>
+              <ul>
+                <li class="ok">kann nicht umgangen werden</li>
+                <li class="ok">einzige Prüfung, auf die man sich verlassen kann</li>
+                <li class="danger">erst nach dem Absenden</li>
+              </ul>
+            </div>
+          </div>
+          <pre class="code-sm">
+                    <code class="bash" data-trim>
+                        curl -d "name=&amp;menge=-5" http://localhost/shop/index.php
+                    </code>
+                </pre>
+          <div class="callout callout--danger">
+            <p>
+              Clientseitig ist Komfort, serverseitig ist Pflicht - in PHP wird
+              <b>immer</b> validiert
+            </p>
+          </div>
+        </section>
+
+        <!-- Ablauf -->
+        <section>
+          <span class="badge">Grundlagen</span>
+          <h2>Ablauf der Validierung</h2>
+          <div class="flow">
+            <div class="box">
+              <b>1. Einlesen</b><br />
+              Werte aus <code class="inline-code">$_POST</code> holen und mit
+              <code class="inline-code">trim()</code> aufbereiten
+            </div>
+            <div class="arrow">&rarr;</div>
+            <div class="box">
+              <b>2. Prüfen</b><br />
+              jede Regel testen, Fehler in einem Array
+              <code class="inline-code">$errors</code> sammeln
+            </div>
+            <div class="arrow">&rarr;</div>
+            <div class="box">
+              <b>3. Entscheiden</b><br />
+              keine Fehler &rarr; verarbeiten<br />
+              sonst &rarr; Formular mit Meldungen
+            </div>
+          </div>
+          <div class="callout">
+            <p>
+              Alle Fehler auf einmal sammeln, nicht beim ersten abbrechen - so
+              kann der Benutzer alles in einem Durchgang korrigieren
+            </p>
+          </div>
+        </section>
+
+        <!-- Fehler-Array -->
+        <section>
+          <span class="badge">Grundlagen</span>
+          <h2>Fehler sammeln</h2>
+          <pre class="code-sm">
+                    <code class="php" data-trim data-line-numbers="2|5-10|12-14">
+                        &lt;?php
+                        $errors = [];
+                        $name = trim($_POST["name"] ?? "");
+
+                        if ($name === "") {
+                            $errors["name"] = "Bitte geben Sie einen Namen ein.";
+                        } elseif (mb_strlen($name) &gt; 50) {
+                            $errors["name"] = "Der Name darf höchstens 50 Zeichen lang sein.";
+                        }
+
+                        if (count($errors) === 0) {
+                            // Bestellung speichern
+                        }
+                    </code>
+                </pre>
+          <div class="callout callout--warn">
+            <p>
+              Feldname als Schlüssel &rarr; Meldung beim richtigen Feld.
+              <code class="inline-code">mb_strlen()</code> zählt Umlaute
+              korrekt
+            </p>
+          </div>
+        </section>
+
+        <!-- Quiz 1 -->
+        <section>
+          <span class="badge badge--quiz">Quiz</span>
+          <h2>Was gibt dieser Code aus?</h2>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        $anzahlKinder = "0"; // aus einem Formular
+
+                        if (empty($anzahlKinder)) {
+                            echo "Pflichtfeld!";
+                        } else {
+                            echo "OK";
+                        }
+                    </code>
+                </pre>
+          <p class="fragment answer">
+            <code class="inline-code">Pflichtfeld!</code> -
+            <code class="inline-code">empty()</code> hält auch
+            <code class="inline-code">"0"</code> für leer. Für Pflichtfelder
+            darum <code class="inline-code">trim($wert) === ""</code> verwenden
+          </p>
+        </section>
+
+        <!-- filter_var -->
+        <section>
+          <span class="badge">Prüfen</span>
+          <h2><code class="inline-code">filter_var()</code></h2>
+          <p class="lead">
+            Prüft, ob ein String ein gültiger Wert eines bestimmten Typs ist -
+            und gibt ihn umgewandelt zurück, sonst
+            <code class="inline-code">false</code>
+          </p>
+          <table class="compare">
+            <thead>
+              <tr><th>Aufruf</th><th>Ergebnis</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code class="inline-code">filter_var("42", FILTER_VALIDATE_INT)</code></td><td><code class="inline-code">42</code> (int)</td></tr>
+              <tr><td><code class="inline-code">filter_var("12.5", FILTER_VALIDATE_INT)</code></td><td><code class="inline-code">false</code></td></tr>
+              <tr><td><code class="inline-code">filter_var("12.5", FILTER_VALIDATE_FLOAT)</code></td><td><code class="inline-code">12.5</code> (float)</td></tr>
+              <tr><td><code class="inline-code">filter_var("anna@example.ch", FILTER_VALIDATE_EMAIL)</code></td><td><code class="inline-code">"anna@example.ch"</code></td></tr>
+              <tr><td><code class="inline-code">filter_var("anna@example", FILTER_VALIDATE_EMAIL)</code></td><td><code class="inline-code">false</code></td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- Zahl mit Bereich -->
+        <section>
+          <span class="badge">Prüfen</span>
+          <h2>Zahlen mit Bereich prüfen</h2>
+          <pre class="code-sm">
+                    <code class="php" data-trim data-line-numbers="2-4|6-8">
+                        &lt;?php
+                        $menge = filter_var($_POST["menge"] ?? "", FILTER_VALIDATE_INT, [
+                            "options" =&gt; ["min_range" =&gt; 1, "max_range" =&gt; 20],
+                        ]);
+
+                        if ($menge === false) {
+                            $errors["menge"] = "Die Menge muss zwischen 1 und 20 liegen.";
+                        }
+
+                        $email = filter_var($_POST["email"] ?? "", FILTER_VALIDATE_EMAIL);
+                        if ($email === false) {
+                            $errors["email"] = "Bitte geben Sie eine gültige E-Mail-Adresse ein.";
+                        }
+                    </code>
+                </pre>
+          <div class="callout">
+            <p>
+              Im Gegensatz zu <code class="inline-code">(int)</code> wird
+              <code class="inline-code">"abc"</code> nicht still zu
+              <code class="inline-code">0</code> - ungültige Werte werden
+              erkannt
+            </p>
+          </div>
+        </section>
+
+        <!-- Quiz 2 -->
+        <section>
+          <span class="badge badge--quiz">Quiz</span>
+          <h2>Was gibt dieser Code aus?</h2>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        $anzahl = "0"; // aus einem Formular
+
+                        if (!filter_var($anzahl, FILTER_VALIDATE_INT)) {
+                            echo "Ungültig";
+                        } else {
+                            echo "OK";
+                        }
+                    </code>
+                </pre>
+          <p class="fragment answer">
+            <code class="inline-code">Ungültig</code> - die Zahl
+            <code class="inline-code">0</code> ist gültig, aber
+            <code class="inline-code">!0</code> ergibt
+            <code class="inline-code">true</code>. Darum immer mit
+            <code class="inline-code">=== false</code> prüfen
+          </p>
+        </section>
+
+        <!-- Auswahl prüfen -->
+        <section>
+          <span class="badge">Prüfen</span>
+          <h2>Auswahlen prüfen</h2>
+          <pre class="code-sm">
+                    <code class="php" data-trim data-line-numbers="2-5|7-10">
+                        &lt;?php
+                        $lieferung = $_POST["lieferung"] ?? "";
+                        if (!in_array($lieferung, ["abholen", "post"], true)) {
+                            $errors["lieferung"] = "Bitte wählen Sie eine Lieferart.";
+                        }
+
+                        $produktId = filter_var($_POST["produkt"] ?? "", FILTER_VALIDATE_INT);
+                        if ($produktId === false || !isset($produkte[$produktId])) {
+                            $errors["produkt"] = "Bitte wählen Sie ein Produkt.";
+                        }
+                    </code>
+                </pre>
+          <div class="callout">
+            <p>
+              Select, Radio und Checkbox lassen sich in den DevTools ändern -
+              nur Werte aus einer <b>Whitelist</b> akzeptieren. Pflicht-Checkbox:
+              <code class="inline-code">isset($_POST["agb"])</code>
+            </p>
+          </div>
+        </section>
+
+        <!-- preg_match -->
+        <section>
+          <span class="badge">Prüfen</span>
+          <h2>Muster prüfen mit <code class="inline-code">preg_match()</code></h2>
+          <pre>
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        $plz = trim($_POST["plz"] ?? "");
+                        if (preg_match('/^[0-9]{4}$/', $plz) !== 1) {
+                            $errors["plz"] = "Die PLZ besteht aus 4 Ziffern.";
+                        }
+                    </code>
+                </pre>
+          <table class="compare">
+            <tbody>
+              <tr><td><code class="inline-code">/ ... /</code></td><td>Anfang und Ende des Musters (regulärer Ausdruck)</td></tr>
+              <tr><td><code class="inline-code">^</code> / <code class="inline-code">$</code></td><td>Anfang / Ende des Strings - sonst würde auch <code class="inline-code">"x80001"</code> passen</td></tr>
+              <tr><td><code class="inline-code">[0-9]{4}</code></td><td>genau 4 Zeichen von 0 bis 9</td></tr>
+            </tbody>
+          </table>
+          <p class="small muted">
+            <code class="inline-code">preg_match()</code> gibt
+            <code class="inline-code">1</code> zurück, wenn das Muster passt,
+            sonst <code class="inline-code">0</code>
+          </p>
+        </section>
+
+        <!-- Fehler anzeigen -->
+        <section>
+          <span class="badge">Anzeigen</span>
+          <h2>Fehler beim Feld anzeigen</h2>
+          <pre class="code-sm">
+                    <code class="php-template" data-trim data-line-numbers="1-2|4-7">
+                        &lt;label for="email"&gt;E-Mail&lt;/label&gt;
+                        &lt;input type="email" id="email" name="email" value="&lt;?= e($email) ?&gt;"&gt;
+
+                        &lt;?php if (isset($errors["email"])): ?&gt;
+                            &lt;p class="fehler"&gt;&lt;?= e($errors["email"]) ?&gt;&lt;/p&gt;
+                        &lt;?php endif; ?&gt;
+                    </code>
+                </pre>
+          <div class="grid-2">
+            <div class="panel">
+              <h3>Werte erhalten</h3>
+              <p>
+                Wie in Lektion 11: der Benutzer muss nur korrigieren, nicht
+                alles neu eingeben
+              </p>
+            </div>
+            <div class="panel">
+              <h3>Klare Meldung</h3>
+              <p>
+                Sagen, <b>was</b> erwartet wird: "Die PLZ besteht aus 4
+                Ziffern" statt "Ungültige Eingabe"
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Validierungsfunktion -->
+        <section>
+          <span class="badge">Praxis</span>
+          <h2>Validierung als Funktion</h2>
+          <pre class="code-sm">
+                    <code class="php" data-trim data-line-numbers="2-12|14">
+                        &lt;?php
+                        function validiereBestellung(array $daten): array
+                        {
+                            $errors = [];
+                            if (trim($daten["name"] ?? "") === "") {
+                                $errors["name"] = "Bitte geben Sie einen Namen ein.";
+                            }
+                            if (filter_var($daten["email"] ?? "", FILTER_VALIDATE_EMAIL) === false) {
+                                $errors["email"] = "Ungültige E-Mail-Adresse.";
+                            }
+                            return $errors;
+                        }
+
+                        $errors = validiereBestellung($_POST);
+                    </code>
+                </pre>
+          <div class="callout">
+            <p>
+              Ohne HTML und Session: einzeln testbar und in eine eigene Datei
+              auslagerbar (<code class="inline-code">require_once</code>)
+            </p>
+          </div>
+        </section>
+
+        <!-- Problem doppelt absenden -->
+        <section>
+          <span class="badge badge--danger">Problem</span>
+          <h2>Doppelt abgeschickt</h2>
+          <div class="grid-2">
+            <div class="panel">
+              <h3>Was passiert?</h3>
+              <p>
+                Nach dem Absenden zeigt der Browser die Antwort auf einen
+                <b>POST-Request</b>. <b>F5</b> wiederholt genau diesen Request
+                - inklusive aller Daten
+              </p>
+            </div>
+            <div class="panel">
+              <h3>Folge</h3>
+              <p>
+                Der Browser fragt "Erneut senden?" - wer bestätigt, bestellt
+                ein zweites Mal
+              </p>
+            </div>
+          </div>
+          <div class="callout callout--warn">
+            <p>
+              Ziel: Nach einer erfolgreichen Verarbeitung soll der Browser
+              eine normale <b>GET</b>-Seite anzeigen
+            </p>
+          </div>
+        </section>
+
+        <!-- PRG -->
+        <section>
+          <span class="badge">Praxis</span>
+          <h2>Post / Redirect / Get</h2>
+          <div class="flow">
+            <div class="box">
+              <b>POST</b><br />
+              Formular wird abgeschickt, PHP validiert und speichert
+            </div>
+            <div class="arrow">&rarr;</div>
+            <div class="box">
+              <b>Redirect</b><br />
+              PHP antwortet nur mit
+              <code class="inline-code">Location: index.php</code>
+            </div>
+            <div class="arrow">&rarr;</div>
+            <div class="box">
+              <b>GET</b><br />
+              Browser lädt <code class="inline-code">index.php</code> neu - F5
+              ist jetzt harmlos
+            </div>
+          </div>
+          <pre class="code-sm">
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        if (count($errors) === 0) {
+                            $_SESSION["bestellungen"][] = $bestellung;
+                            header("Location: index.php");
+                            exit;
+                        }
+                    </code>
+                </pre>
+          <p class="small muted">
+            Nur bei Erfolg umleiten - bei Fehlern wird das Formular mit den
+            Meldungen direkt angezeigt
+          </p>
+        </section>
+
+        <!-- header -->
+        <section>
+          <span class="badge">Praxis</span>
+          <h2><code class="inline-code">header()</code> und <code class="inline-code">exit</code></h2>
+          <div class="grid-2">
+            <div class="panel">
+              <h3><code class="inline-code">header("Location: ...")</code></h3>
+              <p>
+                Schickt dem Browser einen HTTP-Header mit der neuen Adresse.
+                Wie <code class="inline-code">session_start()</code> muss er
+                <b>vor jeder Ausgabe</b> stehen
+              </p>
+            </div>
+            <div class="panel">
+              <h3><code class="inline-code">exit;</code></h3>
+              <p>
+                <code class="inline-code">header()</code> beendet das Skript
+                <b>nicht</b>. Ohne <code class="inline-code">exit</code> läuft
+                der Rest weiter
+              </p>
+            </div>
+          </div>
+          <div class="callout callout--danger">
+            <p>
+              Fehler <i>Cannot modify header information - headers already
+              sent</i>: vor dem <code class="inline-code">header()</code> wurde
+              schon etwas ausgegeben (HTML, <code class="inline-code">echo</code>,
+              Leerzeichen vor <code class="inline-code">&lt;?php</code>)
+            </p>
+          </div>
+        </section>
+
+        <!-- Flash-Meldung -->
+        <section>
+          <span class="badge">Praxis</span>
+          <h2>Flash-Meldung</h2>
+          <div class="grid-2">
+            <div>
+              <p class="small accent">beim erfolgreichen POST</p>
+              <pre class="code-sm">
+                    <code class="php" data-trim data-line-numbers>
+                        &lt;?php
+                        $_SESSION["flash"] = "Danke!";
+                        header("Location: index.php");
+                        exit;
+                    </code>
+                </pre>
+            </div>
+            <div>
+              <p class="small accent">beim nächsten GET</p>
+              <pre class="code-sm">
+                    <code class="php-template" data-trim data-line-numbers>
+                        &lt;?php
+                        $flash = $_SESSION["flash"] ?? null;
+                        unset($_SESSION["flash"]);
+                        ?&gt;
+                        &lt;?php if ($flash !== null): ?&gt;
+                            &lt;p&gt;&lt;?= e($flash) ?&gt;&lt;/p&gt;
+                        &lt;?php endif; ?&gt;
+                    </code>
+                </pre>
+            </div>
+          </div>
+          <div class="callout">
+            <p>
+              Nach dem Redirect sind alle Variablen weg - die Meldung nimmt den
+              Umweg über die Session (Lektion 07) und erscheint genau
+              <b>einmal</b>
+            </p>
+          </div>
+        </section>
+
+        <!-- Quiz 3 -->
+        <section>
+          <span class="badge badge--quiz">Quiz</span>
+          <h2>Wo bleibt die Meldung?</h2>
+          <pre class="code-sm">
+                    <code class="php-template" data-trim data-line-numbers>
+                        &lt;?php
+                        session_start();
+                        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+                            $_SESSION["flash"] = "Anmeldung gespeichert";
+                            header("Location: index.php");
+                        }
+                        $flash = $_SESSION["flash"] ?? null;
+                        unset($_SESSION["flash"]);
+                        ?&gt;
+                        &lt;?php if ($flash !== null): ?&gt;
+                            &lt;p&gt;&lt;?= e($flash) ?&gt;&lt;/p&gt;
+                        &lt;?php endif; ?&gt;
+                    </code>
+                </pre>
+          <p class="fragment answer">
+            <code class="inline-code">exit</code> fehlt: Das Skript läuft im
+            POST-Request weiter und löscht die Meldung, bevor der Browser die
+            Seite per GET neu lädt
+          </p>
+        </section>
+
+        <!-- Typische Fehler -->
+        <section>
+          <span class="badge badge--danger">Achtung</span>
+          <h2>Typische Fehler</h2>
+          <div class="grid-2">
+            <div class="panel">
+              <h3>Nur im Browser validiert</h3>
+              <p>
+                <code class="inline-code">required</code> und
+                <code class="inline-code">min</code> ersetzen keine Prüfung in
+                PHP
+              </p>
+            </div>
+            <div class="panel">
+              <h3><code class="inline-code">!filter_var(...)</code></h3>
+              <p>
+                Gültige <code class="inline-code">0</code> wird als Fehler
+                erkannt &rarr; <code class="inline-code">=== false</code>
+              </p>
+            </div>
+            <div class="panel">
+              <h3><code class="inline-code">exit</code> vergessen</h3>
+              <p>
+                Nach <code class="inline-code">header("Location: ...")</code>
+                läuft das Skript weiter
+              </p>
+            </div>
+            <div class="panel">
+              <h3>Ausgabe vor <code class="inline-code">header()</code></h3>
+              <p>
+                <i>headers already sent</i> &rarr; Logik oben, HTML unten
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- TL;DR -->
+        <section>
+          <h2>TL;DR</h2>
+          <ul class="tldr">
+            <li>
+              Validierung im Browser ist Komfort - in PHP wird
+              <b>immer</b> validiert
+            </li>
+            <li>
+              Fehler in <code class="inline-code">$errors["feld"]</code>
+              sammeln und beim Feld anzeigen, Eingaben erhalten
+            </li>
+            <li>
+              <code class="inline-code">trim($x) === ""</code> für
+              Pflichtfelder, <code class="inline-code">filter_var()</code> mit
+              <code class="inline-code">=== false</code> für Zahlen und E-Mail,
+              <code class="inline-code">in_array()</code> für Auswahlen
+            </li>
+            <li>
+              Nach erfolgreichem POST:
+              <code class="inline-code">header("Location: ...")</code> +
+              <code class="inline-code">exit</code> (Post/Redirect/Get)
+            </li>
+            <li>
+              Erfolgsmeldungen als Flash-Meldung über die Session - nächste
+              Lektion: Dateien &amp; Sessions
+            </li>
+          </ul>
+        </section>
+      </div>
+    </div>
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+      Reveal.initialize({
+        hash: true,
+        plugins: [RevealZoom, RevealMarkdown, RevealHighlight, RevealNotes],
+      });
+    </script>
+  </body>
+</html>

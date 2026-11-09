@@ -1,0 +1,114 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+\usepackage{parskip}
+\usepackage{textcomp}
+
+\setlength{\parindent}{0pt} % Keine Einrückungen
+\setlength{\emergencystretch}{3em}
+
+\title{Modul 295 - Aufgabenblatt 12}
+\author{von Lukas Meier}
+\date{Unterricht vom 17.11.2026}
+
+\begin{document}
+
+\maketitle
+
+Der Hofladen Sonnenhof bietet im Dezember Kurse an. In der Datei \texttt{index.php} finden Sie ein fertiges Anmeldeformular. Die Eingaben werden bereits in das Array \texttt{\$daten} eingelesen und nach dem Absenden wieder im Formular angezeigt. Bisher wird aber jede Anmeldung angenommen, egal was eingegeben wurde. In dieser Lektion ergänzen Sie die Validierung auf dem Server.
+
+\section{Projekt vorbereiten}
+
+Erstellen Sie im \texttt{htdocs}-Ordner Ihrer XAMPP-Installation einen neuen Ordner \texttt{php-validierung} und speichern Sie die Datei \texttt{index.php}, welche Sie auf dem Netzwerkordner finden, darin. Öffnen Sie danach \texttt{http://localhost/php-validierung/} im Browser.
+
+Versuchen Sie, das Formular leer, mit einem Alter von \texttt{12} und mit der PLZ \texttt{80000} abzuschicken. Wer verhindert das Absenden?
+
+\section{Browser-Validierung umgehen}
+
+Öffnen Sie die Entwicklertools (F12) und ergänzen Sie im Tab \emph{Elemente} beim \texttt{<form>}-Tag das Attribut \texttt{novalidate}. Damit schaltet der Browser seine Prüfung ab. Schicken Sie das Formular jetzt leer bzw. mit ungültigen Werten ab.
+
+Ändern Sie zusätzlich im \texttt{<select>} das \texttt{value} einer Option auf \texttt{yoga} und schicken Sie das Formular mit dieser Option ab. Notieren Sie, was der Server mit diesen Eingaben macht.
+
+\textbf{Tipp:} Das Attribut \texttt{novalidate} verschwindet beim Neuladen der Seite wieder. Ergänzen Sie es für die folgenden Aufgaben vorübergehend direkt im HTML in \texttt{index.php} und entfernen Sie es am Ende wieder.
+
+\section{Pflichtfelder}
+
+Legen Sie innerhalb der \texttt{if}-Abfrage ein leeres Array \texttt{\$errors} an. Prüfen Sie danach:
+
+\begin{itemize}
+    \item \texttt{vorname} und \texttt{nachname} dürfen nicht leer sein (\texttt{=== "{}"{}}) und höchstens 50 Zeichen lang sein (\texttt{mb\_strlen()}).
+\end{itemize}
+
+Speichern Sie bei einem Fehler eine verständliche Meldung unter dem Namen des Feldes, z.B. \texttt{\$errors["{}vorname"{}] = "{}Bitte geben Sie Ihren Vornamen ein."{}}. Setzen Sie \texttt{\$angemeldet} nur dann auf \texttt{true}, wenn \texttt{\$errors} leer ist.
+
+Initialisieren Sie \texttt{\$errors} zusätzlich \emph{vor} der \texttt{if}-Abfrage mit einem leeren Array und geben Sie oberhalb des Formulars alle Fehler als Liste (\texttt{<ul>}) aus, falls es welche gibt.
+
+\section{E-Mail und Alter}
+
+Ergänzen Sie die Validierung mit \texttt{filter\_var()}:
+
+\begin{itemize}
+    \item \texttt{email} muss eine gültige E-Mail-Adresse sein.\\
+    Filter: \texttt{FILTER\_VALIDATE\_EMAIL}
+    \item \texttt{alter} muss eine ganze Zahl zwischen 16 und 99 sein.\\
+    Filter: \texttt{FILTER\_VALIDATE\_INT} mit den Optionen \texttt{min\_range} und \texttt{max\_range}
+\end{itemize}
+
+Vergleichen Sie das Ergebnis von \texttt{filter\_var()} immer mit \texttt{=== false}. Testen Sie unter anderem mit den Werten \texttt{anna@example}, \texttt{15}, \texttt{16}, \texttt{17.5} und \texttt{abc}.
+
+\section{PLZ, Kurs und AGB}
+
+\begin{itemize}
+    \item \texttt{plz} muss aus genau 4 Ziffern bestehen. Verwenden Sie dazu:\\
+    \texttt{preg\_match(\textquotesingle{}/\textasciicircum[0-9]\{4\}\$/\textquotesingle{}, \$daten["{}plz"{}])}
+    \item \texttt{kurs} muss ein Schlüssel aus \texttt{\$kurse} sein (Tipp: \texttt{isset()}). Wiederholen Sie den Test mit \texttt{yoga} aus Aufgabe 2.
+    \item Die AGB müssen akzeptiert sein.
+\end{itemize}
+
+\section{Fehler beim Feld anzeigen}
+
+Ersetzen Sie die Fehlerliste aus Aufgabe 3 durch den Hinweis \texttt{"{}Bitte korrigieren Sie die markierten Felder."{}} und zeigen Sie jede Fehlermeldung direkt unter dem betroffenen Feld in einem \texttt{<p class="{}fehler"{}>} an.
+
+Geben Sie ungültigen Feldern zusätzlich die CSS-Klasse \texttt{ungueltig}, z.B. \texttt{class="{}<?= isset(\$errors["{}email"{}]) ? "{}ungueltig"{} : "{}"{} ?>"{}}. Die Felder erhalten dadurch einen roten Rahmen.
+
+\section{Validierung als Funktion}
+
+Erstellen Sie eine Datei \texttt{validierung.php} mit folgender Funktion:
+
+\texttt{validiereAnmeldung(array \$daten, array \$kurse): array}
+
+Sie enthält alle Prüfungen aus den Aufgaben 3 bis 5 und gibt das Array mit den Fehlern zurück.
+
+Binden Sie die Datei in \texttt{index.php} mit \texttt{require\_once} ein und ersetzen Sie Ihre Prüfungen durch einen Aufruf der Funktion. Das Formular muss sich danach genau gleich verhalten wie vorher.
+
+\section{Post/Redirect/Get}
+
+Ist die Anmeldung gültig, speichern Sie sie in der Session: Hängen Sie \texttt{\$daten} an das Array \texttt{\$\_SESSION["{}anmeldungen"{}]} an.
+
+Schicken Sie eine gültige Anmeldung ab und drücken Sie danach \textbf{F5}. Was passiert? Lösen Sie das Problem:
+
+\begin{enumerate}
+    \item Speichern Sie nach einer gültigen Anmeldung eine Flash-Meldung in \texttt{\$\_SESSION["{}flash"{}]}, z.B. \texttt{"{}Vielen Dank, Anna! Ihre Anmeldung für Brot backen ist eingegangen."{}}
+    \item Leiten Sie danach mit \texttt{header("{}Location: index.php"{})} um und beenden Sie das Skript mit \texttt{exit}.
+    \item Lesen Sie die Flash-Meldung oben in der Datei aus, löschen Sie sie sofort mit \texttt{unset()} und zeigen Sie sie anstelle der bisherigen Bestätigung im \texttt{<p class="{}erfolg"{}>} an. Die Variable \texttt{\$angemeldet} wird nicht mehr gebraucht.
+\end{enumerate}
+
+Testen Sie erneut mit \textbf{F5}. Die Meldung erscheint nur einmal, und es wird keine zweite Anmeldung gespeichert.
+
+\section{Kursübersicht}
+
+Zeigen Sie unter dem Formular eine Tabelle mit allen Kursen an: Name, Datum und die belegten Plätze, z.B. \texttt{"{}1 von 3"{}}. Zählen Sie dazu die Anmeldungen in \texttt{\$\_SESSION["{}anmeldungen"{}]}, deren \texttt{kurs} dem jeweiligen Schlüssel entspricht.
+
+\section{Bonusaufgabe: Ausgebucht und doppelte Anmeldung}
+
+Erweitern Sie \texttt{validiereAnmeldung()} um einen dritten Parameter \texttt{array \$anmeldungen} und zwei zusätzliche Prüfungen:
+
+\begin{itemize}
+    \item Sind für den gewählten Kurs bereits so viele Anmeldungen vorhanden, wie er Plätze hat, erscheint die Meldung \texttt{"{}Dieser Kurs ist leider ausgebucht."{}}
+    \item Ist dieselbe E-Mail-Adresse bereits für denselben Kurs angemeldet, erscheint \texttt{"{}Mit dieser E-Mail-Adresse sind Sie bereits angemeldet."{}} Gross- und Kleinschreibung sollen dabei keine Rolle spielen (\texttt{strtolower()}).
+\end{itemize}
+
+Kennzeichnen Sie ausgebuchte Kurse zusätzlich in der Auswahlliste mit \texttt{"{}(ausgebucht)"{}} und dem Attribut \texttt{disabled}. Überlegen Sie, warum die Prüfung in PHP trotzdem nötig ist.
+
+\end{document}
