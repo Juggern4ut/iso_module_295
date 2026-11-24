@@ -1,0 +1,145 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+\usepackage{parskip}
+\usepackage{textcomp}
+
+\setlength{\parindent}{0pt} % Keine Einrückungen
+\setlength{\emergencystretch}{3em}
+
+\title{Modul 295 - Aufgabenblatt 13}
+\author{von Lukas Meier}
+\date{Unterricht vom 24.11.2026}
+
+\begin{document}
+
+\maketitle
+
+Die Kursanmeldung des Hofladens Sonnenhof aus Lektion 12 funktioniert, hat aber einen grossen Haken: Die Anmeldungen werden in der Session gespeichert. Jeder Besucher sieht nur seine eigenen Anmeldungen, und die Betreiber des Hofladens sehen gar keine. In dieser Lektion speichern Sie die Anmeldungen in einer Datei, bauen eine geschützte Verwaltung mit Login und ermöglichen das Hochladen von Kursbildern.
+
+\section{Projekt vorbereiten}
+
+Erstellen Sie im \texttt{htdocs}-Ordner Ihrer XAMPP-Installation einen neuen Ordner \texttt{php-dateien} und speichern Sie die Dateien \texttt{index.php} und \texttt{validierung.php}, welche Sie auf dem Netzwerkordner finden, darin. Erstellen Sie im Ordner \texttt{php-dateien} zusätzlich die beiden leeren Unterordner \texttt{data} und \texttt{bilder}.
+
+Öffnen Sie \texttt{http://localhost/php-dateien/} im Browser und melden Sie sich für einen Kurs an. Öffnen Sie die Seite danach in einem privaten Fenster oder einem anderen Browser. Was zeigt die Kursübersicht dort an, und weshalb?
+
+\section{Besucherzähler}
+
+Erstellen Sie die Datei \texttt{zaehler.php}. Sie liest bei jedem Aufruf eine Zahl aus der Datei \texttt{data/zaehler.txt}, erhöht sie um 1, speichert sie wieder und gibt sie im Format \texttt{"{}Diese Seite wurde 5 Mal aufgerufen."{}} aus.
+
+\begin{itemize}
+    \item Bilden Sie den Pfad mit \texttt{\_\_DIR\_\_ . "{}/data/zaehler.txt"{}}.
+    \item Beim ersten Aufruf gibt es die Datei noch nicht. Prüfen Sie das mit \texttt{file\_exists()} und starten Sie in diesem Fall bei 0.
+\end{itemize}
+
+Rufen Sie die Seite in beiden Browsern aus Aufgabe 1 auf. Vergleichen Sie mit dem Zähler aus Lektion 07, der in der Session gespeichert war.
+
+Ergänzen Sie danach ein Protokoll: Hängen Sie bei jedem Aufruf mit \texttt{FILE\_APPEND} eine Zeile an die Datei \texttt{data/protokoll.txt} an. Die Zeile enthält Datum und Uhrzeit des Aufrufs: \texttt{date("{}d.m.Y H:i:s"{}) . "{}\textbackslash{}n"{}}. Öffnen Sie die Datei nach einigen Aufrufen im Editor.
+
+\section{Gemeinsamer Code in \texttt{app.php}}
+
+In den nächsten Aufgaben kommen weitere Seiten dazu, die denselben Code brauchen. Erstellen Sie darum die Datei \texttt{app.php} und verschieben Sie folgende Teile aus \texttt{index.php} dorthin:
+
+\begin{itemize}
+    \item \texttt{session\_start()} und \texttt{require\_once "{}validierung.php"{}}
+    \item das Array \texttt{\$kurse} und die Funktion \texttt{e()}
+\end{itemize}
+
+Binden Sie \texttt{app.php} am Anfang von \texttt{index.php} mit \texttt{require\_once} ein. Ergänzen Sie in \texttt{app.php} danach zwei Funktionen:
+
+\begin{itemize}
+    \item \texttt{ladeJson(string \$datei): array}\\
+    Liest die Datei \texttt{\$datei} aus dem Ordner \texttt{data} und gibt ihren Inhalt mit \texttt{json\_decode(\$json, true)} als Array zurück. Gibt es die Datei nicht, gibt die Funktion ein leeres Array zurück.
+    \item \texttt{speichereJson(string \$datei, array \$daten): void}\\
+    Wandelt \texttt{\$daten} mit \texttt{json\_encode()} in JSON um und speichert es in der Datei \texttt{\$datei} im Ordner \texttt{data}. Verwenden Sie die Optionen \texttt{JSON\_PRETTY\_PRINT | JSON\_UNESCAPED\_UNICODE}.
+\end{itemize}
+
+Die Kursanmeldung muss sich danach genau gleich verhalten wie vorher.
+
+\section{Anmeldungen in einer Datei speichern}
+
+Ersetzen Sie in \texttt{index.php} die Session durch die Datei \texttt{anmeldungen.json}:
+
+\begin{enumerate}
+    \item Laden Sie \texttt{\$anmeldungen} mit \texttt{ladeJson("{}anmeldungen.json"{})}.
+    \item Hängen Sie eine gültige Anmeldung an \texttt{\$anmeldungen} an und speichern Sie das Array mit \texttt{speichereJson()}.
+\end{enumerate}
+
+Die Flash-Meldung bleibt in der Session. Begründen Sie in einem Satz, weshalb.
+
+Testen Sie mit beiden Browsern: Anmeldungen aus dem einen Browser sind jetzt im anderen sichtbar, und ein Kurs ist für alle ausgebucht. Öffnen Sie \texttt{data/anmeldungen.json} im Editor und schauen Sie sich den Inhalt an.
+
+\section{Benutzer für die Verwaltung}
+
+Die Verwaltung soll nur mit Benutzername und Passwort erreichbar sein. Das Passwort darf dabei nicht im Klartext gespeichert werden.
+
+Erstellen Sie die Datei \texttt{hash.php}, die mit \texttt{password\_hash("{}sonnenhof"{}, PASSWORD\_DEFAULT)} einen Hash erzeugt und ausgibt. Rufen Sie die Seite auf und laden Sie sie einmal neu. Weshalb erhalten Sie jedes Mal einen anderen Hash?
+
+Erstellen Sie danach die Datei \texttt{data/benutzer.json} mit dem Benutzernamen als Schlüssel und dem Hash als Wert:
+
+\texttt{\{"{}admin"{}: "{}\$2y\$10\$..."{}\}}
+
+Löschen Sie \texttt{hash.php} anschliessend wieder. Weshalb?
+
+\section{Login}
+
+Erstellen Sie die Datei \texttt{login.php} mit einem Formular (\texttt{method="{}post"{}}) mit den Feldern \texttt{benutzername} und \texttt{passwort} (\texttt{type="{}password"{}}). Binden Sie zuerst \texttt{app.php} ein. Nach dem Absenden:
+
+\begin{enumerate}
+    \item Laden Sie die Benutzer mit \texttt{ladeJson("{}benutzer.json"{})} und holen Sie den Hash des eingegebenen Benutzernamens (\texttt{?? null}, falls es ihn nicht gibt).
+    \item Prüfen Sie das Passwort mit \texttt{password\_verify()}.
+    \item Stimmt es, rufen Sie \texttt{session\_regenerate\_id(true)} auf, speichern den Benutzernamen in \texttt{\$\_SESSION["{}benutzer"{}]} und leiten auf \texttt{admin.php} um (\texttt{header()} und \texttt{exit}).
+    \item Sonst zeigen Sie die Meldung \texttt{"{}Benutzername oder Passwort ist falsch."{}} an. Der Benutzername bleibt im Feld stehen, das Passwort nicht.
+\end{enumerate}
+
+Verwenden Sie dieselbe Meldung für einen falschen Benutzernamen und ein falsches Passwort. Weshalb?
+
+\section{Geschützte Verwaltung und Logout}
+
+Erstellen Sie die Datei \texttt{auth.php}. Sie prüft, ob \texttt{\$\_SESSION["{}benutzer"{}]} gesetzt ist, und leitet sonst auf \texttt{login.php} um.
+
+Erstellen Sie die Datei \texttt{admin.php}, die zuerst \texttt{app.php} und dann \texttt{auth.php} einbindet. Sie zeigt:
+
+\begin{itemize}
+    \item \texttt{"{}Angemeldet als admin"{}} und einen Link \texttt{Logout} auf \texttt{logout.php}
+    \item eine Tabelle mit allen Anmeldungen aus \texttt{anmeldungen.json}: Name, E-Mail und Name des Kurses
+\end{itemize}
+
+Erstellen Sie die Datei \texttt{logout.php}: Sie entfernt \texttt{\$\_SESSION["{}benutzer"{}]} mit \texttt{unset()}, setzt die Flash-Meldung \texttt{"{}Sie wurden abgemeldet."{}} und leitet auf \texttt{index.php} um. Ergänzen Sie in \texttt{index.php} unten einen Link \texttt{Verwaltung} auf \texttt{admin.php}.
+
+Testen Sie: Rufen Sie \texttt{admin.php} im privaten Fenster direkt über die Adresse auf. Sie müssen auf dem Login landen.
+
+\section{Kursbilder hochladen}
+
+Ergänzen Sie in \texttt{admin.php} ein zweites Formular zum Hochladen eines Bildes für einen Kurs. Es enthält eine Auswahlliste \texttt{kurs} mit allen Kursen und ein Feld \texttt{<input type="{}file"{} name="{}bild"{}>}. Denken Sie an \texttt{enctype="{}multipart/form-data"{}}.
+
+Prüfen Sie nach dem Absenden:
+
+\begin{itemize}
+    \item \texttt{kurs} ist ein Schlüssel aus \texttt{\$kurse}.
+    \item \texttt{\$\_FILES["{}bild"{}]["{}error"{}]} ist \texttt{UPLOAD\_ERR\_OK}.
+    \item Das Bild ist höchstens 2 MB gross.
+    \item \texttt{mime\_content\_type()} ergibt \texttt{image/jpeg} oder \texttt{image/png}.
+\end{itemize}
+
+Zeigen Sie Fehler wie in Lektion 12 beim Feld an. Ist alles gültig, verschieben Sie das Bild mit \texttt{move\_uploaded\_file()} unter seinem ursprünglichen Namen in den Ordner \texttt{bilder}. Verwenden Sie dazu \texttt{basename(\$\_FILES["{}bild"{}]["{}name"{}])}, damit ein Name wie \texttt{../index.php} nicht ausserhalb des Ordners landet.
+
+Merken Sie sich in der Datei \texttt{bilder.json}, welches Bild zu welchem Kurs gehört, z.B. \texttt{\{"{}brot"{}: "{}zopf.jpg"{}\}}. Verwenden Sie dazu wieder \texttt{ladeJson()} und \texttt{speichereJson()}. Leiten Sie nach dem Speichern mit einer Flash-Meldung auf \texttt{admin.php} um.
+
+Testen Sie auch mit einer Textdatei, die Sie in \texttt{test.png} umbenannt haben.
+
+\section{Kursbilder anzeigen}
+
+Ergänzen Sie die Kursübersicht in \texttt{index.php} um eine Spalte \texttt{Bild}. Gibt es für einen Kurs einen Eintrag in \texttt{bilder.json}, zeigen Sie das Bild dort mit einer Breite von 120 Pixeln an.
+
+\section{Bonusaufgabe: Aufräumen}
+
+\begin{itemize}
+    \item Wird für einen Kurs ein neues Bild hochgeladen, bleibt das alte Bild im Ordner \texttt{bilder} liegen. Löschen Sie es mit \texttt{unlink()} - aber nur, wenn es nicht denselben Namen hat wie das neue Bild.
+    \item Ergänzen Sie in der Tabelle in \texttt{admin.php} pro Anmeldung einen Button \texttt{Löschen}. Er steckt in einem kleinen Formular mit \texttt{method="{}post"{}}, das den Index der Anmeldung in einem versteckten Feld mitschickt. Entfernen Sie die Anmeldung mit \texttt{unset()} und speichern Sie das Array mit \texttt{array\_values(\$anmeldungen)}.
+\end{itemize}
+
+Da \texttt{admin.php} jetzt zwei Formulare hat, braucht jedes ein verstecktes Feld \texttt{aktion}, damit Sie wissen, welches abgeschickt wurde. Überlegen Sie: Weshalb wird zum Löschen ein Formular mit POST verwendet und nicht ein Link wie \texttt{admin.php?loeschen=0}? Und was passiert, wenn Sie \texttt{array\_values()} weglassen und danach die erste Anmeldung löschen? Schauen Sie sich dazu \texttt{anmeldungen.json} an.
+
+\end{document}
